@@ -1,0 +1,54 @@
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 30px auto;
+    font-size: 13px;
+    overflow: hidden;
+    box-shadow:  0px 0px 40px #000000;
+    font-family: "Trebuchet MS",sans-serif;
+    }
+    
+    
+    .mat-form-field {
+      font-size: 20px;
+      width: 90%;
+    }
+    
+    td, th {
+      width: 23%;
+      padding: 13px 15px;
+    }
+    
+    .table img{
+      width: 15px;
+    }
+
+  
+    
+    .mat-header-cell{
+     /* background-color:#1C2951;*/
+     background-color: #301934;
+     color: #FFFFFF;
+      text-align: left;
+      width: 10px;
+    }
+    
+    .mat-row:nth-child(even):hover{
+      background-color: #ffff99;
+      color:#6f0000;
+      font-weight: bold;
+    
+    }
+    .mat-row:nth-child(odd):hover{
+     background-color:#ffff99;
+     color: #6f0000;
+     font-weight: bold;
+    }
+    
+    .mat-cell{
+      border-bottom: 1px solid #1C2951;
+      padding: 18px;
+    }
+
+    
+    

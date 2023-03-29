@@ -1,0 +1,37 @@
+<h1 class="text-center mb-5">Create new flight</h1>
+
+
+<form>
+
+
+    <div class="form-group">
+        <label for="fromPlace">fromPlace</label>
+        <input type="text" class="form-control" id="fromPlace" name="fromPlace" [(ngModel)]="fromPlace" />
+      </div>
+      <div class="form-group">
+        <label for="toPlace">toPlace</label>
+        <input type="text" class="form-control" id="toPlace" name="toPlace" [(ngModel)]="toPlace" />
+      </div>
+      <div class="form-group">
+        <label for="startTime">startTime</label>
+        <input type="datetime-local" class="form-control" id="startTime"  name="startTime" [(ngModel)]="startTime" />
+      </div>
+      <div class="form-group">
+        <label for="endTime">endTime</label>
+        <input type="datetime-local" class="form-control" id="endTime"  name="endTime" [(ngModel)]="endTime" />
+      </div>
+      <div class="form-group">
+        <label for="ticketPrice">ticketPrice</label>
+        <input type="number" class="form-control" id="ticketPrice" name="ticketPrice" [(ngModel)]="ticketPrice" />
+      </div>
+
+      <div class="form-group">
+        <label for="numOfSeats">numOfSeats</label>
+        <input type="number" class="form-control" id="numOfSeats" name="numOfSeats"  rowspan="2" [(ngModel)]="numOfSeats" />
+      </div>
+
+
+      <br>
+      <button type="button" class="btn btn-primary" (click)="saveFlight()" >Create flight</button>
+
+</form>
