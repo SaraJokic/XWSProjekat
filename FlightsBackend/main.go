@@ -38,15 +38,26 @@ func main() {
 	}
 	defer flightRepo.DisconnectFlightRepo(timeoutContext)
 
+	// NoSQL: Initialize User Repository store
+	userRepo, err := repositories.NewUserRepo(timeoutContext, storeLogger)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	defer userRepo.DisconnectUserRepo(timeoutContext)
+
 	// NoSQL: Checking if the connection was established
 	flightRepo.PingFlightRepo()
+	// NoSQL: Checking if the connection was established
+	userRepo.PingUserRepo()
 
 	//Initialize the handler and inject said logger
 	flightsHandler := handlers.NewFlightsHandler(logger, flightRepo)
+	//Initialize the handler and inject said logger
+	usersHandler := handlers.NewUsersHandler(logger, userRepo)
 
 	//Initialize the router and add a middleware for all the requests
 	router := mux.NewRouter()
-	router.Use(flightsHandler.MiddlewareContentTypeSet)
+	//router.Use(flightsHandler.MiddlewareContentTypeSet)
 
 	getRouter := router.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/", flightsHandler.GetAllFlights)
@@ -61,7 +72,15 @@ func main() {
 	deleteRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/{id}", flightsHandler.DeleteFlight)
 
-	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}))
+	postUserRouter := router.Methods(http.MethodPost).Subrouter()
+	postUserRouter.HandleFunc("/register", usersHandler.PostUser)
+	postUserRouter.Use(usersHandler.MiddlewareUserDeserialization)
+
+	getAllUsersRouter := router.Methods(http.MethodGet).Subrouter()
+	getAllUsersRouter.HandleFunc("/allUsers", usersHandler.GetAllUsers)
+
+	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
+		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}))
 
 	//Initialize the server
 	server := http.Server{

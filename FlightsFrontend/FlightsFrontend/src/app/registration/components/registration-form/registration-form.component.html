@@ -1,0 +1,41 @@
+<form #userForm='ngForm' (ngSubmit)="registerUser(userForm.value)">
+    <div class="rgform">
+      <div class="info">
+        <p class="title"> Register</p>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input  matInput ngModel name="name" #name="ngModel" placeholder="Name">
+        <mat-hint>Enter the name</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Surname</mat-label>
+        <input  matInput ngModel name="surname" #surname="ngModel" placeholder="Surname">
+        <mat-hint></mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-select ngModel name="gender" #gender="ngModel">
+            <mat-option [value]='0' >Male</mat-option>
+            <mat-option  [value]='1' >Female</mat-option>
+        </mat-select>
+        <mat-label>Gender</mat-label>
+        <mat-hint></mat-hint>
+    </mat-form-field>
+   
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput ngModel name="email" #email="ngModel" placeholder="emailaddres@gmail.com">
+        <mat-hint>Enter email</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput ngModel name="password1" #password1="ngModel" placeholder="Enter password">
+        <mat-hint>Enter password</mat-hint>
+      </mat-form-field>
+      <span class="spacer"></span>
+      <button mat-raised-button  class="submit">Submit</button>
+    </div>
+</form>

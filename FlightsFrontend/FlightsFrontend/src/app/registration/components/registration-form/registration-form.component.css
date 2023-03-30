@@ -1,0 +1,31 @@
+
+.rgform{
+    width: 50%;
+    justify-content: center;
+    background-color: rgb(245, 243, 243);
+    margin-left:25% ;
+    padding-bottom: 5%;
+}
+.title{
+    font-size: 2.0rem;
+    margin-left: 45% ;
+    padding-top: 5%;
+    
+}
+mat-form-field{
+    margin-left: 15%;
+    margin-right: 10%;
+    width: 70%;
+    padding-top: 5%;
+}
+.submit{
+    width: 10%;
+    font-size: 1.3rem;
+    margin-left: 80%;
+    padding: 3%;
+    margin-top: 5%;
+    background-color: rgb(270 270, 270);
+}
+.spacer {
+    flex: 1 1 auto;
+  }
