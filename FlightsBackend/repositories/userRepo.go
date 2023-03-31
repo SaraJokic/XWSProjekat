@@ -75,6 +75,37 @@ func (pr *UserRepo) GetById(id string) (*model.User, error) {
 	return &user, nil
 }
 
+func (pr *UserRepo) FindByEmail(email string) (*model.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	usersCollection := pr.getCollection()
+
+	var user model.User
+	err := usersCollection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+	if err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+
+	return &user, nil
+}
+func (pr *UserRepo) FindByUsername(username string) (*model.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	usersCollection := pr.getCollection()
+
+	var user model.User
+	err := usersCollection.FindOne(ctx, bson.M{"username": username}).Decode(&user)
+	if err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+
+	return &user, nil
+}
+
 func (pr *UserRepo) Insert(user *model.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

@@ -2,12 +2,17 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"time"
+	"xwsproj/jwt"
 	"xwsproj/model"
 	"xwsproj/repositories"
 
 	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -62,17 +67,51 @@ func (p *UsersHandler) GetUserById(rw http.ResponseWriter, h *http.Request) {
 		return
 	}
 }
+
+/*
+	func (p *UsersHandler) PostUser(rw http.ResponseWriter, h *http.Request) {
+		user := h.Context().Value(KeyUser{}).(*model.User)
+		user, err := p.repo.FindByUsername(user.Username)
+		if err != nil {
+			// greška se desila prilikom pretrage
+			p.logger.Print("Error while searching for user:", err)
+		} else if user != nil {
+			// korisnik je pronađen
+
+			p.logger.Print("Found user with username:", user.Username)
+		} else {
+			user.Password, _ = p.HashPassword(user.Password)
+			p.repo.Insert(user)
+			// korisnik nije pronađen
+			p.logger.Printf("User with username not found.")
+		}
+		rw.WriteHeader(http.StatusCreated)
+
+}
+*/
 func (p *UsersHandler) PostUser(rw http.ResponseWriter, h *http.Request) {
-	user := h.Context().Value(KeyUser{}).(*model.User)
-	user.Password, _ = p.HashPassword(user.Password)
-	p.repo.Insert(user)
+	newUser := h.Context().Value(KeyUser{}).(*model.User)
+
+	hashedPassword, err := p.HashPassword(newUser.Password)
+	if err != nil {
+		p.logger.Print("Error while hashing password:", err)
+		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	newUser.Password = hashedPassword
+	err = p.repo.Insert(newUser)
+	if err != nil {
+		p.logger.Print("Error while inserting user:", err)
+		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 	rw.WriteHeader(http.StatusCreated)
 }
-
 func (p *UsersHandler) HashPassword(password string) (string, error) {
 	passwordbytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	return string(passwordbytes), err
 }
+
 func (p *UsersHandler) DeleteUser(rw http.ResponseWriter, h *http.Request) {
 	vars := mux.Vars(h)
 	id := vars["id"]
@@ -95,6 +134,35 @@ func (p *UsersHandler) MiddlewareUserDeserialization(next http.Handler) http.Han
 
 		next.ServeHTTP(rw, h)
 	})
+}
+func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
+	var loginObj model.LoginRequest
+	err := json.NewDecoder(r.Body).Decode(&loginObj)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error decoding request body: %v", err), http.StatusBadRequest)
+		p.logger.Printf("Ticket with user id: '%v' not found", loginObj)
+		return
+	}
+
+	// validate the loginObj for valid credential adn if these are valid then
+
+	var claims = &jwt.JwtClaims{}
+	claims.Id, _ = primitive.ObjectIDFromHex("randomId")
+	claims.Username = loginObj.Username
+	claims.Role = 0
+
+	var tokenCreationTime = time.Now().UTC()
+	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Hour)
+	tokenString, err := jwt.GenerateToken(claims, expirationTime)
+
+	if err != nil {
+		http.Error(w, "error in generating token: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("token created: " + tokenString))
+
 }
 func (p *UsersHandler) MiddlewareContentTypeSet(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, h *http.Request) {

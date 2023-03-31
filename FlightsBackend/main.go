@@ -76,6 +76,10 @@ func main() {
 	postUserRouter.HandleFunc("/register", usersHandler.PostUser)
 	postUserRouter.Use(usersHandler.MiddlewareUserDeserialization)
 
+	loginRouter := router.Methods(http.MethodPost).Subrouter()
+	loginRouter.HandleFunc("/login", usersHandler.LoginUser)
+	//loginRouter.Use(usersHandler.MiddlewareUserDeserialization)
+
 	getAllUsersRouter := router.Methods(http.MethodGet).Subrouter()
 	getAllUsersRouter.HandleFunc("/allUsers", usersHandler.GetAllUsers)
 
