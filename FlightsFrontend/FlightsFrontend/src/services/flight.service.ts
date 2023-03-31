@@ -5,6 +5,8 @@ import { Observable } from "rxjs";
 
 const baseUrl = 'http://localhost:4200';
 
+const novoUrl = 'http://localhost:4200/filter';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,5 +44,11 @@ export class FlightService {
 
 
 
+  Search(nesto:any): Observable<Flights[]> {
+    console.log(nesto);
+    return this.http.get<Flights[]>(`${novoUrl}/${nesto}`);
 
+    
+
+  }
 }

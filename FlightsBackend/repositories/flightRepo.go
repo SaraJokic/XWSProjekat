@@ -105,6 +105,25 @@ func (pr *FlightRepo) GetFlightById(id string) (*model.Flight, error) {
 	return &flight, nil
 }
 
+func (pr *FlightRepo) GetFlightsFromPlace(fromplace string) (model.Flights, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	flightsCollection := pr.getCollection()
+
+	var flights model.Flights
+	flightsCursor, err := flightsCollection.Find(ctx, bson.M{"fromplace": fromplace})
+	if err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+	if err = flightsCursor.All(ctx, &flights); err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+	return flights, nil
+}
+
 func (pr *FlightRepo) CreateFlight(flight *model.Flight) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

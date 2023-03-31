@@ -58,10 +58,16 @@ func main() {
 	getByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getByIdRouter.HandleFunc("/{id}", flightsHandler.GetFlightById)
 
+	getByNameRouter := router.Methods(http.MethodGet).Subrouter()
+	getByNameRouter.HandleFunc("/filter/{fromplace}", flightsHandler.GetFlightsFromPlace)
+
 	deleteRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/{id}", flightsHandler.DeleteFlight)
 
-	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}))
+	//cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}))
+	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
+		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
+		gorillaHandlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}))
 
 	//Initialize the server
 	server := http.Server{

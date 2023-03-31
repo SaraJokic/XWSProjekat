@@ -1,11 +1,11 @@
 class Flights {
     id?:any;
-    fromPlace?:string;
-    toPlace?:string;
-    startTime?:any;
-    endTime?:any;
-    ticketPrice?:number;
-    numOfSeats?:number;
+    fromplace?:string;
+    toplace?:string;
+    starttime?:any;
+    endtime?:any;
+    ticketprice?:number;
+    numofseats?:number;
        
 }
 

@@ -1,35 +1,31 @@
-<h1 class="text-center mb-5">Create new flight</h1>
+<h1 class="text-center mb-5">Create new Flight</h1>
 
 
 <form>
-
-
     <div class="form-group">
-        <label for="fromPlace">fromPlace</label>
-        <input type="text" class="form-control" id="fromPlace" name="fromPlace" [(ngModel)]="fromPlace" />
+        <label for="fromplace">From Place</label>
+        <input type="text" class="form-control" id="fromplace" name="fromplace" [(ngModel)]="fromplace" />
       </div>
       <div class="form-group">
-        <label for="toPlace">toPlace</label>
-        <input type="text" class="form-control" id="toPlace" name="toPlace" [(ngModel)]="toPlace" />
+        <label for="toplace">To Place</label>
+        <input type="text" class="form-control" id="toplace" name="toplace" [(ngModel)]="toplace" />
       </div>
       <div class="form-group">
-        <label for="startTime">startTime</label>
-        <input type="datetime-local" class="form-control" id="startTime"  name="startTime" [(ngModel)]="startTime" />
+        <label for="starttime">Start Time</label>
+        <input type="datetime-local" class="form-control" id="starttime"  name="starttime" [(ngModel)]="starttime" />
       </div>
       <div class="form-group">
-        <label for="endTime">endTime</label>
-        <input type="datetime-local" class="form-control" id="endTime"  name="endTime" [(ngModel)]="endTime" />
+        <label for="endtime">End Time</label>
+        <input type="datetime-local" class="form-control" id="endtime"  name="endtime" [(ngModel)]="endtime" />
       </div>
       <div class="form-group">
-        <label for="ticketPrice">ticketPrice</label>
-        <input type="number" class="form-control" id="ticketPrice" name="ticketPrice" [(ngModel)]="ticketPrice" />
+        <label for="ticketprice">Ticket Price</label>
+        <input type="number" class="form-control" id="ticketprice"  name="ticketprice" [(ngModel)]="ticketprice" />
       </div>
-
       <div class="form-group">
-        <label for="numOfSeats">numOfSeats</label>
-        <input type="number" class="form-control" id="numOfSeats" name="numOfSeats"  rowspan="2" [(ngModel)]="numOfSeats" />
+        <label for="numofseats">Number of Seats</label>
+        <input type="number" class="form-control" id="numofseats" name="numofseats"  rowspan="2" [(ngModel)]="numofseats" />
       </div>
-
 
       <br>
       <button type="button" class="btn btn-primary" (click)="saveFlight()" >Create flight</button>

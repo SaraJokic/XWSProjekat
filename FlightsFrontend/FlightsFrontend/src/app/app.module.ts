@@ -7,7 +7,18 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AllFlightsComponent } from './components/all-flights/all-flights.component';
 import { AddFlightsComponent } from './components/add-flights/add-flights.component';
-import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+
 
 
 
@@ -18,6 +29,8 @@ import { FormsModule } from '@angular/forms';
     AllFlightsComponent,
     AddFlightsComponent,
     
+
+    
   ],
   imports: [
     BrowserModule,
@@ -26,8 +39,19 @@ import { FormsModule } from '@angular/forms';
     MatSortModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatButtonModule,
+   
     
 
+
+    
 
   ],
   providers: [],
