@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Flights } from "src/models/flight.model";
 import { Observable } from "rxjs";
 
-const baseUrl = 'http://localhost:4200';
+const baseUrl = 'http://localhost:8080';
 
-const novoUrl = 'http://localhost:4200/filter';
+const novoUrl = 'http://localhost:8080/filter';
 
 @Injectable({
   providedIn: 'root'
