@@ -105,6 +105,21 @@ func (tr *TicketRepo) GetTicketById(id string) (*model.Ticket, error) {
 	return &ticket, nil
 }
 
+func (tr *TicketRepo) GetTicketByUserId(id string) (*model.Ticket, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	ticketsCollection := tr.getCollection()
+
+	var ticket model.Ticket
+	err := ticketsCollection.FindOne(ctx, bson.M{"userid": id}).Decode(&ticket)
+	if err != nil {
+		tr.logger.Println(err)
+		return nil, err
+	}
+	return &ticket, nil
+}
+
 func (tr *TicketRepo) CreateTicket(ticket *model.Ticket) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

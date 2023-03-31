@@ -99,9 +99,18 @@ func main() {
 	getAllTicketsRouter := router.Methods(http.MethodGet).Subrouter()
 	getAllTicketsRouter.HandleFunc("/tickets/all", ticketsHandler.GetAllTickets)
 
+	getTicketByIdRouter := router.Methods(http.MethodGet).Subrouter()
+	getTicketByIdRouter.HandleFunc("/tickets/get/{id}", ticketsHandler.GetTicketById)
+
+	getTicketByUserIdRouter := router.Methods(http.MethodGet).Subrouter()
+	getTicketByUserIdRouter.HandleFunc("/tickets/getbyuser/{id}", ticketsHandler.GetTicketByUserId)
+
 	postTicketRouter := router.Methods(http.MethodPost).Subrouter()
 	postTicketRouter.HandleFunc("/tickets/buy", ticketsHandler.CreateTicket)
 	postTicketRouter.Use(ticketsHandler.MiddlewareTicketDeserialization)
+
+	deleteTicketRouter := router.Methods(http.MethodDelete).Subrouter()
+	deleteTicketRouter.HandleFunc("/tickets/delete/{id}", ticketsHandler.DeleteTicket)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
 		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),

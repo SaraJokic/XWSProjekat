@@ -62,6 +62,29 @@ func (t *TicketsHandler) GetTicketById(rw http.ResponseWriter, h *http.Request) 
 	}
 }
 
+func (t *TicketsHandler) GetTicketByUserId(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	id := vars["id"]
+
+	ticket, err := t.repo.GetTicketByUserId(id)
+	if err != nil {
+		t.logger.Print("Database exception: ", err)
+	}
+
+	if ticket == nil {
+		http.Error(rw, "Ticket with given user id not found", http.StatusNotFound)
+		t.logger.Printf("Ticket with user id: '%s' not found", id)
+		return
+	}
+
+	err = ticket.ToJSON(rw)
+	if err != nil {
+		http.Error(rw, "Unable to convert to json", http.StatusInternalServerError)
+		t.logger.Fatal("Unable to convert to json :", err)
+		return
+	}
+}
+
 func (t *TicketsHandler) CreateTicket(rw http.ResponseWriter, h *http.Request) {
 	ticket := h.Context().Value(KeyProduct{}).(*model.Ticket)
 	t.repo.CreateTicket(ticket)
