@@ -7,7 +7,6 @@ import { RegistrationFormComponent } from './registration/components/registratio
 const routes: Routes = [
   {path: 'flights', component: AllFlightsComponent },
   {path: 'flights/add', component: AddFlightsComponent },
-
   { path: 'userRegister', component: RegistrationFormComponent }
 ];
 

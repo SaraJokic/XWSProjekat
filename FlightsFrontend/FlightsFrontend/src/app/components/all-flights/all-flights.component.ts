@@ -71,8 +71,7 @@ export class AllFlightsComponent implements AfterViewInit {
     this.izabran = deleting.id;
     this.flightService.delete(this.izabran).subscribe(
       (resp) =>{
-        this.flights.data.splice(this.izabran,1);
-        this.flights.filter='';
+        this.retrieveFlights();
         return console.log("Deleted!");
       }, err=>{
         return console.error("Neuspesno");
