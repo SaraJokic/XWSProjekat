@@ -1,0 +1,55 @@
+table {
+width: 100%;
+border-collapse: collapse;
+margin: 30px auto;
+font-size: 13px;
+border-radius: 30px 0px 30px 0px;
+overflow: hidden;
+box-shadow:  0px 0px 40px #000000;
+font-family: "Trebuchet MS",sans-serif;
+}
+
+
+.mat-form-field {
+  font-size: 18px;
+  width: 100%;
+}
+
+td, th {
+  width: 16%;
+  padding: 13px 16px;
+}
+
+.table img{
+  width: 15px;
+}
+
+.mat-header-cell{
+ /* background-color:#1C2951;*/
+ background-color: #301934;
+ color: #FFFFFF;
+  text-align: left;
+}
+
+.mat-row:nth-child(even):hover{
+  background-color: #ffff99;
+  color:#6f0000;
+  font-weight: bold;
+
+}
+.mat-row:nth-child(odd):hover{
+ background-color:#ffff99;
+ color: #6f0000;
+ font-weight: bold;
+}
+
+.mat-cell{
+  border-bottom: 1px solid #1C2951;
+  padding: 18px;
+}
+
+
+.nesto:hover {
+  background-color:#555555;
+  transition: 1.25s;
+}
