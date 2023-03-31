@@ -32,12 +32,8 @@ export class AddFlightsComponent  {
         ticketprice: this.ticketprice,
         numofseats: this.numofseats,
       };
-      console.log("ovo je start time ", this.starttime)
-      console.log("ovo je end time ", this.endtime)
       data.starttime?.setHours(data.starttime.getHours() + 2)
       data.endtime?.setHours(data.endtime.getHours() + 2)
-      console.log("ovo je start time sa dodatim satom", data.starttime)
-      console.log("ovo je end time sa dodatim satom", data.endtime)
       
       this.flightService.create(data)
         .subscribe({

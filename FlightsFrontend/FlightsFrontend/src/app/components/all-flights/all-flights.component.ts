@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 
 export class AllFlightsComponent implements AfterViewInit {
 
-  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Delete'];
+  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Delete', 'Buy'];
   flights = new MatTableDataSource<Flights[]>;
   
   
@@ -62,6 +62,10 @@ export class AllFlightsComponent implements AfterViewInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  buyTicket(flight: any){
+
   }
 
 
