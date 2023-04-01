@@ -1,1 +1,37 @@
-<p>buy-ticket-dialog works!</p>
+<div style="width: 50%; margin: 0 auto;">
+    <h2>Flight Details</h2>
+    <table>
+      <tr>
+        <td><mat-icon>calendar_today</mat-icon> DATE:</td>
+        <td>{{flight.starttime?.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}} </td>
+      </tr>
+      <tr>
+        <td><mat-icon>flight_takeoff</mat-icon> Departure:</td>
+        <td><b>{{flight.starttime?.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}}</b>   {{flight.fromplace}}</td>
+      </tr>
+      <tr>
+        <td><mat-icon>flight_land</mat-icon> Arrival:</td>
+        <td><b>{{flight.endtime?.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}}</b>  {{flight.toplace}}</td>
+      </tr>
+      <tr>
+        <td>Available seats left:</td>
+        <td>{{data.numofseats}}</td>
+      </tr>
+      <tr>
+        <td>Ticket price:</td>
+        <td>{{data.ticketprice | currency}}</td>
+      </tr>
+    </table>
+    
+    <h2>Buy Tickets</h2>
+    <form (submit)="buyTicket()">
+      <label>
+        Number of Tickets:
+        <input type="number" min="1" [attr.max]="data.numofseats" [(ngModel)]="numTickets" name="numTickets"><br>
+        <mat-error *ngIf="numTickets > (data.numofseats ?? 0)">
+            You cannot exceed the maximum number of seats available.
+          </mat-error>
+      </label>
+      <button type="submit"m mat-raised-button [disabled]="numTickets <= 0 || numTickets > (data.numofseats ?? 0)">Buy Tickets</button>
+    </form>
+  </div>

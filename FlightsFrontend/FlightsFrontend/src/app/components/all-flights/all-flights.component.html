@@ -73,7 +73,7 @@
 
     <ng-container matColumnDef="ticketprice"  >
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Ticket Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.ticketprice}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ticketprice | currency}} </td>
       </ng-container>
 
       <ng-container matColumnDef="numofseats"  >
@@ -93,7 +93,7 @@
       <ng-container matColumnDef="Buy">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element">
-          <button [disabled]="element.numofseats === 0" class="buyticktet"
+          <button mat-raised-button [disabled]="element.numofseats === 0" class="buyticktet"
             (click)="openDialog(element)">Buy ticket</button>
         </td>
       </ng-container>
