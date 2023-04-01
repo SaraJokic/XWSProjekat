@@ -1,0 +1,21 @@
+<div style="width: 50%; margin: 0 auto;">
+    <h2>Ticket Details</h2>
+    <table>
+        <tr>
+          <td><mat-icon>calendar_today</mat-icon> DATE:</td>
+          <td>{{flight.starttime?.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}} </td>
+        </tr>
+        <tr>
+          <td><mat-icon>flight_takeoff</mat-icon> Departure:</td>
+          <td><b>{{flight.starttime?.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}}</b>   {{flight.fromplace}}</td>
+        </tr>
+        <tr>
+          <td><mat-icon>flight_land</mat-icon> Arrival:</td>
+          <td><b>{{flight.endtime?.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}}</b>  {{flight.toplace}}</td>
+        </tr>
+        <tr>
+          <td>Quantity:</td>
+          <td>{{data.quantity}}</td>
+        </tr>
+      </table>
+</div>
