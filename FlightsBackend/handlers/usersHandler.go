@@ -12,7 +12,6 @@ import (
 	"xwsproj/repositories"
 
 	"github.com/gorilla/mux"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -120,11 +119,18 @@ func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// validate the loginObj for valid credential adn if these are valid then
+	var user *model.User
+	user, err = p.repo.ValidateUsernameAndPassword(loginObj.Username, loginObj.Password)
+	if err != nil {
+		http.Error(w, "Username or password are incorrect", http.StatusBadRequest)
+		return
+	}
 
 	var claims = &jwt.JwtClaims{}
-	claims.Id, _ = primitive.ObjectIDFromHex("randomId")
+	claims.Id = user.ID
 	claims.Username = loginObj.Username
-	claims.Role = 0
+	claims.Role = user.Role
+	claims.Name = user.Name
 
 	var tokenCreationTime = time.Now().UTC()
 	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Hour)

@@ -13,6 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserRepo struct {
@@ -117,6 +118,29 @@ func (ur *UserRepo) CheckIfEmailAndUsernameExist(email string, username string) 
 	// email and username aren't in the database
 	return false, nil
 }
+
+func (ur *UserRepo) ValidateUsernameAndPassword(username string, password string) (*model.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	usersCollection := ur.getCollection()
+	var user model.User
+	err := usersCollection.FindOne(ctx, bson.M{"username": username}).Decode(&user)
+	if err != nil {
+		ur.logger.Println(err)
+		return nil, err
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		// password does not match hash
+		return nil, err
+	} else {
+		// password matches hash
+		return &user, nil
+	}
+
+}
+
 func (pr *UserRepo) FindByUsername(username string) (*model.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
