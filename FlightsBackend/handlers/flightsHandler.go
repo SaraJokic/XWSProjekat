@@ -61,6 +61,27 @@ func (p *FlightsHandler) GetFlightById(rw http.ResponseWriter, h *http.Request) 
 		return
 	}
 }
+
+func (p *FlightsHandler) GetFlightsFromPlace(rw http.ResponseWriter, h *http.Request) {
+	fromplace := h.URL.Query().Get("fromplace")
+
+	flights, err := p.repo.GetFlightsFromPlace(fromplace)
+	if err != nil {
+		p.logger.Print("Database exception: ", err)
+	}
+
+	if flights == nil {
+		return
+	}
+
+	err = flights.ToJSON(rw)
+	if err != nil {
+		http.Error(rw, "Unable to convert to json", http.StatusInternalServerError)
+		p.logger.Fatal("Unable to convert to json :", err)
+		return
+	}
+}
+
 func (p *FlightsHandler) CreateFlight(rw http.ResponseWriter, h *http.Request) {
 	flight := h.Context().Value(KeyProduct{}).(*model.Flight)
 	p.repo.CreateFlight(flight)

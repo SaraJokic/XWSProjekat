@@ -20,7 +20,7 @@ func main() {
 	//This allows flexibility in different environments (for eg. when running multiple docker api's and want to override the default port)
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
-		port = "4200"
+		port = "8080"
 	}
 
 	// Initialize context
@@ -45,19 +45,29 @@ func main() {
 	}
 	defer userRepo.DisconnectUserRepo(timeoutContext)
 
+	ticketRepo, err := repositories.NewTicketRepo(timeoutContext, storeLogger)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	defer ticketRepo.DisconnectTicketRepo(timeoutContext)
+
 	// NoSQL: Checking if the connection was established
 	flightRepo.PingFlightRepo()
 	// NoSQL: Checking if the connection was established
 	userRepo.PingUserRepo()
+	ticketRepo.PingTicketRepo()
 
 	//Initialize the handler and inject said logger
 	flightsHandler := handlers.NewFlightsHandler(logger, flightRepo)
 	//Initialize the handler and inject said logger
 	usersHandler := handlers.NewUsersHandler(logger, userRepo)
+	ticketsHandler := handlers.NewTicketsHandler(logger, ticketRepo)
 
 	//Initialize the router and add a middleware for all the requests
 	router := mux.NewRouter()
 	//router.Use(flightsHandler.MiddlewareContentTypeSet)
+
+	//FLIGHT
 
 	getRouter := router.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/", flightsHandler.GetAllFlights)
@@ -69,18 +79,42 @@ func main() {
 	getByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getByIdRouter.HandleFunc("/{id}", flightsHandler.GetFlightById)
 
+	getByNameRouter := router.Methods(http.MethodGet).Subrouter()
+	getByNameRouter.HandleFunc("/filter/{fromplace}", flightsHandler.GetFlightsFromPlace)
+
 	deleteRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/{id}", flightsHandler.DeleteFlight)
 
+	//USER
+
 	postUserRouter := router.Methods(http.MethodPost).Subrouter()
-	postUserRouter.HandleFunc("/register", usersHandler.PostUser)
+	postUserRouter.HandleFunc("/users/register", usersHandler.PostUser)
 	postUserRouter.Use(usersHandler.MiddlewareUserDeserialization)
 
 	getAllUsersRouter := router.Methods(http.MethodGet).Subrouter()
-	getAllUsersRouter.HandleFunc("/allUsers", usersHandler.GetAllUsers)
+	getAllUsersRouter.HandleFunc("/users/all", usersHandler.GetAllUsers)
+
+	//TICKETS
+
+	getAllTicketsRouter := router.Methods(http.MethodGet).Subrouter()
+	getAllTicketsRouter.HandleFunc("/tickets/all", ticketsHandler.GetAllTickets)
+
+	getTicketByIdRouter := router.Methods(http.MethodGet).Subrouter()
+	getTicketByIdRouter.HandleFunc("/tickets/get/{id}", ticketsHandler.GetTicketById)
+
+	getTicketByUserIdRouter := router.Methods(http.MethodGet).Subrouter()
+	getTicketByUserIdRouter.HandleFunc("/tickets/getbyuser/{id}", ticketsHandler.GetTicketByUserId)
+
+	postTicketRouter := router.Methods(http.MethodPost).Subrouter()
+	postTicketRouter.HandleFunc("/tickets/buy", ticketsHandler.CreateTicket)
+	postTicketRouter.Use(ticketsHandler.MiddlewareTicketDeserialization)
+
+	deleteTicketRouter := router.Methods(http.MethodDelete).Subrouter()
+	deleteTicketRouter.HandleFunc("/tickets/delete/{id}", ticketsHandler.DeleteTicket)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
-		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}))
+		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
+		gorillaHandlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}))
 
 	//Initialize the server
 	server := http.Server{
