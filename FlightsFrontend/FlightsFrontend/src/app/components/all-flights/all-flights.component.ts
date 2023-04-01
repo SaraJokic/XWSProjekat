@@ -7,6 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SearchFlightsDTO } from 'src/models/flightDTO.model';
+import { Ticket } from 'src/models/ticket';
+import { TicketService } from 'src/services/ticket.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { DialogService } from 'src/services/dialog.service';
 
 
 @Component({
@@ -17,8 +21,9 @@ import { SearchFlightsDTO } from 'src/models/flightDTO.model';
 
 export class AllFlightsComponent implements AfterViewInit {
 
-  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Edit', 'Delete'];
-  flights = new MatTableDataSource<Flights[]>;
+
+  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Delete', 'Buy'];
+
   
   
 
@@ -50,7 +55,8 @@ export class AllFlightsComponent implements AfterViewInit {
     
   }
 
-  constructor(private flightService: FlightService) { }
+  constructor(private flightService: FlightService, private ticketservice: TicketService,
+    private dialogService: DialogService) { }
 
   retrieveFlights(): void {
     this.flightService.getAll()
@@ -76,8 +82,24 @@ export class AllFlightsComponent implements AfterViewInit {
       });
   }
 
-
-
+  buyTicket(flight: any){
+    const newTicket: Ticket = {
+      userid: "6426f65971b16d7d27fe5bb8",
+      flightid: flight.id,
+      expired: false,
+      quantity: 4,
+    };
+    console.log(flight.id)
+    this.ticketservice.add(newTicket).subscribe(
+      (data) => {
+        alert("Success!");
+        this.retrieveFlights()
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
   deleteFlight(deleting : any){
 
     this.izabran = deleting.id;
@@ -88,6 +110,9 @@ export class AllFlightsComponent implements AfterViewInit {
       }, err=>{
         return console.error("Neuspesno");
       });
+  }
+  openDialog(flight: Flights): void {
+    this.dialogService.openDialogBuyingTicket(flight);
   }
     
 

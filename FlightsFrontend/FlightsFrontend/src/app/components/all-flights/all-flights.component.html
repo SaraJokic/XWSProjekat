@@ -89,23 +89,23 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="starttime"  >
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
-      <td mat-cell *matCellDef="let element"> {{element.starttime}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.starttime | date:'short'}} </td>
     </ng-container>
     <!-- Symbol Column -->
 
     <ng-container matColumnDef="endtime"  >
       <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time </th>
-      <td mat-cell *matCellDef="let element"> {{element.endtime}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.endtime | date:'short'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="ticketprice"  >
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Ticket Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.ticketprice}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ticketprice | currency}} </td>
       </ng-container>
 
       <ng-container matColumnDef="numofseats"  >
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Number of Seats </th>
-        <td mat-cell *matCellDef="let element"> {{element.numofseats}} </td>
+        <td  mat-cell *matCellDef="let element"> {{element.numofseats === 0 ? 'Not Available' : element.numofseats}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Edit"  >
@@ -124,6 +124,13 @@
             (click)="deleteFlight(element)">
             <mat-icon matTooltip="delete">delete</mat-icon>
           </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Buy">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button [disabled]="element.numofseats === 0" class="buyticktet"
+            (click)="openDialog(element)">Buy ticket</button>
         </td>
       </ng-container>
 

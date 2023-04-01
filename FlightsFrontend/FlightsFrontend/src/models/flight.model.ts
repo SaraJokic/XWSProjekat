@@ -1,5 +1,5 @@
 class Flights {
-    id?:number;
+    id?:string;
     fromplace?:string;
     toplace?:string;
     starttime?:any;
