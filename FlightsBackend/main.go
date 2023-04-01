@@ -81,7 +81,7 @@ func main() {
 	//loginRouter.Use(usersHandler.MiddlewareUserDeserialization)
 
 	getAllUsersRouter := router.Methods(http.MethodGet).Subrouter()
-	getAllUsersRouter.HandleFunc("/allUsers", usersHandler.GetAllUsers)
+	getAllUsersRouter.HandleFunc("/users/all", usersHandler.GetAllUsers)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
 		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}))

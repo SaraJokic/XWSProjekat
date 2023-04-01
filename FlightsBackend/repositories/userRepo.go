@@ -90,6 +90,33 @@ func (pr *UserRepo) FindByEmail(email string) (*model.User, error) {
 
 	return &user, nil
 }
+
+func (ur *UserRepo) CheckIfEmailAndUsernameExist(email string, username string) (bool, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	usersCollection := ur.getCollection()
+	var userEmail model.User
+	err := usersCollection.FindOne(ctx, bson.M{"email": email}).Decode(&userEmail)
+	if err == nil {
+		// email exists in database
+		return true, nil
+	} else if err != mongo.ErrNoDocuments {
+		return false, err
+	}
+
+	var userUsername model.User
+	err = usersCollection.FindOne(ctx, bson.M{"username": username}).Decode(&userUsername)
+	if err == nil {
+		// username exists in database
+		return true, nil
+	} else if err != mongo.ErrNoDocuments {
+		return false, err
+	}
+
+	// email and username aren't in the database
+	return false, nil
+}
 func (pr *UserRepo) FindByUsername(username string) (*model.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

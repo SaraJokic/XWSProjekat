@@ -92,6 +92,16 @@ func (p *UsersHandler) GetUserById(rw http.ResponseWriter, h *http.Request) {
 func (p *UsersHandler) PostUser(rw http.ResponseWriter, h *http.Request) {
 	newUser := h.Context().Value(KeyUser{}).(*model.User)
 
+	exists, err := p.repo.CheckIfEmailAndUsernameExist(newUser.Email, newUser.Username)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if exists {
+		http.Error(rw, "Email or username already exist", http.StatusBadRequest)
+		return
+	}
+
 	hashedPassword, err := p.HashPassword(newUser.Password)
 	if err != nil {
 		p.logger.Print("Error while hashing password:", err)
@@ -140,7 +150,6 @@ func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&loginObj)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("error decoding request body: %v", err), http.StatusBadRequest)
-		p.logger.Printf("Ticket with user id: '%v' not found", loginObj)
 		return
 	}
 
