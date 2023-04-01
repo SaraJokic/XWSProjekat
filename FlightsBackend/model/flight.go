@@ -25,6 +25,11 @@ func (f *Flights) ToJSON(w io.Writer) error {
 	return e.Encode(f)
 }
 
+func (f *Flights) FromJSON(w io.Writer) error {
+	e := json.NewEncoder(w)
+	return e.Encode(f)
+}
+
 func (p *Flight) ToJSON(w io.Writer) error {
 	e := json.NewEncoder(w)
 	return e.Encode(p)

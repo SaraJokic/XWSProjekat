@@ -6,6 +6,7 @@ import { FlightService } from 'src/services/flight.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { SearchFlightsDTO } from 'src/models/flightDTO.model';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Observable } from 'rxjs';
 
 export class AllFlightsComponent implements AfterViewInit {
 
-  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Delete'];
+  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Edit', 'Delete'];
   flights = new MatTableDataSource<Flights[]>;
   
   
@@ -26,6 +27,16 @@ export class AllFlightsComponent implements AfterViewInit {
   public izabran : any ;
   fromPlace='';
   toPlace='';
+  numOFSEATS:any;
+  fromDate:any;
+  toDate:any;
+
+  allFlights : Array<Flights> = new Array
+  isAdmin = false ;
+  startPlace: string = "";
+  endPlace: string = "";
+  startDate: Date | undefined;
+  endDate : Date | undefined;
 
 
 
@@ -59,6 +70,7 @@ export class AllFlightsComponent implements AfterViewInit {
       .subscribe({
         next: (data) => {
           this.flights = new MatTableDataSource(<any>data.filter(flights => flights.fromplace?.toLowerCase().includes(this.fromPlace.toLowerCase()) && flights.toplace?.toLowerCase().includes(this.toPlace.toLowerCase())));
+          console.log("Nadji " + this.fromPlace + " " + this.toPlace);
         },
         error: (e) => console.error(e)
       });
@@ -80,16 +92,42 @@ export class AllFlightsComponent implements AfterViewInit {
     
 
 
+ forDate(): void {
+  this.flightService.getAll()
+    .subscribe({
+      next: (data) => {
+        this.flights = new MatTableDataSource(<any>data.filter(flights => flights.fromplace?.includes(this.fromDate)));
+        console.log("Nadji " + this.fromDate);
+      },
+      error: (e) => console.error(e)
+    });
+}
 
 /*
 Search(nesto:any){
   this.flightService.Search(nesto)
-  .subscribe((data)=>{
+  .subscribe((data:any)=>{
     this.flights.data = data.push;
   } )
     
 }
 */
+
+/*
+Nadji(nesto:any){
+  this.flightService.Proba(nesto)
+  .subscribe((data:any)=>{
+    this.flights.data = data.push; //iLI data.push
+  } )
+    */
+
+}
+
+
+
+
+
+
 /*
 onSubmitSearch(inputSearch : any){
   
@@ -103,4 +141,3 @@ onSubmitSearch(inputSearch : any){
 
 
 
-}

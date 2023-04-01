@@ -20,13 +20,16 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './common/navbar/navbar.component';
 import { RegistrationModule } from './registration/registration.module';
 import { MaterialModule } from './material/material.module';
+import { UpdateFlightsComponent } from './components/update-flights/update-flights.component';
+import {Moment} from 'moment/moment';
 
 @NgModule({
   declarations: [
     AppComponent,
     AllFlightsComponent,
     AddFlightsComponent,
-    NavbarComponent
+    NavbarComponent,
+    UpdateFlightsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { MaterialModule } from './material/material.module';
     MatButtonModule,
     RegistrationModule,
     BrowserAnimationsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
