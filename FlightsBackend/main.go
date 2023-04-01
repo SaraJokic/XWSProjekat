@@ -80,14 +80,11 @@ func main() {
 	loginRouter := router.Methods(http.MethodPost).Subrouter()
 	loginRouter.HandleFunc("/login", usersHandler.LoginUser)
 
-	validateTokenRouter := router.Methods(http.MethodGet).Subrouter()
-	validateTokenRouter.HandleFunc("/{id}", flightsHandler.GetFlightById)
-
 	getAllUsersRouter := router.Methods(http.MethodGet).Subrouter()
-	getAllUsersRouter.HandleFunc("/Users/allUsers", usersHandler.GetAllUsers)
+	getAllUsersRouter.HandleFunc("/users/getAll", usersHandler.GetAllUsers)
 
 	ValidateTokenRouter := router.Methods(http.MethodGet).Subrouter()
-	ValidateTokenRouter.HandleFunc("/Users/allUsers/token", usersHandler.GetAllUsers)
+	ValidateTokenRouter.HandleFunc("/users/token/valildation", usersHandler.GetAllUsers)
 	ValidateTokenRouter.Use(middleware.ValidateToken)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
