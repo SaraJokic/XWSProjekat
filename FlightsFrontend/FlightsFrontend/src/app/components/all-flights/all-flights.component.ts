@@ -99,7 +99,7 @@ export class AllFlightsComponent implements AfterViewInit {
       });
   }
   openDialog(flight: Flights): void {
-    this.dialogService.openDialog(flight);
+    this.dialogService.openDialogBuyingTicket(flight);
   }
     
 

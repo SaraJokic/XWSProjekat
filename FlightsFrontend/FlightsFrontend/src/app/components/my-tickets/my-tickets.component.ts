@@ -5,6 +5,7 @@ import { TicketService } from 'src/services/ticket.service';
 import { MatCardModule } from '@angular/material/card';
 import { Flights } from 'src/models/flight.model';
 import { FlightService } from 'src/services/flight.service';
+import { DialogService } from 'src/services/dialog.service';
 
 @Component({
   selector: 'app-my-tickets',
@@ -13,7 +14,8 @@ import { FlightService } from 'src/services/flight.service';
 })
 export class MyTicketsComponent implements OnInit{
   
-  constructor(private ticketService: TicketService, private flightservice: FlightService) { }
+  constructor(private ticketService: TicketService, private flightservice: FlightService,
+    private dialogService: DialogService) { }
 
   public tickets : Ticket[] = [];
   public flights : Flights[] = [];
@@ -40,4 +42,7 @@ export class MyTicketsComponent implements OnInit{
     })
   }
 
+  openTicketDetailsDialog(ticket: Ticket): void{
+    this.dialogService.openDialogTicketDetails(ticket);
+  }
 }

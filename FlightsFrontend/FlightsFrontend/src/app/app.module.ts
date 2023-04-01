@@ -24,6 +24,7 @@ import { MyTicketsComponent } from './components/my-tickets/my-tickets.component
 import { MatCardModule } from '@angular/material/card';
 import { BuyTicketDialogComponent } from './components/buy-ticket-dialog/buy-ticket-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TicketDetailsDialogComponent } from './components/ticket-details-dialog/ticket-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     NavbarComponent,
     MyTicketsComponent,
     BuyTicketDialogComponent,
+    TicketDetailsDialogComponent,
   ],
   imports: [
     BrowserModule,
