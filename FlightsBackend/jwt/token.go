@@ -18,7 +18,6 @@ func GenerateToken(claims *JwtClaims, expirationTime time.Time) (string, error) 
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	// Sign and get the complete encoded token as a string using the secret
 	tokenString, err := token.SignedString([]byte(jWTPrivateToken))
 	if err != nil {
 		return "", err
@@ -39,22 +38,13 @@ func VerifyToken(tokenString string) (bool, *JwtClaims) {
 
 func getTokenFromString(tokenString string, claims *JwtClaims) (*jwt.Token, error) {
 	return jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
+
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-
-		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
+		if token.Header["alg"] != "HS256" {
+			return nil, fmt.Errorf("Unexpected algorithm used: %v", token.Header["alg"])
+		}
 		return []byte(jWTPrivateToken), nil
 	})
-}
-
-func GetClaims(tokenString string) JwtClaims {
-	claims := &JwtClaims{}
-
-	_, err := getTokenFromString(tokenString, claims)
-	if err == nil {
-		return *claims
-	}
-	return *claims
 }

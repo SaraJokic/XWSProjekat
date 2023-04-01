@@ -68,27 +68,14 @@ func (p *UsersHandler) GetUserById(rw http.ResponseWriter, h *http.Request) {
 	}
 }
 
-/*
-	func (p *UsersHandler) PostUser(rw http.ResponseWriter, h *http.Request) {
-		user := h.Context().Value(KeyUser{}).(*model.User)
-		user, err := p.repo.FindByUsername(user.Username)
-		if err != nil {
-			// greška se desila prilikom pretrage
-			p.logger.Print("Error while searching for user:", err)
-		} else if user != nil {
-			// korisnik je pronađen
+func (p *UsersHandler) DeleteUser(rw http.ResponseWriter, h *http.Request) {
+	vars := mux.Vars(h)
+	id := vars["id"]
 
-			p.logger.Print("Found user with username:", user.Username)
-		} else {
-			user.Password, _ = p.HashPassword(user.Password)
-			p.repo.Insert(user)
-			// korisnik nije pronađen
-			p.logger.Printf("User with username not found.")
-		}
-		rw.WriteHeader(http.StatusCreated)
-
+	p.repo.Delete(id)
+	rw.WriteHeader(http.StatusNoContent)
 }
-*/
+
 func (p *UsersHandler) PostUser(rw http.ResponseWriter, h *http.Request) {
 	newUser := h.Context().Value(KeyUser{}).(*model.User)
 
@@ -98,6 +85,7 @@ func (p *UsersHandler) PostUser(rw http.ResponseWriter, h *http.Request) {
 		http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
+
 	newUser.Password = hashedPassword
 	err = p.repo.Insert(newUser)
 	if err != nil {
@@ -107,34 +95,12 @@ func (p *UsersHandler) PostUser(rw http.ResponseWriter, h *http.Request) {
 	}
 	rw.WriteHeader(http.StatusCreated)
 }
+
 func (p *UsersHandler) HashPassword(password string) (string, error) {
 	passwordbytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	return string(passwordbytes), err
 }
 
-func (p *UsersHandler) DeleteUser(rw http.ResponseWriter, h *http.Request) {
-	vars := mux.Vars(h)
-	id := vars["id"]
-
-	p.repo.Delete(id)
-	rw.WriteHeader(http.StatusNoContent)
-}
-func (p *UsersHandler) MiddlewareUserDeserialization(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(rw http.ResponseWriter, h *http.Request) {
-		user := &model.User{}
-		err := user.FromJSON(h.Body)
-		if err != nil {
-			http.Error(rw, "Unable to decode json", http.StatusBadRequest)
-			p.logger.Fatal(err)
-			return
-		}
-
-		ctx := context.WithValue(h.Context(), KeyUser{}, user)
-		h = h.WithContext(ctx)
-
-		next.ServeHTTP(rw, h)
-	})
-}
 func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 	var loginObj model.LoginRequest
 	err := json.NewDecoder(r.Body).Decode(&loginObj)
@@ -161,14 +127,31 @@ func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("token created: " + tokenString))
+	w.Write([]byte(tokenString))
 
 }
+
 func (p *UsersHandler) MiddlewareContentTypeSet(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, h *http.Request) {
 		p.logger.Println("Method [", h.Method, "] - Hit path :", h.URL.Path)
 
 		rw.Header().Add("Content-Type", "application/json")
+
+		next.ServeHTTP(rw, h)
+	})
+}
+func (p *UsersHandler) MiddlewareUserDeserialization(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, h *http.Request) {
+		user := &model.User{}
+		err := user.FromJSON(h.Body)
+		if err != nil {
+			http.Error(rw, "Unable to decode json", http.StatusBadRequest)
+			p.logger.Fatal(err)
+			return
+		}
+
+		ctx := context.WithValue(h.Context(), KeyUser{}, user)
+		h = h.WithContext(ctx)
 
 		next.ServeHTTP(rw, h)
 	})
