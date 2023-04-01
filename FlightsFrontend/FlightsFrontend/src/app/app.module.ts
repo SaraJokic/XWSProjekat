@@ -20,13 +20,19 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './common/navbar/navbar.component';
 import { RegistrationModule } from './registration/registration.module';
 import { MaterialModule } from './material/material.module';
+import { MyTicketsComponent } from './components/my-tickets/my-tickets.component';
+import { MatCardModule } from '@angular/material/card';
+import { BuyTicketDialogComponent } from './components/buy-ticket-dialog/buy-ticket-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     AllFlightsComponent,
     AddFlightsComponent,
-    NavbarComponent
+    NavbarComponent,
+    MyTicketsComponent,
+    BuyTicketDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +50,8 @@ import { MaterialModule } from './material/material.module';
     MatButtonModule,
     RegistrationModule,
     BrowserAnimationsModule,
+    MatCardModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

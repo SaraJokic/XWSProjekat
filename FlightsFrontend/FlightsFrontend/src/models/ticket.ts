@@ -1,7 +1,10 @@
+import { Flights } from "./flight.model"
+
 export interface Ticket {
     id?: string,
     userid: string,
     flightid: string,
-    quantity: string,
-    expired:boolean
+    quantity: number,
+    expired:boolean,
+    flight?: Flights
 }

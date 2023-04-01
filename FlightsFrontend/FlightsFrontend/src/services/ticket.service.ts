@@ -17,8 +17,8 @@ export class TicketService {
   findById(input: number){
     return this.http.get<Ticket>(baseUrl + `/tickets/get/${input}`);
   }
-  findByUserId(input: number){
-    return this.http.get<Ticket>(baseUrl + `/tickets/getbyuser/${input}`);
+  findByUserId(input: string){
+    return this.http.get<Ticket[]>(baseUrl + `/tickets/getbyuser/${input}`);
   }
   delete(input: number){
     return this.http.delete(baseUrl + `/tickets/delete/${input}`)
