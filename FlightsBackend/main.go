@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"xwsproj/handlers"
+	"xwsproj/middleware"
 	"xwsproj/repositories"
 
 	gorillaHandlers "github.com/gorilla/handlers"
@@ -78,10 +79,13 @@ func main() {
 
 	loginRouter := router.Methods(http.MethodPost).Subrouter()
 	loginRouter.HandleFunc("/login", usersHandler.LoginUser)
-	//loginRouter.Use(usersHandler.MiddlewareUserDeserialization)
 
 	getAllUsersRouter := router.Methods(http.MethodGet).Subrouter()
-	getAllUsersRouter.HandleFunc("/users/all", usersHandler.GetAllUsers)
+	getAllUsersRouter.HandleFunc("/users/getAll", usersHandler.GetAllUsers)
+	ValidateTokenRouter := router.Methods(http.MethodGet).Subrouter()
+
+	ValidateTokenRouter.HandleFunc("/users/token/valildation", usersHandler.GetAllUsers)
+	ValidateTokenRouter.Use(middleware.ValidateToken)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
 		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}))
