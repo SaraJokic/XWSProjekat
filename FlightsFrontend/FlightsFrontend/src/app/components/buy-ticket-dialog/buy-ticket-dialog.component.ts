@@ -1,9 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
+<<<<<<< HEAD
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+=======
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+>>>>>>> b9e4397910355c6a5f4d0735a445ddfd870850a2
 import { Flights } from 'src/models/flight.model';
 import { Ticket } from 'src/models/ticket';
 import { FlightService } from 'src/services/flight.service';
@@ -17,10 +22,15 @@ import { TicketService } from 'src/services/ticket.service';
 
 export class BuyTicketDialogComponent implements OnInit {
 
+<<<<<<< HEAD
   constructor(@Inject(MAT_DIALOG_DATA) public data: Flights, private ticketService: TicketService, private router: Router, private dialog:MatDialog) { }
   
   flights = new MatTableDataSource<Flights[]>;
 
+=======
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Flights, private ticketService: TicketService,
+  public dialogRef: MatDialogRef<BuyTicketDialogComponent>) { }
+>>>>>>> b9e4397910355c6a5f4d0735a445ddfd870850a2
   
   numTickets: number = 1;
   flight: Flights ={
@@ -50,8 +60,12 @@ export class BuyTicketDialogComponent implements OnInit {
     this.ticketService.add(newTicket).subscribe(
       (data) => {
         alert("Success!");
+<<<<<<< HEAD
         this.dialog.closeAll();
         this.reloadCurrentRoute();
+=======
+        this.dialogRef.close();
+>>>>>>> b9e4397910355c6a5f4d0735a445ddfd870850a2
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

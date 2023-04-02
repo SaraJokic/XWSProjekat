@@ -9,7 +9,8 @@ import { FlightService } from 'src/services/flight.service';
   styleUrls: ['./add-flights.component.css']
 })
 
-export class AddFlightsComponent  implements OnInit {
+export class AddFlightsComponent implements OnInit  {
+
 
     fromplace:string='';
     toplace:string='';
@@ -25,15 +26,16 @@ export class AddFlightsComponent  implements OnInit {
     totalSum:any=this.tp*this.ns;
 
     
-ngOnInit(): void {
-    this.racunaj(this.tp,this.ns );
-}
 
 racunaj(a: any, b:any){
   return this.totalSum = a*b;
 }
 
     constructor(private flightService: FlightService, private router: Router) { }
+  ngOnInit(): void {
+    console.log(this.getCurrentDateTime());
+    this.racunaj(this.tp,this.ns );
+  }
 
     saveFlight(): void {
       const data: Flights = {
@@ -57,6 +59,10 @@ racunaj(a: any, b:any){
           },
           error: (e) => console.error(e)
         });
+    }
+
+    getCurrentDateTime() {
+      return new Date().toISOString().slice(0, 16);
     }
 
 
