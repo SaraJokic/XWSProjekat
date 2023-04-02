@@ -127,6 +127,10 @@ func main() {
 	postTicketRouter.HandleFunc("/tickets/buy", ticketsHandler.CreateTicket)
 	postTicketRouter.Use(ticketsHandler.MiddlewareTicketDeserialization)
 
+	patchTicketRouter := router.Methods(http.MethodPatch).Subrouter()
+	patchTicketRouter.HandleFunc("/tickets/update/{id}", ticketsHandler.PatchTicket)
+	patchTicketRouter.Use(ticketsHandler.MiddlewareTicketDeserialization)
+
 	deleteTicketRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteTicketRouter.HandleFunc("/tickets/delete/{id}", ticketsHandler.DeleteTicket)
 

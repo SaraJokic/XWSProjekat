@@ -21,7 +21,6 @@ import { NavbarComponent } from './common/navbar/navbar.component';
 import { RegistrationModule } from './registration/registration.module';
 import { MaterialModule } from './material/material.module';
 import { UpdateFlightsComponent } from './components/update-flights/update-flights.component';
-import {Moment} from 'moment/moment';
 import { MyTicketsComponent } from './components/my-tickets/my-tickets.component';
 import { MatCardModule } from '@angular/material/card';
 import { BuyTicketDialogComponent } from './components/buy-ticket-dialog/buy-ticket-dialog.component';

@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Flights } from 'src/models/flight.model';
 import { FlightService } from 'src/services/flight.service';
-import * as moment from 'moment/moment';
 
 @Component({
   selector: 'app-update-flights',
