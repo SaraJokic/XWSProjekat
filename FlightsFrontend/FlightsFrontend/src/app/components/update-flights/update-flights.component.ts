@@ -27,6 +27,7 @@ export class UpdateFlightsComponent implements OnInit {
   };
 
   message = '';
+  starttime?:Date;
  
 
   constructor(private flightService: FlightService, private router: Router, private route: ActivatedRoute,) { }

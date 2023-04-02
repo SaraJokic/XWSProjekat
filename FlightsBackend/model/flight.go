@@ -16,6 +16,7 @@ type Flight struct {
 	EndTime     time.Time          `bson:"endtime,omitempty" json:"endtime"`
 	TicketPrice float64            `bson:"ticketprice,omitempty" json:"ticketprice"`
 	NumOfSeats  int                `bson:"numofseats,omitempty" json:"numofseats"`
+	TotalSum    float64            `bson:"totalsum,omitempty" json:"totalsum"`
 }
 
 type Flights []*Flight

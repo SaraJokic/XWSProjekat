@@ -22,8 +22,8 @@ import { DialogService } from 'src/services/dialog.service';
 export class AllFlightsComponent implements AfterViewInit {
 
 
-  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Delete', 'Buy'];
-
+  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Edit', 'Delete', 'Buy'];
+  flights = new MatTableDataSource<Flights[]>;
   
   
 
@@ -43,6 +43,7 @@ export class AllFlightsComponent implements AfterViewInit {
   startDate: Date | undefined;
   endDate : Date | undefined;
 
+  
 
 
   @ViewChild(MatSort)

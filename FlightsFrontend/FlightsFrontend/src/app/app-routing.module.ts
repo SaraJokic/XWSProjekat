@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'flights', component: AllFlightsComponent },
   {path: 'flights/add', component: AddFlightsComponent },
 
-  { path: 'flights/:id', component: UpdateFlightsComponent }
+  { path: 'flights/:id', component: UpdateFlightsComponent },
 
   { path: 'userRegister', component: RegistrationFormComponent },
   {path: 'mytickets', component: MyTicketsComponent },

@@ -6,9 +6,8 @@ class Flights {
     endtime?:any;
     ticketprice?:number;
     numofseats?:any;
-
-    
-       
+    totalSum?:any;      
 }
+
 
 export {Flights}

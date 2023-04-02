@@ -35,7 +35,7 @@ import { TicketDetailsDialogComponent } from './components/ticket-details-dialog
     AllFlightsComponent,
     AddFlightsComponent,
     NavbarComponent,
-    UpdateFlightsComponent
+    UpdateFlightsComponent,
     MyTicketsComponent,
     BuyTicketDialogComponent,
     TicketDetailsDialogComponent,
