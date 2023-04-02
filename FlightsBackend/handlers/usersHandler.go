@@ -110,42 +110,6 @@ func (p *UsersHandler) HashPassword(password string) (string, error) {
 	return string(passwordbytes), err
 }
 
-/*
-	func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
-		var loginObj model.LoginRequest
-		err := json.NewDecoder(r.Body).Decode(&loginObj)
-		if err != nil {
-			http.Error(w, fmt.Sprintf("error decoding request body: %v", err), http.StatusBadRequest)
-			return
-		}
-
-		// validate the loginObj for valid credential adn if these are valid then
-		var user *model.User
-		user, err = p.repo.ValidateUsernameAndPassword(loginObj.Username, loginObj.Password)
-		if err != nil {
-			http.Error(w, "Username or password are incorrect", http.StatusBadRequest)
-			return
-		}
-
-		claims.Id = user.ID
-		claims.Username = loginObj.Username
-		claims.Role = user.Role
-		claims.Name = user.Name
-
-		var tokenCreationTime = time.Now().UTC()
-		var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Hour)
-		tokenString, err := jwt.GenerateToken(claims, expirationTime)
-
-		if err != nil {
-			http.Error(w, "error in generating token: "+err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(tokenString))
-
-}
-*/
 func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 	var loginObj model.LoginRequest
 	err := json.NewDecoder(r.Body).Decode(&loginObj)
@@ -154,7 +118,6 @@ func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// validate the loginObj for valid credential adn if these are valid then
 	var user *model.User
 	user, err = p.repo.ValidateUsernameAndPassword(loginObj.Username, loginObj.Password)
 	if err != nil {

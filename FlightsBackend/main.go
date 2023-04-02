@@ -114,7 +114,6 @@ func main() {
 	ValidateTokenRouter := router.Methods(http.MethodGet).Subrouter()
 	ValidateTokenRouter.HandleFunc("/users/token/valildation", usersHandler.GetAllUsers)
 	ValidateTokenRouter.Use(middleware.ValidateToken)
-	//getAllUsersRouter.HandleFunc("/users/all", usersHandler.GetAllUsers)
 
 	//TICKETS
 

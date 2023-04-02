@@ -20,7 +20,7 @@ export class AuthService {
   constructor( private http: HttpClient
    ) { }
   
-      private tokenKey = 'authToken'; // ključ za čuvanje tokena u local storage-u
+      private tokenKey = 'authToken'; 
     
       
       login(user: loginDto): Observable<any> {
@@ -43,7 +43,6 @@ export class AuthService {
         if (token!=null) {
           const payload: any = jwt_decode(token);
           const userRole: string = payload.role;
-          //console.log(userRole); 
           return userRole;
         } else {
           return '';
