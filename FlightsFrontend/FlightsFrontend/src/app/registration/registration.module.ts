@@ -10,7 +10,9 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 @NgModule({
   declarations: [
     RegistrationFormComponent,
+
     LoginFormComponent
+
   ],
   imports: [
     CommonModule,
