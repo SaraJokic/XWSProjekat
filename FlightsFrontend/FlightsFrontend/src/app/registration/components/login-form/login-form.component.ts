@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { loginUser } from '../../model/loginUser';
 import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { loginDto } from '../../model/loginDto';
 
 @Component({
   selector: 'app-login-form',
@@ -18,7 +18,7 @@ export class LoginFormComponent {
  
     loginUser(user: any): void {
      
-        let loginUser: loginUser = {
+        let loginUser: loginDto = {
         username: user.username,
         password: user.password1
         }

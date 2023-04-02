@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { loginUser } from '../model/loginUser';
 import jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { loginDto } from '../model/loginDto';
+import { logedUserInfo } from '../model/logedUserInfo';
+import { NonNullAssert } from '@angular/compiler';
 
 
 
@@ -21,7 +23,7 @@ export class AuthService {
       private tokenKey = 'authToken'; // ključ za čuvanje tokena u local storage-u
     
       
-      login(user: loginUser): Observable<any> {
+      login(user: loginDto): Observable<any> {
         return this.http.post<any>( `${this.baseUrl}/login`,user);
       }
     
@@ -45,6 +47,25 @@ export class AuthService {
           return userRole;
         } else {
           return '';
+        }
+      }
+      getLogedUserInfo(): logedUserInfo | null {
+        const token= this.getToken();
+        
+        if (token!=null) {
+          const payload: any = jwt_decode(token);
+          const Name : string = payload.name;
+          const Username: string = payload.username;
+          const Role: string = payload.role;
+          let logedUserInfo: logedUserInfo = {
+            name: Name,
+            username: Username,
+            role: Role
+            }
+            console.log(logedUserInfo)
+          return logedUserInfo;
+        } else {
+          return null;
         }
       }
     }
