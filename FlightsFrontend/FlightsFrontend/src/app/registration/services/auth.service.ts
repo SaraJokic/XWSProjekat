@@ -51,16 +51,17 @@ export class AuthService {
       }
       getLogedUserInfo(): logedUserInfo | null {
         const token= this.getToken();
-        
         if (token!=null) {
           const payload: any = jwt_decode(token);
           const Name : string = payload.name;
+          const Id : string = payload.id;
           const Username: string = payload.username;
           const Role: string = payload.role;
           let logedUserInfo: logedUserInfo = {
             name: Name,
             username: Username,
-            role: Role
+            role: Role,
+            id: Id
             }
             console.log(logedUserInfo)
           return logedUserInfo;
