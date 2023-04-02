@@ -32,7 +32,10 @@
             Not enough seats available.
           </mat-error>
       </label>
+
+
       <h3>Total Price: {{numTickets * (data.ticketprice ?? 0) | currency}}</h3>
       <button type="submit" mat-raised-button [disabled]="numTickets <= 0 || numTickets > (data.numofseats ?? 0)">Buy Tickets</button>
+
     </form>
   </div>

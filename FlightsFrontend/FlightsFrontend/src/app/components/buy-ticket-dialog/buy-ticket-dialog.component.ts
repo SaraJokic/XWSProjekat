@@ -1,8 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Flights } from 'src/models/flight.model';
 import { Ticket } from 'src/models/ticket';
+import { FlightService } from 'src/services/flight.service';
 import { TicketService } from 'src/services/ticket.service';
 
 @Component({
@@ -10,10 +14,15 @@ import { TicketService } from 'src/services/ticket.service';
   templateUrl: './buy-ticket-dialog.component.html',
   styleUrls: ['./buy-ticket-dialog.component.css']
 })
+
 export class BuyTicketDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Flights, private ticketService: TicketService,
-  public dialogRef: MatDialogRef<BuyTicketDialogComponent>) { }
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Flights, private ticketService: TicketService, private router: Router, private dialog:MatDialog) { }
+  
+  flights = new MatTableDataSource<Flights[]>;
+
+
   
   numTickets: number = 1;
   flight: Flights ={
@@ -29,6 +38,10 @@ export class BuyTicketDialogComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data)
   }
+
+  @ViewChild(MatSort)
+  sort: MatSort = new MatSort;
+
   buyTicket(){
     const newTicket: Ticket = {
       userid: "6428e5416833a3ee718b4af0",
@@ -39,12 +52,23 @@ export class BuyTicketDialogComponent implements OnInit {
     this.ticketService.add(newTicket).subscribe(
       (data) => {
         alert("Success!");
-        this.dialogRef.close();
+        this.dialog.closeAll();
+        this.reloadCurrentRoute();
+
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     )
   }
+
+
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
+}
+
 
 }
