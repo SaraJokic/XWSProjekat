@@ -133,7 +133,7 @@ func (p *UsersHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 	claims.Name = user.Name
 
 	var tokenCreationTime = time.Now().UTC()
-	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Hour)
+	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Second)
 	tokenString, err := jwt.GenerateToken(claims, expirationTime)
 
 	if err != nil {

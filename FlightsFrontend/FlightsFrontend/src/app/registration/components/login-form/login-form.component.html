@@ -1,0 +1,22 @@
+<form #userForm='ngForm' (ngSubmit)="loginUser(userForm.value)">
+    <div class="rgform">
+      <div class="info">
+        <p class="title"> Login</p>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input  matInput ngModel name="username" #name="ngModel" placeholder="Username">
+        <mat-hint>Enter the username</mat-hint>
+      </mat-form-field>
+
+     
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput ngModel name="password1" #password1="ngModel" placeholder="Enter password">
+        <mat-hint>Enter password</mat-hint>
+      </mat-form-field>
+      <span class="spacer"></span>
+      <button mat-raised-button  class="submit">Submit</button>
+    </div>
+</form>
+
