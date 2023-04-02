@@ -9,7 +9,7 @@ import { FlightService } from 'src/services/flight.service';
   styleUrls: ['./add-flights.component.css']
 })
 
-export class AddFlightsComponent  {
+export class AddFlightsComponent implements OnInit  {
 
     fromplace:string='';
     toplace:string='';
@@ -22,6 +22,9 @@ export class AddFlightsComponent  {
 
 
     constructor(private flightService: FlightService, private router: Router) { }
+  ngOnInit(): void {
+    console.log(this.getCurrentDateTime())
+  }
 
     saveFlight(): void {
       const data: Flights = {
@@ -45,6 +48,10 @@ export class AddFlightsComponent  {
           },
           error: (e) => console.error(e)
         });
+    }
+
+    getCurrentDateTime() {
+      return new Date().toISOString().slice(0, 16);
     }
 
 

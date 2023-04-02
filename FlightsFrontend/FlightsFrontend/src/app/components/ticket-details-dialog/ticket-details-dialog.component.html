@@ -1,4 +1,4 @@
-<div style="width: 50%; margin: 0 auto;">
+<div style="width: 50%; margin: 0 auto;" class="ticketdialog">
     <h2>Ticket Details</h2>
     <table>
         <tr>
@@ -16,6 +16,13 @@
         <tr>
           <td>Quantity:</td>
           <td>{{data.quantity}}</td>
+        </tr>
+        <tr>
+          <td>Total price:</td>
+          <td>{{data.quantity * (flight.ticketprice ?? 0) | currency}}</td>
+        </tr>
+        <tr *ngIf="data.expired">
+          <td>Ticket is expired</td>
         </tr>
       </table>
 </div>
