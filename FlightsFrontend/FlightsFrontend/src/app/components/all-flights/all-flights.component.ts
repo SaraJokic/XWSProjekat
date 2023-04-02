@@ -11,6 +11,7 @@ import { TicketService } from 'src/services/ticket.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogService } from 'src/services/dialog.service';
 import { AuthService } from 'src/app/registration/services/auth.service';
+import { logedUserInfo } from 'src/app/registration/model/logedUserInfo';
 
 
 @Component({
@@ -25,6 +26,12 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
   
   flights = new MatTableDataSource<Flights[]>;
   role: string = 'ROLE_NOTAUTH'
+  logedUser: logedUserInfo = {
+    id: "",
+    username: "",
+    role: "",
+    name: ''
+  };
   
   
 
@@ -41,6 +48,8 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
   
   ngOnInit(): void {
     this.displayedColumns = this.getdisplayedColumns()
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    //console.log(this.logedUser)
   }
 
   ngAfterViewInit(): void {

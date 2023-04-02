@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { logedUserInfo } from 'src/app/registration/model/logedUserInfo';
+import { AuthService } from 'src/app/registration/services/auth.service';
 import { Flights } from 'src/models/flight.model';
 import { Ticket } from 'src/models/ticket';
 import { TicketService } from 'src/services/ticket.service';
@@ -12,7 +14,8 @@ import { TicketService } from 'src/services/ticket.service';
 })
 export class BuyTicketDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Flights, private ticketService: TicketService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Flights, private ticketService: TicketService,
+    private authService: AuthService) { }
   
   numTickets: number = 1;
   flight: Flights ={
@@ -24,13 +27,21 @@ export class BuyTicketDialogComponent implements OnInit {
     ticketprice: this.data.ticketprice,
     numofseats:this.data.numofseats
   };
+  logedUser: logedUserInfo = {
+    id: "",
+    username: "",
+    role: "",
+    name: ''
+  };
   
   ngOnInit(): void {
     console.log(this.data)
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    //console.log("iz buy ticket dialoga user, ", this.logedUser)
   }
   buyTicket(){
     const newTicket: Ticket = {
-      userid: "6426f65971b16d7d27fe5bb8",
+      userid: this.logedUser.id,
       flightid: this.data.id!,
       expired: false,
       quantity: this.numTickets,
