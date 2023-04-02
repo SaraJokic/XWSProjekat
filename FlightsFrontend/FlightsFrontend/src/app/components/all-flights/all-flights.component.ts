@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Flights } from 'src/models/flight.model';
@@ -62,7 +62,11 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.displayedColumns = this.getdisplayedColumns()
     this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    this.racunaj(this.tp,this.ns);
     //console.log(this.logedUser)
+  }
+  racunaj(a: any, b:any){
+    return this.totalSum = a*b;
   }
 
   ngAfterViewInit(): void {
@@ -74,16 +78,16 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
     //console.log(typeof this.role)
     if (this.role.toString() === '1') {
       //console.log("admina bc number is ", this.role)
-      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'Delete', 'Buy'];
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'totalsum','Edit', 'Delete', 'Buy'];
       
     } else if (this.role.toString() === '0'){
       //console.log("user bc number is ", this.role)
-      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'Buy'];
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'totalsum', 'Buy'];
       
     }
     else{
       //console.log("not auth bc number is ", this.role)
-      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats'];
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'totalsum'];
     }
   }
 
