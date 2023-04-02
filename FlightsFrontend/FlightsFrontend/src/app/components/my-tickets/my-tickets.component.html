@@ -3,6 +3,9 @@
         <mat-card-header>
             <mat-card-title>{{ticket.flight?.fromplace}} → {{ticket.flight?.toplace}}</mat-card-title>
           </mat-card-header>
+          <mat-card-subtitle>
+            <p *ngIf="ticket.expired" class="expiredtic">EXPIRED</p>
+          </mat-card-subtitle>
           <mat-card-content>
             Departure date: {{ticket.flight?.starttime | date:'short'}} <br>
             Arrival date: {{ticket.flight?.endtime | date:'short'}} <br>

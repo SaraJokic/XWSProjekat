@@ -29,6 +29,15 @@ export class MyTicketsComponent implements OnInit{
       for (const ticket of data) {
         this.flightservice.getById(ticket.flightid).subscribe(flight => {
           ticket.flight = flight;
+          this.CheckIfTicketExpired(flight.starttime, ticket)
+        },
+        error => {
+          // Delete from tickets and db
+          const index = this.tickets.indexOf(ticket);
+          if (index !== -1) {
+            this.tickets.splice(index, 1);
+          }
+          this.DeleteTicket(ticket.id ?? "")
         });
       }
       this.tickets = data;
@@ -45,5 +54,23 @@ export class MyTicketsComponent implements OnInit{
   }
   GoToAllFlightsPage(): void{
     this.router.navigate(["/flights"]); 
+  }
+  DeleteTicket(id: string): void{
+    this.ticketService.delete(id ?? "").subscribe((resp) =>{
+      console.log("Deleted!");
+    }, err=>{
+      return console.error("Not deleted");
+    });
+  }
+  //if the date of departure passed
+  CheckIfTicketExpired(date: Date, ticket: Ticket){
+    const currentDate = new Date();
+    if(date < currentDate){
+      this.ticketService.update(ticket, (ticket.id ?? "")).subscribe((resp) =>{
+        console.log("Ticket set to expired");
+      }, err =>{
+        console.error("Error")
+      });
+    }
   }
 }
