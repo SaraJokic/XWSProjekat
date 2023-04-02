@@ -75,13 +75,6 @@ func main() {
 	getByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getByIdRouter.HandleFunc("/{id}", flightsHandler.GetFlightById)
 
-	getByNameRouter := router.Methods(http.MethodGet).Subrouter()
-	getByNameRouter.HandleFunc("/a/filter", flightsHandler.GetFlightsFromPlace)
-
-	getSearchedFlightsRouter := router.Methods(http.MethodPatch).Subrouter()
-	getSearchedFlightsRouter.HandleFunc("/flight/search", flightsHandler.GetSearchedFlights)
-	getSearchedFlightsRouter.Use(flightsHandler.MiddlewareFlightSearchDeserialization)
-
 	postRouter := router.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/", flightsHandler.CreateFlight)
 	postRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
@@ -92,6 +85,23 @@ func main() {
 
 	deleteRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/{id}", flightsHandler.DeleteFlight)
+
+	//SEARCHING FLIGHTS
+	getByNameRouter := router.Methods(http.MethodGet).Subrouter()
+	getByNameRouter.HandleFunc("/flight/filter", flightsHandler.GetFlightsFromPlaceToPlace)
+
+	getBySeatsRouter := router.Methods(http.MethodGet).Subrouter()
+	getBySeatsRouter.HandleFunc("/flight/filter/seats", flightsHandler.GetFlightsByNumOfSeats)
+
+	/*
+		getByStartDateRouter := router.Methods(http.MethodGet).Subrouter()
+		getByStartDateRouter.HandleFunc("/flight/filter/time", flightsHandler.GetFlightsByStartTime)
+
+		getSearchedFlightsRouter := router.Methods(http.MethodPatch).Subrouter()
+		getSearchedFlightsRouter.HandleFunc("/flight/search", flightsHandler.GetSearchedFlights)
+		getSearchedFlightsRouter.Use(flightsHandler.MiddlewareFlightSearchDeserialization)
+
+	*/
 
 	//USER
 

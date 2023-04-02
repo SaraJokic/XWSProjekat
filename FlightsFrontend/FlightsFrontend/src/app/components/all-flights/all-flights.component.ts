@@ -11,6 +11,7 @@ import { Ticket } from 'src/models/ticket';
 import { TicketService } from 'src/services/ticket.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogService } from 'src/services/dialog.service';
+import { Pipe, PipeTransform } from '@angular/core';
 
 
 @Component({
@@ -26,15 +27,17 @@ export class AllFlightsComponent implements AfterViewInit, OnInit {
   flights = new MatTableDataSource<Flights[]>;
   
   
-
+  probavam:any;
 
   currentIndex = -1;
   public izabran : any ;
   fromPlace='';
   toPlace='';
+  random='';
+
   tp:number=0;
   ns:number=0;
-  fromDate:any;
+  fromDate='';
   toDate:any;
 
   totalSum:any=this.tp*this.ns;
@@ -61,10 +64,6 @@ export class AllFlightsComponent implements AfterViewInit, OnInit {
     this.racunaj(this.tp,this.ns);
 }
 
-racunaj(a: any, b:any){
-  return this.totalSum = a*b;
-}
-
 
   constructor(private flightService: FlightService, private ticketservice: TicketService,
     private dialogService: DialogService) { }
@@ -82,16 +81,14 @@ racunaj(a: any, b:any){
   }
 
 
-  filterByNameAndSurname(): void {
-    this.flightService.getAll()
-      .subscribe({
-        next: (data) => {
-          this.flights = new MatTableDataSource(<any>data.filter(flights => flights.fromplace?.toLowerCase().includes(this.fromPlace.toLowerCase()) && flights.toplace?.toLowerCase().includes(this.toPlace.toLowerCase())));
-          console.log("Nadji " + this.fromPlace + " " + this.toPlace);
-        },
-        error: (e) => console.error(e)
-      });
+  FilterByNameAndSurname(smor:any,smor2:any,smor3:any){
+    this.flightService.SearchByAll(smor,smor2,smor3)
+    .subscribe((data:any) =>{
+      this.flights=data;
+    })
   }
+
+
   
   deleteFlight(deleting : any){
     this.izabran = deleting.id;
@@ -108,8 +105,7 @@ racunaj(a: any, b:any){
   openDialog(flight: Flights): void {
     this.dialogService.openDialogBuyingTicket(flight);
   }
-    
-
+  
 
  forDate(): void {
   this.flightService.getAll()
@@ -122,7 +118,7 @@ racunaj(a: any, b:any){
     });
 }
 
-/*
+
 Search(nesto:any){
   this.flightService.Search(nesto)
   .subscribe((data:any)=>{
@@ -130,7 +126,22 @@ Search(nesto:any){
   } )
     
 }
-*/
+
+filterByPlaces(): void {
+  this.flightService.getAll()
+    .subscribe({
+      next: (data) => {
+        this.flights = new MatTableDataSource(<any>data.filter(flights => flights.fromplace?.toLowerCase().includes(this.fromPlace.toLowerCase()) && flights.toplace?.toLowerCase().includes(this.toPlace.toLowerCase())));
+        console.log("Nadji " + this.fromPlace + " " + this.toPlace);
+      },
+      error: (e) => console.error(e)
+    });
+}
+
+
+racunaj(a: any, b:any){
+  return this.totalSum = a*b;
+}
 
 /*
 Nadji(nesto:any){
