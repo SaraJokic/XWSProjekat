@@ -26,7 +26,7 @@ import { BuyTicketDialogComponent } from './components/buy-ticket-dialog/buy-tic
 import { MatDialogModule } from '@angular/material/dialog';
 import { TicketDetailsDialogComponent } from './components/ticket-details-dialog/ticket-details-dialog.component';
 import { AuthInterceptorService } from './registration/services/auth-interceptor.service';
-
+import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +36,7 @@ import { AuthInterceptorService } from './registration/services/auth-interceptor
     MyTicketsComponent,
     BuyTicketDialogComponent,
     TicketDetailsDialogComponent,
+    WelcomePageComponent,
   ],
   imports: [
     BrowserModule,

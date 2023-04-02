@@ -5,8 +5,10 @@ import { AddFlightsComponent } from './components/add-flights/add-flights.compon
 import { RegistrationFormComponent } from './registration/components/registration-form/registration-form.component';
 import { MyTicketsComponent } from './components/my-tickets/my-tickets.component';
 import { LoginFormComponent } from './registration/components/login-form/login-form.component';
+import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 
 const routes: Routes = [
+  {path: '', component: WelcomePageComponent },
   {path: 'flights', component: AllFlightsComponent },
   {path: 'flights/add', component: AddFlightsComponent },
   { path: 'userRegister', component: RegistrationFormComponent },
