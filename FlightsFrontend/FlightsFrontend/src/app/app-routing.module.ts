@@ -12,12 +12,12 @@ import { AuthGuardAdminService } from './registration/services/auth-guard-admin.
 
 const routes: Routes = [
   {path: '', component: WelcomePageComponent },
-  {path: 'flights', component: AllFlightsComponent ,canActivate :[AuthGuardService]},
+  {path: 'flights', component: AllFlightsComponent},
   {path: 'flights/add', component: AddFlightsComponent ,canActivate :[AuthGuardAdminService] },
   { path: 'userRegister', component: RegistrationFormComponent },
   { path: 'userLogin', component:  LoginFormComponent },
-  { path: 'userLogout', component:  LogoutComponent },
-  {path: 'mytickets', component: MyTicketsComponent },
+  { path: 'userLogout', component:  LogoutComponent, canActivate :[AuthGuardService] },
+  {path: 'mytickets', component: MyTicketsComponent, canActivate :[AuthGuardService]},
 ];
 
 @NgModule({

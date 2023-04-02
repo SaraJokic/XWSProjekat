@@ -5,20 +5,20 @@
       <li class="nav-item">
         <a routerLink="flights" class="nav-link" >All Flights</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="userRole === 1">
         <a routerLink="flights/add" class="nav-link" >Add Flights</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="userRole != 'ROLE_NOTAUTH'">
         <a routerLink="mytickets" class="nav-link" >Tickets</a>
       </li>
-      <li class="nav-item">
-        <a routerLink="userRegister" class="nav-link" >Register</a>
+      <li class="nav-item" *ngIf="userRole === 'ROLE_NOTAUTH'">
+        <a routerLink="userRegister" class="nav-link">Register</a>
       </li>
-      <li class="nav-item">
-        <a routerLink="userLogin" class="nav-link" >Login</a>
+      <li class="nav-item" *ngIf="userRole === 'ROLE_NOTAUTH'">
+        <a routerLink="userLogin" class="nav-link">Login</a>
       </li>
-      <li class="nav-item">
-        <a routerLink="userLogout" class="nav-link" >Logout</a>
+      <li class="nav-item" *ngIf="userRole != 'ROLE_NOTAUTH'">
+        <a routerLink="userLogin" class="nav-link" (click)="logout()">Logout</a>
       </li>
     </div>
   </nav>

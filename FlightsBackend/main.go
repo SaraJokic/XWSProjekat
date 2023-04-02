@@ -76,15 +76,19 @@ func main() {
 	postRouter := router.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/", flightsHandler.CreateFlight)
 	postRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
+	postRouter.Use(middleware.ValidateToken)
 
 	getByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getByIdRouter.HandleFunc("/{id}", flightsHandler.GetFlightById)
+	getByIdRouter.Use(middleware.ValidateToken)
 
 	getByNameRouter := router.Methods(http.MethodGet).Subrouter()
 	getByNameRouter.HandleFunc("/filter/{fromplace}", flightsHandler.GetFlightsFromPlace)
+	getByNameRouter.Use(middleware.ValidateToken)
 
 	deleteRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/{id}", flightsHandler.DeleteFlight)
+	deleteRouter.Use(middleware.ValidateToken)
 
 	//USER
 
@@ -97,6 +101,7 @@ func main() {
 
 	getAllUsersRouter := router.Methods(http.MethodGet).Subrouter()
 	getAllUsersRouter.HandleFunc("/users/getAll", usersHandler.GetAllUsers)
+	getAllUsersRouter.Use(middleware.ValidateToken)
 
 	ValidateTokenRouter := router.Methods(http.MethodGet).Subrouter()
 	ValidateTokenRouter.HandleFunc("/users/token/valildation", usersHandler.GetAllUsers)
@@ -107,19 +112,24 @@ func main() {
 
 	getAllTicketsRouter := router.Methods(http.MethodGet).Subrouter()
 	getAllTicketsRouter.HandleFunc("/tickets/all", ticketsHandler.GetAllTickets)
+	getAllTicketsRouter.Use(middleware.ValidateToken)
 
 	getTicketByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getTicketByIdRouter.HandleFunc("/tickets/get/{id}", ticketsHandler.GetTicketById)
+	getTicketByIdRouter.Use(middleware.ValidateToken)
 
 	getTicketByUserIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getTicketByUserIdRouter.HandleFunc("/tickets/getbyuser/{id}", ticketsHandler.GetTicketByUserId)
+	getTicketByUserIdRouter.Use(middleware.ValidateToken)
 
 	postTicketRouter := router.Methods(http.MethodPost).Subrouter()
 	postTicketRouter.HandleFunc("/tickets/buy", ticketsHandler.CreateTicket)
 	postTicketRouter.Use(ticketsHandler.MiddlewareTicketDeserialization)
+	postTicketRouter.Use(middleware.ValidateToken)
 
 	deleteTicketRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteTicketRouter.HandleFunc("/tickets/delete/{id}", ticketsHandler.DeleteTicket)
+	deleteRouter.Use(middleware.ValidateToken)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
 		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
