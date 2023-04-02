@@ -12,3 +12,14 @@
     border: 1px solid #ccc;
     box-shadow: 2px 2px 5px #ccc;
 }
+h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+.allflights-button{
+  display: block;
+  margin: 0 auto;
+}
+.expiredtic{
+  margin-left: 10px;
+}

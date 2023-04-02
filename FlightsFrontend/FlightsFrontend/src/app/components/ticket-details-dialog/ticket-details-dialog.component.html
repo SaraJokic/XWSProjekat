@@ -21,7 +21,7 @@
           <td>Total price:</td>
           <td>{{data.quantity * (flight.ticketprice ?? 0) | currency}}</td>
         </tr>
-        <tr *ngIf="data.expired">
+        <tr *ngIf="data.expired" aria-colspan="2">
           <td>Ticket is expired</td>
         </tr>
       </table>

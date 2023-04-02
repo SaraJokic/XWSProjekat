@@ -20,10 +20,13 @@ export class TicketService {
   findByUserId(input: string){
     return this.http.get<Ticket[]>(baseUrl + `/tickets/getbyuser/${input}`);
   }
-  delete(input: number){
+  delete(input: string){
     return this.http.delete(baseUrl + `/tickets/delete/${input}`)
   }
   add(newTicket: Ticket){
     return this.http.post<Ticket>(baseUrl + '/tickets/buy', newTicket);
+  }
+  update(newTicket: Ticket, input : string){
+    return this.http.patch<Ticket>(baseUrl + `/tickets/update/${input}`, newTicket);
   }
 }

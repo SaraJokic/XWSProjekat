@@ -44,7 +44,7 @@ export class BuyTicketDialogComponent implements OnInit {
 
   buyTicket(){
     const newTicket: Ticket = {
-      userid: "6426f65971b16d7d27fe5bb8",
+      userid: "6428e5416833a3ee718b4af0",
       flightid: this.data.id!,
       expired: false,
       quantity: this.numTickets,
