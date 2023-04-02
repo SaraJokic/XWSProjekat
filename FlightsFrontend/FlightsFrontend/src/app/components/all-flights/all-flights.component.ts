@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Flights } from 'src/models/flight.model';
@@ -10,6 +10,7 @@ import { Ticket } from 'src/models/ticket';
 import { TicketService } from 'src/services/ticket.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogService } from 'src/services/dialog.service';
+import { AuthService } from 'src/app/registration/services/auth.service';
 
 
 @Component({
@@ -18,14 +19,16 @@ import { DialogService } from 'src/services/dialog.service';
   styleUrls: ['./all-flights.component.css'],
 })
 
-export class AllFlightsComponent implements AfterViewInit {
+export class AllFlightsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Delete', 'Buy'];
+  
+  
   flights = new MatTableDataSource<Flights[]>;
+  role: string = 'ROLE_NOTAUTH'
   
   
 
-
+  displayedColumns!: string[];
   currentIndex = -1;
   public izabran : any ;
   fromPlace='';
@@ -36,15 +39,38 @@ export class AllFlightsComponent implements AfterViewInit {
   @ViewChild(MatSort)
   sort: MatSort = new MatSort;
   
+  ngOnInit(): void {
+    this.displayedColumns = this.getdisplayedColumns()
+  }
 
   ngAfterViewInit(): void {
     this.retrieveFlights();
     this.flights.sort = this.sort;
-    
+  }
+
+  getdisplayedColumns(): string[] {
+    //console.log(typeof this.role)
+    if (this.role.toString() === '1') {
+      //console.log("admina bc number is ", this.role)
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'Delete', 'Buy'];
+      
+    } else if (this.role.toString() === '0'){
+      //console.log("user bc number is ", this.role)
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'Buy'];
+      
+    }
+    else{
+      //console.log("not auth bc number is ", this.role)
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats'];
+    }
   }
 
   constructor(private flightService: FlightService, private ticketservice: TicketService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService, private authService: AuthService) {
+      this.GetUserRole();
+      //console.log("ROLA USERA KOD FLIGHTS JE ", this.role)
+     }
+  
 
   retrieveFlights(): void {
     this.flightService.getAll()
@@ -52,7 +78,7 @@ export class AllFlightsComponent implements AfterViewInit {
         next: (data) => {
           this.flights = new MatTableDataSource(<Flights[][]>data);
           this.flights.sort = this.sort;
-          console.log(data);
+          //console.log(data);
         },
         error: (e) => console.error(e)
       });
@@ -76,7 +102,7 @@ export class AllFlightsComponent implements AfterViewInit {
       expired: false,
       quantity: 4,
     };
-    console.log(flight.id)
+    //console.log(flight.id)
     this.ticketservice.add(newTicket).subscribe(
       (data) => {
         alert("Success!");
@@ -101,7 +127,12 @@ export class AllFlightsComponent implements AfterViewInit {
   openDialog(flight: Flights): void {
     this.dialogService.openDialogBuyingTicket(flight);
   }
-    
+  
+  GetUserRole(): void{
+    if(localStorage['authToken'] != null){
+      this.role = this.authService.getUserRole();
+    }
+  }
 
 
 

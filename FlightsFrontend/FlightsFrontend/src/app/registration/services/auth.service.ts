@@ -41,7 +41,7 @@ export class AuthService {
         if (token!=null) {
           const payload: any = jwt_decode(token);
           const userRole: string = payload.role;
-          console.log(userRole); 
+          //console.log(userRole); 
           return userRole;
         } else {
           return '';

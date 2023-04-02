@@ -57,7 +57,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     RegistrationModule,
     BrowserAnimationsModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
