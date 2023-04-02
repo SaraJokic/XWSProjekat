@@ -8,7 +8,7 @@ import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [
-    RegistrationFormComponent
+    RegistrationFormComponent,
   ],
   imports: [
     CommonModule,
