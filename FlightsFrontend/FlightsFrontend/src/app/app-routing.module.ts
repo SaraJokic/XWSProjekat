@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'userLogin', component:  LoginFormComponent },
   { path: 'userLogout', component:  LogoutComponent, canActivate :[AuthGuardService] },
   {path: 'mytickets', component: MyTicketsComponent, canActivate :[AuthGuardService]},
-  { path: 'flights/:id', component: UpdateFlightsComponent },
+  { path: 'flights/:id', component: UpdateFlightsComponent ,canActivate :[AuthGuardAdminService] },
 
 ];
 
