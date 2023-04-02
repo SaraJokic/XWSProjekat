@@ -27,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TicketDetailsDialogComponent } from './components/ticket-details-dialog/ticket-details-dialog.component';
 import { AuthInterceptorService } from './registration/services/auth-interceptor.service';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { LogoutComponent } from './components/logout/logout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { WelcomePageComponent } from './components/welcome-page/welcome-page.com
     BuyTicketDialogComponent,
     TicketDetailsDialogComponent,
     WelcomePageComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,

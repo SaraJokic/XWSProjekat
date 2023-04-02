@@ -12,9 +12,12 @@ export class AuthGuardService {
     if (this.authService.getToken()) {
       return true;
     } else {
+      console.log("niste ulogovani")
       this.router.navigate(['userLogin']);
       return false;
     }
  }
+
+ 
 
 }
