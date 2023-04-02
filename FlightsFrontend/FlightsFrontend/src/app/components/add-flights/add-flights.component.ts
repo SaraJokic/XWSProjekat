@@ -17,7 +17,7 @@ export class AddFlightsComponent implements OnInit  {
     starttime?:Date;
     endtime?:Date;
     ticketprice:number=0;
-    numofseats:number=0;
+    numofseats:string='';
 
 
     tp:number=0;

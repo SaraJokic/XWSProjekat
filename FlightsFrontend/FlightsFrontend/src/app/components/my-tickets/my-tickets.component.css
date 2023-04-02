@@ -12,6 +12,17 @@
     border: 1px solid #ccc;
     box-shadow: 2px 2px 5px #ccc;
 }
+
+
+.dugme1:hover {
+  background-color:#1D63DC;
+  transition: 1.25s;
+}
+
+.dugme2:hover {
+  background-color:#FF0000;
+  transition: 1.25s;
+
 h2 {
   text-align: center;
   margin-top: 20px;
@@ -22,4 +33,5 @@ h2 {
 }
 .expiredtic{
   margin-left: 10px;
+
 }

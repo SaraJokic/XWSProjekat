@@ -22,3 +22,9 @@ table {
     display: block;
     margin: 0 auto;
   }
+
+
+  .taster:hover {
+    background-color:#1D63DC;
+    transition: 1.25s;
+  }
