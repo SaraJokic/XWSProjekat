@@ -92,8 +92,8 @@ racunaj(a: any, b:any){
         error: (e) => console.error(e)
       });
   }
+  
   deleteFlight(deleting : any){
-
     this.izabran = deleting.id;
     this.flightService.delete(this.izabran).subscribe(
       (resp) =>{
@@ -103,6 +103,8 @@ racunaj(a: any, b:any){
         return console.error("Neuspesno");
       });
   }
+
+
   openDialog(flight: Flights): void {
     this.dialogService.openDialogBuyingTicket(flight);
   }
