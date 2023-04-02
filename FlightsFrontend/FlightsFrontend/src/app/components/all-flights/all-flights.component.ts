@@ -82,25 +82,6 @@ export class AllFlightsComponent implements AfterViewInit {
         error: (e) => console.error(e)
       });
   }
-
-  buyTicket(flight: any){
-    const newTicket: Ticket = {
-      userid: "6426f65971b16d7d27fe5bb8",
-      flightid: flight.id,
-      expired: false,
-      quantity: 4,
-    };
-    console.log(flight.id)
-    this.ticketservice.add(newTicket).subscribe(
-      (data) => {
-        alert("Success!");
-        this.retrieveFlights()
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    )
-  }
   deleteFlight(deleting : any){
 
     this.izabran = deleting.id;
