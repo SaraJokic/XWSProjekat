@@ -5,10 +5,8 @@ import { Observable } from "rxjs";
 import { SearchFlightsDTO } from "src/models/flightDTO.model";
 
 const baseUrl = 'http://localhost:8080';
-const ajde = 'http://localhost:8080/flight/search';
 const novoUrl = 'http://localhost:8080/a/filter';
-
-const proba = 'http://localhost:8080/a/filter';
+const probaUrl = 'http://localhost:8080/flight/filter/seats';
 
 
 @Injectable({
@@ -57,18 +55,14 @@ export class FlightService {
   }
 
 
-  /*
-  searchFlights(startPlace: string, endPlace: String, startDateString: string, endDateString: string):Observable<any> {
-    return this.http.get(this.apiServerUrl + '/flight/search?startPlace=' + startPlace + '&endPlace=' + endPlace + '&startDate=' + startDateString + '&endDate=' + endDateString,{headers: this.headers, responseType: 'text'})
+  
+  SearchByAll(prva:any, druga:any, treca:any): Observable<Flights[]> {
+    return this.http.get<Flights[]>(`${probaUrl}?fromplace=${prva}&toplace=${druga}numofseats=${treca}`);
   }
-*/
+
+
 
 /*
-  searchFlights(startPlace: string, endPlace: String, startDateString: string, endDateString: string): Observable<any[]> {
-    return this.http.get<Flights[]>(`${baseUrl}/flight/search?startPlace=${startPlace}');
-  }
-*/
-
  SearchFlights(dto: SearchFlightsDTO){
   let flights:any;
 
@@ -78,10 +72,9 @@ export class FlightService {
   return flights;
 }
 
-
-
 AAAA(startPlace: string, endPlace: String, startDateString: string, endDateString: string): Observable<any[]> {
   return this.http.get<Flights[]>(`${novoUrl}?startPlace=${startPlace}`+ '&endPlace=' + endPlace + '&startDate=' + startDateString + '&endDate=' + endDateString);
 }
+*/
   
 }

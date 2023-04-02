@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DialogService } from 'src/services/dialog.service';
 import { AuthService } from 'src/app/registration/services/auth.service';
 import { logedUserInfo } from 'src/app/registration/model/logedUserInfo';
+import { Pipe, PipeTransform } from '@angular/core';
 
 
 @Component({
@@ -35,15 +36,17 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
   };
   
   
-
+  probavam:any;
   displayedColumns!: string[];
   currentIndex = -1;
   public izabran : any ;
   fromPlace='';
   toPlace='';
+  random='';
+
   tp:number=0;
   ns:number=0;
-  fromDate:any;
+  fromDate='';
   toDate:any;
 
   totalSum:any=this.tp*this.ns;
@@ -111,16 +114,14 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
   }
 
 
-  filterByNameAndSurname(): void {
-    this.flightService.getAll()
-      .subscribe({
-        next: (data) => {
-          this.flights = new MatTableDataSource(<any>data.filter(flights => flights.fromplace?.toLowerCase().includes(this.fromPlace.toLowerCase()) && flights.toplace?.toLowerCase().includes(this.toPlace.toLowerCase())));
-          console.log("Nadji " + this.fromPlace + " " + this.toPlace);
-        },
-        error: (e) => console.error(e)
-      });
+  FilterByNameAndSurname(smor:any,smor2:any,smor3:any){
+    this.flightService.SearchByAll(smor,smor2,smor3)
+    .subscribe((data:any) =>{
+      this.flights=data;
+    })
   }
+
+
   
   deleteFlight(deleting : any){
     this.izabran = deleting.id;
@@ -144,7 +145,6 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
     }
   }
 
-
  forDate(): void {
   this.flightService.getAll()
     .subscribe({
@@ -156,7 +156,7 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
     });
 }
 
-/*
+
 Search(nesto:any){
   this.flightService.Search(nesto)
   .subscribe((data:any)=>{
@@ -164,7 +164,19 @@ Search(nesto:any){
   } )
     
 }
-*/
+
+filterByPlaces(): void {
+  this.flightService.getAll()
+    .subscribe({
+      next: (data) => {
+        this.flights = new MatTableDataSource(<any>data.filter(flights => flights.fromplace?.toLowerCase().includes(this.fromPlace.toLowerCase()) && flights.toplace?.toLowerCase().includes(this.toPlace.toLowerCase())));
+        console.log("Nadji " + this.fromPlace + " " + this.toPlace);
+      },
+      error: (e) => console.error(e)
+    });
+}
+
+
 
 /*
 Nadji(nesto:any){

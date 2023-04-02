@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Ticket } from 'src/models/ticket';
 import { TicketService } from 'src/services/ticket.service';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +8,8 @@ import { FlightService } from 'src/services/flight.service';
 import { DialogService } from 'src/services/dialog.service';
 import { logedUserInfo } from 'src/app/registration/model/logedUserInfo';
 import { AuthService } from 'src/app/registration/services/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,7 +24,6 @@ export class MyTicketsComponent implements OnInit{
 
   public tickets : Ticket[] = [];
   public flights : Flights[] = [];
-
   logedUser: logedUserInfo = {
     id: "",
     username: "",
@@ -30,9 +31,18 @@ export class MyTicketsComponent implements OnInit{
     name: ''
   };
   
+  public izabran : any ;
+  ticKets = new MatTableDataSource<Ticket[]>;
+  message?:any;
+
+  @ViewChild(MatSort)
+  sort: MatSort = new MatSort;
+
+
   ngOnInit(): void {
     this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
     this.getMyTickets();
+  //this.retrieveTickets(this.izabran);
   }
   getMyTickets(): void{
     this.ticketService.findByUserId(this.logedUser.id).subscribe((data) => {
@@ -62,6 +72,51 @@ export class MyTicketsComponent implements OnInit{
   openTicketDetailsDialog(ticket: Ticket): void{
     this.dialogService.openDialogTicketDetails(ticket);
   }
+
+
+/*
+  deleteTicket(deleting : any){
+    this.message = '';
+    this.izabran = deleting.id;
+    if(confirm("Are you sure?")){
+    this.ticketService.delete(this.izabran).subscribe(
+      (resp) =>{
+        this.retrieveTickets(deleting);
+        this.reloadCurrentRoute();
+        return console.log("Ticket Deleted!");
+         
+      }, err=>{
+         console.error("Neuspesno");
+      });
+    }
+  }
+
+
+  
+
+
+  retrieveTickets(id:any): void {
+    this.ticketService.findByUserId(id)
+      .subscribe({
+        next: (data) => {
+          this.ticKets = new MatTableDataSource(<Ticket[][]><unknown>data);
+          this.ticKets.sort = this.sort;
+          console.log(data);
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
+}
+
+*/
+
+
   GoToAllFlightsPage(): void{
     this.router.navigate(["/flights"]); 
   }
@@ -83,4 +138,5 @@ export class MyTicketsComponent implements OnInit{
       });
     }
   }
+
 }

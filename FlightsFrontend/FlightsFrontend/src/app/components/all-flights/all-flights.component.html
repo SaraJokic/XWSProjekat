@@ -1,9 +1,8 @@
 
-
-<!---
-<form #AAA="ngForm" (ngSubmit)="Nadji(AAA.value)">
+<!--
+<form #AAA="ngForm" (ngSubmit)="Pronadji(AAA.value)">
   <mat-form-field>
-    <input matInput name="searchinput" #searchinput="ngModel" ngModel placeholder="Search"  [(ngModel)]="fromPlace">
+    <input matInput name="searchinput" #searchinput="ngModel" ngModel placeholder="Search" [(ngModel)]="probavam">
   </mat-form-field>
   <button type="submit" mat-raised-button>Search</button>
 </form>
@@ -12,33 +11,34 @@
 
 
 
-
 <div class="col-md-8">
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search FromPlace"
-        [(ngModel)]="fromPlace"
-      />
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search ToPlace"
-        [(ngModel)]="toPlace"
-      />
-      
-      <div class="input-group-append">
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          (click)="filterByNameAndSurname()"
-        >
-          Search
-        </button>
-      </div>
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search FromPlace"
+      [(ngModel)]="fromPlace"
+    />
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search ToPlace"
+      [(ngModel)]="toPlace"
+    />
+    
+    <div class="input-group-append">
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="filterByPlaces()"
+      >
+        Search
+      </button>
     </div>
   </div>
+</div>
+
+  
 
   
 <div class="col-md-8">
@@ -134,8 +134,8 @@
       <ng-container matColumnDef="Buy">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button [disabled]="element.numofseats === 0" class="buyticktet"
-            (click)="openDialog(element)">Buy ticket</button>
+          <button  mat-raised-button [disabled]="element.numofseats === 0" class="buyticktet"
+            (click)="openDialog(element)" >Buy ticket</button>
         </td>
       </ng-container>
 

@@ -64,7 +64,8 @@ export class BuyTicketDialogComponent implements OnInit {
       (data) => {
         alert("Success!");
         this.dialog.closeAll();
-        this.reloadCurrentRoute();
+        //this.reloadCurrentRoute();
+        this.router.navigate(["/mytickets"]);
 
       },
       (error: HttpErrorResponse) => {
