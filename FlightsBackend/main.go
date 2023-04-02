@@ -72,15 +72,23 @@ func main() {
 	getRouter := router.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/", flightsHandler.GetAllFlights)
 
-	postRouter := router.Methods(http.MethodPost).Subrouter()
-	postRouter.HandleFunc("/", flightsHandler.CreateFlight)
-	postRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
-
 	getByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getByIdRouter.HandleFunc("/{id}", flightsHandler.GetFlightById)
 
 	getByNameRouter := router.Methods(http.MethodGet).Subrouter()
-	getByNameRouter.HandleFunc("/filter/{fromplace}", flightsHandler.GetFlightsFromPlace)
+	getByNameRouter.HandleFunc("/a/filter", flightsHandler.GetFlightsFromPlace)
+
+	getSearchedFlightsRouter := router.Methods(http.MethodPatch).Subrouter()
+	getSearchedFlightsRouter.HandleFunc("/flight/search", flightsHandler.GetSearchedFlights)
+	getSearchedFlightsRouter.Use(flightsHandler.MiddlewareFlightSearchDeserialization)
+
+	postRouter := router.Methods(http.MethodPost).Subrouter()
+	postRouter.HandleFunc("/", flightsHandler.CreateFlight)
+	postRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
+
+	patchRouter := router.Methods(http.MethodPatch).Subrouter()
+	patchRouter.HandleFunc("/{id}", flightsHandler.UpdateFlight)
+	patchRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
 
 	deleteRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/{id}", flightsHandler.DeleteFlight)
@@ -113,7 +121,7 @@ func main() {
 	deleteTicketRouter.HandleFunc("/tickets/delete/{id}", ticketsHandler.DeleteTicket)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
-		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
+		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"}),
 		gorillaHandlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}))
 
 	//Initialize the server

@@ -15,8 +15,9 @@ export class AddFlightsComponent implements OnInit  {
     toplace:string='';
     starttime?:Date;
     endtime?:Date;
-    ticketprice?:number=0;
+    ticketprice:number=0;
     numofseats:number=0;
+    totalSum:any=this.numofseats*this.ticketprice;
 
     
 
