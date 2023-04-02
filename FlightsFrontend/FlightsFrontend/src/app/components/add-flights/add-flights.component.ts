@@ -9,19 +9,33 @@ import { FlightService } from 'src/services/flight.service';
   styleUrls: ['./add-flights.component.css']
 })
 
-export class AddFlightsComponent  {
+export class AddFlightsComponent implements OnInit  {
+
 
     fromplace:string='';
     toplace:string='';
     starttime?:Date;
     endtime?:Date;
-    ticketprice?:number=0;
+    ticketprice:number=0;
     numofseats:number=0;
 
+
+    tp:number=0;
+    ns:number=0;
     
+    totalSum:any=this.tp*this.ns;
+
     
 
+racunaj(a: any, b:any){
+  return this.totalSum = a*b;
+}
+
     constructor(private flightService: FlightService, private router: Router) { }
+  ngOnInit(): void {
+    console.log(this.getCurrentDateTime());
+    this.racunaj(this.tp,this.ns );
+  }
 
     saveFlight(): void {
       const data: Flights = {
@@ -45,6 +59,10 @@ export class AddFlightsComponent  {
           },
           error: (e) => console.error(e)
         });
+    }
+
+    getCurrentDateTime() {
+      return new Date().toISOString().slice(0, 16);
     }
 
 

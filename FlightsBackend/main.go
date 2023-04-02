@@ -72,18 +72,24 @@ func main() {
 
 	getRouter := router.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/", flightsHandler.GetAllFlights)
-
 	postRouter := router.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/", flightsHandler.CreateFlight)
 	postRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
-	postRouter.Use(middleware.ValidateToken)
 
 	getByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getByIdRouter.HandleFunc("/{id}", flightsHandler.GetFlightById)
 	getByIdRouter.Use(middleware.ValidateToken)
 
 	getByNameRouter := router.Methods(http.MethodGet).Subrouter()
-	getByNameRouter.HandleFunc("/filter/{fromplace}", flightsHandler.GetFlightsFromPlace)
+	getByNameRouter.HandleFunc("/a/filter", flightsHandler.GetFlightsFromPlace)
+
+	getSearchedFlightsRouter := router.Methods(http.MethodPatch).Subrouter()
+	getSearchedFlightsRouter.HandleFunc("/flight/search", flightsHandler.GetSearchedFlights)
+	getSearchedFlightsRouter.Use(flightsHandler.MiddlewareFlightSearchDeserialization)
+
+	patchRouter := router.Methods(http.MethodPatch).Subrouter()
+	patchRouter.HandleFunc("/{id}", flightsHandler.UpdateFlight)
+	patchRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
 	getByNameRouter.Use(middleware.ValidateToken)
 
 	deleteRouter := router.Methods(http.MethodDelete).Subrouter()
@@ -125,6 +131,10 @@ func main() {
 	postTicketRouter := router.Methods(http.MethodPost).Subrouter()
 	postTicketRouter.HandleFunc("/tickets/buy", ticketsHandler.CreateTicket)
 	postTicketRouter.Use(ticketsHandler.MiddlewareTicketDeserialization)
+
+	patchTicketRouter := router.Methods(http.MethodPatch).Subrouter()
+	patchTicketRouter.HandleFunc("/tickets/update/{id}", ticketsHandler.PatchTicket)
+	patchTicketRouter.Use(ticketsHandler.MiddlewareTicketDeserialization)
 	postTicketRouter.Use(middleware.ValidateToken)
 
 	deleteTicketRouter := router.Methods(http.MethodDelete).Subrouter()
@@ -132,7 +142,7 @@ func main() {
 	deleteRouter.Use(middleware.ValidateToken)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
-		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
+		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"}),
 		gorillaHandlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}))
 
 	//Initialize the server

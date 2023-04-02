@@ -16,8 +16,8 @@ font-family: "Trebuchet MS",sans-serif;
 }
 
 td, th {
-  width: 16%;
-  padding: 13px 16px;
+  width: 15%;
+  padding: 13px 13px;
 }
 
 .table img{
@@ -53,3 +53,5 @@ td, th {
   background-color:#555555;
   transition: 1.25s;
 }
+
+

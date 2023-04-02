@@ -1,4 +1,4 @@
-<div style="width: 50%; margin: 0 auto;">
+<div style="width: 50%; margin: 0 auto;" class="rounded-dialog">
     <h2>Flight Details</h2>
     <table>
       <tr>
@@ -29,9 +29,13 @@
         Number of Tickets:
         <input type="number" min="1" [attr.max]="data.numofseats" [(ngModel)]="numTickets" name="numTickets"><br>
         <mat-error *ngIf="numTickets > (data.numofseats ?? 0)">
-            You cannot exceed the maximum number of seats available.
+            Not enough seats available.
           </mat-error>
       </label>
-      <button type="submit"m mat-raised-button [disabled]="numTickets <= 0 || numTickets > (data.numofseats ?? 0)">Buy Tickets</button>
+
+
+      <h3>Total Price: {{numTickets * (data.ticketprice ?? 0) | currency}}</h3>
+      <button type="submit" mat-raised-button [disabled]="numTickets <= 0 || numTickets > (data.numofseats ?? 0)">Buy Tickets</button>
+
     </form>
   </div>

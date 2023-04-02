@@ -1,0 +1,150 @@
+
+<h1 class="text-center mb-5">Update Flight</h1>
+
+
+<div *ngIf="viewMode; else editable">
+    <div *ngIf="currentFlight.id">
+      <h4> Update Flight</h4>
+      <div>
+        <label><strong>From Place:</strong></label> {{ currentFlight.fromplace }}
+      </div>
+      <div>
+        <label><strong>To Place:</strong></label>
+        {{ currentFlight.toplace }}
+      </div>
+      <div>
+        <label><strong>Start Time</strong></label>
+        {{ currentFlight.starttime }}
+      </div>
+      <div>
+        <label><strong>End Time</strong></label>
+        {{ currentFlight.endtime }}
+      </div>
+      <div>
+        <label><strong>Ticket Price</strong></label>
+        {{ currentFlight.ticketprice }}
+      </div>
+      <div>
+        <label><strong>Numofseats</strong></label>
+        {{ currentFlight.numofseats }}
+      </div>
+      <a
+        class="badge badge-warning"
+        routerLink="/flights/{{ currentFlight.id }}"
+      >
+        Edit
+      </a>
+    </div>
+  
+    <div *ngIf="!currentFlight">
+      <br />
+      <p>Please click on a flight..</p>
+    </div>
+  </div>
+
+
+  <ng-template #editable>
+    <div *ngIf="currentFlight.id" class="edit-form">
+      <form>
+        <div class="form-group">
+          <label for="fromplace">From place</label>
+          <input 
+            type="text"
+            class="form-control"
+            id="fromplace"
+            [(ngModel)]="currentFlight.fromplace"
+            name="fromplace"
+  
+          />
+        </div>
+        <div class="form-group">
+          <label for="surname">To place</label>
+          <input
+            type="text"
+            class="form-control"
+            id="surname"
+            [(ngModel)]="currentFlight.toplace"
+            name="surname"
+  
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Start Time</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            [(ngModel)]="currentFlight.starttime"
+            name="email"
+  
+  
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">End Time</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            [min]="starttime"
+            [(ngModel)]="currentFlight.endtime"
+            name="email"
+     
+          />
+        </div>
+        <div class="form-group">
+          <label for="s">Ticket Price</label>
+          <input
+            type="number"
+            min="1" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1"
+            class="form-control"
+            id="s"
+            [(ngModel)]="currentFlight.ticketprice"
+            name="s"
+  
+          />
+        </div>  
+        <div class="form-group">
+            <label for="points">Number OfSeats</label>
+            <input
+              type="number"
+              min="1" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1"
+              class="form-control"
+              id="points"
+              [(ngModel)]="currentFlight.numofseats"
+              name="points"
+    
+            />
+          </div> 
+          <div class="form-group">
+            <label for="sum">Total Sum</label>
+            <label readonly  onkeydown="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1" 
+            class="form-control" rowspan="2">{{racunaj(currentFlight.numofseats, currentFlight.ticketprice)}}</label>
+          </div> 
+
+
+      </form>
+  
+      <br>
+     
+      <button [disabled]="!currentFlight.fromplace || !currentFlight.toplace || !currentFlight.starttime || !currentFlight.endtime"
+        type="submit"
+        class="btn btn-primary"
+        (click)="updateFlight()"
+        routerLink="/flights"
+      >
+        Update
+      </button>
+      <p>{{ message }}</p>
+    </div>
+  
+  
+  
+    <div *ngIf="!currentFlight.id">
+      <br />
+      <p>Cannot access this centre...</p>
+    </div>
+  
+  </ng-template>
+
+  

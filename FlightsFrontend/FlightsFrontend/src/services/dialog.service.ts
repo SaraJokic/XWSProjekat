@@ -15,7 +15,7 @@ export class DialogService {
   openDialogBuyingTicket(details: Flights): void {
     const dialogRef = this.dialog.open(BuyTicketDialogComponent, {
       width: '600px',
-      height: '500px',
+      height: '550px',
       data: details
     });
 
@@ -26,7 +26,7 @@ export class DialogService {
   openDialogTicketDetails(details: Ticket): void {
     const dialogRef = this.dialog.open(TicketDetailsDialogComponent, {
       width: '600px',
-      height: '500px',
+      height: '400px',
       data: details
     });
 

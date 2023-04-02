@@ -2,11 +2,12 @@ class Flights {
     id?:string;
     fromplace?:string;
     toplace?:string;
-    starttime?:Date;
-    endtime?:Date;
+    starttime?:any;
+    endtime?:any;
     ticketprice?:number;
-    numofseats?:number;
-       
+    numofseats?:any;
+    totalSum?:any;      
 }
+
 
 export {Flights}

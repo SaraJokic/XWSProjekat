@@ -12,22 +12,33 @@
       </div>
       <div class="form-group">
         <label for="starttime">Start Time</label>
-        <input type="datetime-local" class="form-control" id="starttime"  name="starttime" [(ngModel)]="starttime" />
+        <input type="datetime-local" [min]="getCurrentDateTime()" class="form-control" id="starttime"  name="starttime" [(ngModel)]="starttime" />
       </div>
       <div class="form-group">
         <label for="endtime">End Time</label>
-        <input type="datetime-local" class="form-control" id="endtime"  name="endtime" [(ngModel)]="endtime" />
+        <input type="datetime-local" class="form-control" id="endtime" [min]="starttime" name="endtime" [(ngModel)]="endtime" />
       </div>
       <div class="form-group">
         <label for="ticketprice">Ticket Price</label>
-        <input type="number" class="form-control" id="ticketprice"  name="ticketprice" [(ngModel)]="ticketprice" />
+        <input type="number" min="1"  onkeyup="if(this.value<0)this.value=1"onblur="if(this.value<0)this.value=1"   
+         class="form-control" id="ticketprice" name="ticketprice" [(ngModel)]="ticketprice" />
       </div>
       <div class="form-group">
         <label for="numofseats">Number of Seats</label>
-        <input type="number" class="form-control" id="numofseats" name="numofseats"  rowspan="2" [(ngModel)]="numofseats" />
+        <input type="number" min="1" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1"
+         class="form-control" id="numofseats"  name="numofseats"  rowspan="2" [(ngModel)]="numofseats" />
+      </div>
+
+      <div class="form-group">
+        <label for="sum">Total Sum</label>
+        <label  onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1"
+         readonly  class="form-control" rowspan="2">{{racunaj(numofseats,ticketprice)}}</label>
       </div>
 
       <br>
-      <button type="button" class="btn btn-primary" (click)="saveFlight()" >Create flight</button>
+      <button 
+      [disabled]="!fromplace || !toplace || !starttime || !endtime || !ticketprice || !numofseats"  
+       type="button" class="btn btn-primary" (click)="saveFlight()" >Create flight  
+      </button>
 
 </form>

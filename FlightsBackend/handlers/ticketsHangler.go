@@ -97,7 +97,7 @@ func (t *TicketsHandler) DeleteTicket(rw http.ResponseWriter, h *http.Request) {
 	t.repo.DeleteTicket(id)
 	rw.WriteHeader(http.StatusNoContent)
 }
-func (t *TicketsHandler) PatchPatient(rw http.ResponseWriter, h *http.Request) {
+func (t *TicketsHandler) PatchTicket(rw http.ResponseWriter, h *http.Request) {
 	vars := mux.Vars(h)
 	id := vars["id"]
 	ticket := h.Context().Value(KeyProduct{}).(*model.Ticket)
