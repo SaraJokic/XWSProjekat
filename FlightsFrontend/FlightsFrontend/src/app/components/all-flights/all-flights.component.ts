@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Flights } from 'src/models/flight.model';
@@ -19,10 +19,10 @@ import { DialogService } from 'src/services/dialog.service';
   styleUrls: ['./all-flights.component.css'],
 })
 
-export class AllFlightsComponent implements AfterViewInit {
+export class AllFlightsComponent implements AfterViewInit, OnInit {
 
 
-  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'Edit', 'Delete', 'Buy'];
+  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'totalsum', 'Edit', 'Delete', 'Buy'];
   flights = new MatTableDataSource<Flights[]>;
   
   
@@ -32,9 +32,13 @@ export class AllFlightsComponent implements AfterViewInit {
   public izabran : any ;
   fromPlace='';
   toPlace='';
-  numOFSEATS:any;
+  tp:number=0;
+  ns:number=0;
   fromDate:any;
   toDate:any;
+
+  totalSum:any=this.tp*this.ns;
+
 
   allFlights : Array<Flights> = new Array
   isAdmin = false ;
@@ -42,9 +46,6 @@ export class AllFlightsComponent implements AfterViewInit {
   endPlace: string = "";
   startDate: Date | undefined;
   endDate : Date | undefined;
-
-  
-
 
   @ViewChild(MatSort)
   sort: MatSort = new MatSort;
@@ -55,6 +56,15 @@ export class AllFlightsComponent implements AfterViewInit {
     this.flights.sort = this.sort;
     
   }
+
+  ngOnInit(): void {
+    this.racunaj(this.tp,this.ns);
+}
+
+racunaj(a: any, b:any){
+  return this.totalSum = a*b;
+}
+
 
   constructor(private flightService: FlightService, private ticketservice: TicketService,
     private dialogService: DialogService) { }

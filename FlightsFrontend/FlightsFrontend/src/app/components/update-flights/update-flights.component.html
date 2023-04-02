@@ -1,4 +1,6 @@
 
+<h1 class="text-center mb-5">Update Flight</h1>
+
 
 <div *ngIf="viewMode; else editable">
     <div *ngIf="currentFlight.id">
@@ -43,7 +45,6 @@
 
   <ng-template #editable>
     <div *ngIf="currentFlight.id" class="edit-form">
-      <h4> Update Flight</h4>
       <form>
         <div class="form-group">
           <label for="fromplace">From place</label>
@@ -92,19 +93,19 @@
           />
         </div>
         <div class="form-group">
-          <label for="points">Ticket Price</label>
+          <label for="s">Ticket Price</label>
           <input
             type="number"
             min="1" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1"
             class="form-control"
-            id="points"
+            id="s"
             [(ngModel)]="currentFlight.ticketprice"
-            name="points"
+            name="s"
   
           />
         </div>  
         <div class="form-group">
-            <label for="points">Number Of Seats</label>
+            <label for="points">Number OfSeats</label>
             <input
               type="number"
               min="1" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1"
@@ -115,8 +116,16 @@
     
             />
           </div> 
+          <div class="form-group">
+            <label for="sum">Total Sum</label>
+            <label readonly  onkeydown="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1" 
+            class="form-control" rowspan="2">{{racunaj(currentFlight.numofseats, currentFlight.ticketprice)}}</label>
+          </div> 
+
+
       </form>
   
+      <br>
      
       <button [disabled]="!currentFlight.fromplace || !currentFlight.toplace || !currentFlight.starttime || !currentFlight.endtime"
         type="submit"

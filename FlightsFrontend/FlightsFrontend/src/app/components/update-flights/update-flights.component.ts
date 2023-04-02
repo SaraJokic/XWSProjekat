@@ -26,9 +26,13 @@ export class UpdateFlightsComponent implements OnInit {
     ticketprice:0,
   };
 
+  tp:number=0;
+  ns:number=0;
+
   message = '';
   starttime?:Date;
- 
+
+  totalSum:any=this.ns*this.tp;
 
   constructor(private flightService: FlightService, private router: Router, private route: ActivatedRoute,) { }
 
@@ -36,9 +40,16 @@ export class UpdateFlightsComponent implements OnInit {
     if (!this.viewMode) {
       this.message = '';
       this.getFlightID(this.route.snapshot.params["id"]);
+      this.racunaj(this.ns,this.tp );
     }
 
   }
+
+
+
+racunaj(a: any, b:any){
+  return this.totalSum = a*b;
+}
 
 
   getFlightID(id: string): void {

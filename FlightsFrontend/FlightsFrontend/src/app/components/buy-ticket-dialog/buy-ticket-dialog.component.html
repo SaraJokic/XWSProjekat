@@ -32,6 +32,6 @@
             You cannot exceed the maximum number of seats available.
           </mat-error>
       </label>
-      <button type="submit"m mat-raised-button [disabled]="numTickets <= 0 || numTickets > (data.numofseats ?? 0)">Buy Tickets</button>
+      <button type="submit"   mat-raised-button [disabled]="numTickets <= 0 || numTickets > (data.numofseats ?? 0)">Buy Tickets</button>
     </form>
   </div>
