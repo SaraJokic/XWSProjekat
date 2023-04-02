@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"time"
 	"xwsproj/model"
 
@@ -105,6 +106,111 @@ func (pr *FlightRepo) GetFlightById(id string) (*model.Flight, error) {
 	return &flight, nil
 }
 
+/*
+func (fr *FlightRepo) GetSearched(dto *model.FlightSearchDTO) (model.Flights, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	flightsCollection := fr.getCollection()
+	helperDate := dto.StartTime.Add(time.Hour * 24)
+
+	var flights model.Flights
+	var flightsCursor *mongo.Cursor
+	var err error
+
+	if dto.StartTime.Year() != 1970 {
+		flightsCursor, err = flightsCollection.Find(ctx, bson.M{"fromplace": bson.M{"$regex": dto.FromPlace, "$options": "i"},
+			"toplace":          bson.M{"$regex": dto.ToPlace, "$options": "i"},
+			"starttime":        bson.M{"$gte": dto.StartTime, "$lt": helperDate},
+			"remainingtickets": bson.M{"$gte": dto.RemainingTickets}})
+	} else {
+		flightsCursor, err = flightsCollection.Find(ctx, bson.M{"fromplace": bson.M{"$regex": dto.FromPlace, "$options": "i"},
+			"toplace":          bson.M{"$regex": dto.ToPlace, "$options": "i"},
+			"remainingtickets": bson.M{"$gte": dto.RemainingTickets}})
+	}
+	if err != nil {
+		fr.logger.Println(err)
+		return nil, err
+	}
+	if err = flightsCursor.All(ctx, &flights); err != nil {
+		fr.logger.Println(err)
+		return nil, err
+	}
+
+	return flights, nil
+}
+*/
+
+/*
+func (pr *FlightRepo) GetFlightsByStartTime(rez string) (*model.Flights, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	flightsCollection := pr.getCollection()
+
+	//layout := "2006-01-02T15:04:05.000Z"
+	rez = "2014-11-12T11:45:26.371Z"
+	starttime, err := time.Parse(time.DateTime, rez)
+	//starttime, err := time.Parse(layout, rez)
+
+	var flights model.Flights
+	flightsCursor, err := flightsCollection.Find(ctx, bson.M{"starttime": starttime})
+
+	if err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+	if err = flightsCursor.All(ctx, &flights); err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+	return &flights, nil
+}
+*/
+
+func (pr *FlightRepo) GetFlightsByNumOfSeats(rez string) (*model.Flights, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	flightsCollection := pr.getCollection()
+
+	numofseats, _ := strconv.ParseInt(rez, 10, 64)
+	//numofseats := strconv.Itoa(rez)
+	var flights model.Flights
+	//flightsCursor, err := flightsCollection.Find(ctx, bson.M{"fromplace": fromplace})
+	flightsCursor, err := flightsCollection.Find(ctx, bson.M{"numofseats": int(numofseats)})
+
+	if err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+	if err = flightsCursor.All(ctx, &flights); err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+	return &flights, nil
+}
+
+func (pr *FlightRepo) GetFlightsFromPlaceToPlace(fromplace string, toplace string) (*model.Flights, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	flightsCollection := pr.getCollection()
+
+	var flights model.Flights
+
+	flightsCursor, err := flightsCollection.Find(ctx, bson.M{"fromplace": fromplace, "toplace": toplace})
+	if err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+	if err = flightsCursor.All(ctx, &flights); err != nil {
+		pr.logger.Println(err)
+		return nil, err
+	}
+	return &flights, nil
+}
+
 func (pr *FlightRepo) CreateFlight(flight *model.Flight) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -116,6 +222,33 @@ func (pr *FlightRepo) CreateFlight(flight *model.Flight) error {
 		return err
 	}
 	pr.logger.Printf("Documents ID: %v\n", result.InsertedID)
+	return nil
+}
+
+func (pr *FlightRepo) UpdateFlight(id string, flight *model.Flight) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	flightsCollection := pr.getCollection()
+
+	objID, _ := primitive.ObjectIDFromHex(id)
+	filter := bson.M{"_id": objID}
+	update := bson.M{"$set": bson.M{
+		"fromplace":   flight.FromPlace,
+		"toplace":     flight.ToPlace,
+		"starttime":   flight.StartTime,
+		"endtime":     flight.EndTime,
+		"ticketprice": flight.TicketPrice,
+		"numofseats":  flight.NumOfSeats,
+		"totalprice":  flight.TotalPrice,
+	}}
+	result, err := flightsCollection.UpdateOne(ctx, filter, update)
+	pr.logger.Printf("Documents matched: %v\n", result.MatchedCount)
+	pr.logger.Printf("Documents updated: %v\n", result.ModifiedCount)
+
+	if err != nil {
+		pr.logger.Println(err)
+		return err
+	}
 	return nil
 }
 

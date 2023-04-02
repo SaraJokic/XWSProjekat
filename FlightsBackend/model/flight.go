@@ -16,11 +16,17 @@ type Flight struct {
 	EndTime     time.Time          `bson:"endtime,omitempty" json:"endtime"`
 	TicketPrice float64            `bson:"ticketprice,omitempty" json:"ticketprice"`
 	NumOfSeats  int                `bson:"numofseats,omitempty" json:"numofseats"`
+	TotalPrice  float64            `bson:"totalprice,omitempty" json:"totalprice"`
 }
 
 type Flights []*Flight
 
 func (f *Flights) ToJSON(w io.Writer) error {
+	e := json.NewEncoder(w)
+	return e.Encode(f)
+}
+
+func (f *Flights) FromJSON(w io.Writer) error {
 	e := json.NewEncoder(w)
 	return e.Encode(f)
 }
