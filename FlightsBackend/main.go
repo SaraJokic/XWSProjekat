@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"xwsproj/handlers"
+	"xwsproj/middleware"
 	"xwsproj/repositories"
 
 	gorillaHandlers "github.com/gorilla/handlers"
@@ -72,8 +73,14 @@ func main() {
 	getRouter := router.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/", flightsHandler.GetAllFlights)
 
+	postRouter := router.Methods(http.MethodPost).Subrouter()
+	postRouter.HandleFunc("/", flightsHandler.CreateFlight)
+	postRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
+	postRouter.Use(middleware.ValidateToken)
+
 	getByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getByIdRouter.HandleFunc("/{id}", flightsHandler.GetFlightById)
+	getByIdRouter.Use(middleware.ValidateToken)
 
 	getByNameRouter := router.Methods(http.MethodGet).Subrouter()
 	getByNameRouter.HandleFunc("/a/filter", flightsHandler.GetFlightsFromPlace)
@@ -82,16 +89,14 @@ func main() {
 	getSearchedFlightsRouter.HandleFunc("/flight/search", flightsHandler.GetSearchedFlights)
 	getSearchedFlightsRouter.Use(flightsHandler.MiddlewareFlightSearchDeserialization)
 
-	postRouter := router.Methods(http.MethodPost).Subrouter()
-	postRouter.HandleFunc("/", flightsHandler.CreateFlight)
-	postRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
-
 	patchRouter := router.Methods(http.MethodPatch).Subrouter()
 	patchRouter.HandleFunc("/{id}", flightsHandler.UpdateFlight)
 	patchRouter.Use(flightsHandler.MiddlewareFlightDeserialization)
+	getByNameRouter.Use(middleware.ValidateToken)
 
 	deleteRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/{id}", flightsHandler.DeleteFlight)
+	deleteRouter.Use(middleware.ValidateToken)
 
 	//USER
 
@@ -99,19 +104,30 @@ func main() {
 	postUserRouter.HandleFunc("/users/register", usersHandler.PostUser)
 	postUserRouter.Use(usersHandler.MiddlewareUserDeserialization)
 
+	loginRouter := router.Methods(http.MethodPost).Subrouter()
+	loginRouter.HandleFunc("/login", usersHandler.LoginUser)
+
 	getAllUsersRouter := router.Methods(http.MethodGet).Subrouter()
-	getAllUsersRouter.HandleFunc("/users/all", usersHandler.GetAllUsers)
+	getAllUsersRouter.HandleFunc("/users/getAll", usersHandler.GetAllUsers)
+	getAllUsersRouter.Use(middleware.ValidateToken)
+
+	ValidateTokenRouter := router.Methods(http.MethodGet).Subrouter()
+	ValidateTokenRouter.HandleFunc("/users/token/valildation", usersHandler.GetAllUsers)
+	ValidateTokenRouter.Use(middleware.ValidateToken)
 
 	//TICKETS
 
 	getAllTicketsRouter := router.Methods(http.MethodGet).Subrouter()
 	getAllTicketsRouter.HandleFunc("/tickets/all", ticketsHandler.GetAllTickets)
+	getAllTicketsRouter.Use(middleware.ValidateToken)
 
 	getTicketByIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getTicketByIdRouter.HandleFunc("/tickets/get/{id}", ticketsHandler.GetTicketById)
+	getTicketByIdRouter.Use(middleware.ValidateToken)
 
 	getTicketByUserIdRouter := router.Methods(http.MethodGet).Subrouter()
 	getTicketByUserIdRouter.HandleFunc("/tickets/getbyuser/{id}", ticketsHandler.GetTicketByUserId)
+	getTicketByUserIdRouter.Use(middleware.ValidateToken)
 
 	postTicketRouter := router.Methods(http.MethodPost).Subrouter()
 	postTicketRouter.HandleFunc("/tickets/buy", ticketsHandler.CreateTicket)
@@ -120,9 +136,11 @@ func main() {
 	patchTicketRouter := router.Methods(http.MethodPatch).Subrouter()
 	patchTicketRouter.HandleFunc("/tickets/update/{id}", ticketsHandler.PatchTicket)
 	patchTicketRouter.Use(ticketsHandler.MiddlewareTicketDeserialization)
+	postTicketRouter.Use(middleware.ValidateToken)
 
 	deleteTicketRouter := router.Methods(http.MethodDelete).Subrouter()
 	deleteTicketRouter.HandleFunc("/tickets/delete/{id}", ticketsHandler.DeleteTicket)
+	deleteRouter.Use(middleware.ValidateToken)
 
 	cors := gorillaHandlers.CORS(gorillaHandlers.AllowedOrigins([]string{"*"}),
 		gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"}),

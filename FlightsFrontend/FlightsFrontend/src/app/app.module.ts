@@ -4,7 +4,7 @@ import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy
 import { MatSortModule} from '@angular/material/sort';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AllFlightsComponent } from './components/all-flights/all-flights.component';
 import { AddFlightsComponent } from './components/add-flights/add-flights.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +26,9 @@ import { MatCardModule } from '@angular/material/card';
 import { BuyTicketDialogComponent } from './components/buy-ticket-dialog/buy-ticket-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TicketDetailsDialogComponent } from './components/ticket-details-dialog/ticket-details-dialog.component';
-
+import { AuthInterceptorService } from './registration/services/auth-interceptor.service';
+import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { TicketDetailsDialogComponent } from './components/ticket-details-dialog
     MyTicketsComponent,
     BuyTicketDialogComponent,
     TicketDetailsDialogComponent,
-
+    WelcomePageComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,10 +60,11 @@ import { TicketDetailsDialogComponent } from './components/ticket-details-dialog
     RegistrationModule,
     BrowserAnimationsModule,
     MatCardModule,
-    MatDialogModule
-    
+    MatDialogModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { logedUserInfo } from 'src/app/registration/model/logedUserInfo';
+import { AuthService } from 'src/app/registration/services/auth.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -18,7 +20,8 @@ import { TicketService } from 'src/services/ticket.service';
 export class BuyTicketDialogComponent implements OnInit {
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Flights, private ticketService: TicketService, private router: Router, private dialog:MatDialog) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Flights, private ticketService: TicketService,
+    private authService: AuthService, private router: Router, private dialog:MatDialog) { }
   
   flights = new MatTableDataSource<Flights[]>;
 
@@ -34,9 +37,17 @@ export class BuyTicketDialogComponent implements OnInit {
     ticketprice: this.data.ticketprice,
     numofseats:this.data.numofseats
   };
+  logedUser: logedUserInfo = {
+    id: "",
+    username: "",
+    role: "",
+    name: ''
+  };
   
   ngOnInit(): void {
     console.log(this.data)
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    //console.log("iz buy ticket dialoga user, ", this.logedUser)
   }
 
   @ViewChild(MatSort)
@@ -44,7 +55,7 @@ export class BuyTicketDialogComponent implements OnInit {
 
   buyTicket(){
     const newTicket: Ticket = {
-      userid: "6428e5416833a3ee718b4af0",
+      userid: this.logedUser.id,
       flightid: this.data.id!,
       expired: false,
       quantity: this.numTickets,

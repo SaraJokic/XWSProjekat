@@ -11,6 +11,8 @@ import { Ticket } from 'src/models/ticket';
 import { TicketService } from 'src/services/ticket.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogService } from 'src/services/dialog.service';
+import { AuthService } from 'src/app/registration/services/auth.service';
+import { logedUserInfo } from 'src/app/registration/model/logedUserInfo';
 
 
 @Component({
@@ -19,15 +21,22 @@ import { DialogService } from 'src/services/dialog.service';
   styleUrls: ['./all-flights.component.css'],
 })
 
-export class AllFlightsComponent implements AfterViewInit, OnInit {
+export class AllFlightsComponent implements OnInit, AfterViewInit {
 
-
-  displayedColumns:string[] = ['fromplace','toplace', 'starttime','endtime','ticketprice','numofseats', 'totalsum', 'Edit', 'Delete', 'Buy'];
+  
+  
   flights = new MatTableDataSource<Flights[]>;
+  role: string = 'ROLE_NOTAUTH'
+  logedUser: logedUserInfo = {
+    id: "",
+    username: "",
+    role: "",
+    name: ''
+  };
   
   
 
-
+  displayedColumns!: string[];
   currentIndex = -1;
   public izabran : any ;
   fromPlace='';
@@ -50,24 +59,44 @@ export class AllFlightsComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort)
   sort: MatSort = new MatSort;
   
+  ngOnInit(): void {
+    this.displayedColumns = this.getdisplayedColumns()
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    this.racunaj(this.tp,this.ns);
+    //console.log(this.logedUser)
+  }
+  racunaj(a: any, b:any){
+    return this.totalSum = a*b;
+  }
 
   ngAfterViewInit(): void {
     this.retrieveFlights();
     this.flights.sort = this.sort;
-    
   }
 
-  ngOnInit(): void {
-    this.racunaj(this.tp,this.ns);
-}
-
-racunaj(a: any, b:any){
-  return this.totalSum = a*b;
-}
-
+  getdisplayedColumns(): string[] {
+    //console.log(typeof this.role)
+    if (this.role.toString() === '1') {
+      //console.log("admina bc number is ", this.role)
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'totalsum','Edit', 'Delete', 'Buy'];
+      
+    } else if (this.role.toString() === '0'){
+      //console.log("user bc number is ", this.role)
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'totalsum', 'Buy'];
+      
+    }
+    else{
+      //console.log("not auth bc number is ", this.role)
+      return ['fromplace', 'toplace', 'starttime', 'endtime', 'ticketprice', 'numofseats', 'totalsum'];
+    }
+  }
 
   constructor(private flightService: FlightService, private ticketservice: TicketService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService, private authService: AuthService) {
+      this.GetUserRole();
+      //console.log("ROLA USERA KOD FLIGHTS JE ", this.role)
+     }
+  
 
   retrieveFlights(): void {
     this.flightService.getAll()
@@ -75,7 +104,7 @@ racunaj(a: any, b:any){
         next: (data) => {
           this.flights = new MatTableDataSource(<Flights[][]>data);
           this.flights.sort = this.sort;
-          console.log(data);
+          //console.log(data);
         },
         error: (e) => console.error(e)
       });
@@ -108,7 +137,12 @@ racunaj(a: any, b:any){
   openDialog(flight: Flights): void {
     this.dialogService.openDialogBuyingTicket(flight);
   }
-    
+  
+  GetUserRole(): void{
+    if(localStorage['authToken'] != null){
+      this.role = this.authService.getUserRole();
+    }
+  }
 
 
  forDate(): void {
