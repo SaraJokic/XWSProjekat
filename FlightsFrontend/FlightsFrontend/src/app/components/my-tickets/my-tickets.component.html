@@ -1,4 +1,4 @@
-<div class="card-container">
+<div class="card-container" *ngIf="tickets.length > 0; else noTickets">
     <mat-card *ngFor="let ticket of tickets" class="one-card">
         <mat-card-header>
             <mat-card-title>{{ticket.flight?.fromplace}} → {{ticket.flight?.toplace}}</mat-card-title>
@@ -13,3 +13,9 @@
           </mat-card-actions>
     </mat-card>
   </div>
+
+  <ng-template #noTickets>
+    <h2>Oops! You don't have any purchased flight tickets yet. <br>
+      Why not search for some great deals on flights and plan your next adventure?</h2><br>
+      <button mat-raised-button (click)="GoToAllFlightsPage()" class="allflights-button">Search flights</button>
+  </ng-template>
