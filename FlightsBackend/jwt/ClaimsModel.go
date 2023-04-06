@@ -15,7 +15,7 @@ type JwtClaims struct {
 	Name     string             `bson:"name"     json:"name"`
 	Username string             `bson:"username" json:"username"`
 	Role     model.UserType     `bson:"role"     json:"role"`
-	jwt.StandardClaims
+	jwt.StandardClaims   
 }
 
 func (claims JwtClaims) Valid() error {

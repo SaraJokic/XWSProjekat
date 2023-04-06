@@ -27,6 +27,9 @@ export class LoginFormComponent {
           this.authService.saveToken(response.token);
           alert("Welcome back! You have successfully logged in.")
           this.router.navigate(["/flights"]); 
+        },
+        (error: HttpErrorResponse) => {
+          alert("Incorect username or password");
         });
     }
    

@@ -107,7 +107,7 @@ export class AllFlightsComponent implements OnInit, AfterViewInit {
         next: (data) => {
           this.flights = new MatTableDataSource(<Flights[][]>data);
           this.flights.sort = this.sort;
-          //console.log(data);
+          console.log(data);
         },
         error: (e) => console.error(e)
       });
@@ -175,7 +175,51 @@ filterByPlaces(): void {
       error: (e) => console.error(e)
     });
 }
+dateStarting:string='';
+vreme='';
+FilterbyDate():void{
+  const prva = this.convertDate(this.dateStarting);
+  console.log(prva);
+  this.flightService.getAll()
+  .subscribe({
+    next: (data) => {
+      this.flights = new MatTableDataSource(<any>data.filter(flights => flights.starttime?.toLowerCase().includes(prva.toLowerCase())));
+      console.log("Nadji " + this.dateStarting);
+    },
+    error: (e) => console.error(e)
+  });
 
+}
+
+
+public p : number=2;
+convertDate(date: any):string{
+ // date.setHours(date.getHours()-4);
+  const year = "2023";
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const hours = ("0" + date.getHours()).slice(-2);
+  //const hours = "16";
+  //const minutes = "50"; 
+  const minutes = ("0" + date.getMinutes()).slice(-2);
+  const seconds = ("0" + date.getSeconds()).slice(-2);
+  const niz= this.vreme.split(":");
+  console.log ("oov je niz ",niz);
+  let konstanta =Number(niz[0]);
+  konstanta=konstanta-2;
+  let konstanta2;
+ if (konstanta<10)
+ {
+    konstanta2 ="0"+konstanta.toString()
+ }
+ else{
+   konstanta2=konstanta.toString();
+ }
+  console.log("ovo j ekrajnje vreme ",konstanta2+":"+niz[1]);
+  const backendDateString = `${year}-${month}-${day}T${konstanta2}:${niz[1]}:${seconds}Z`;
+  console.log("ovo saljem na bek",backendDateString);
+  return backendDateString;
+}
 
 
 /*
