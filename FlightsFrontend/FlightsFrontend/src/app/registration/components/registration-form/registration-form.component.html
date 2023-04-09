@@ -1,3 +1,4 @@
+<!--
 <form #userForm='ngForm' (ngSubmit)="registerUser(userForm.value)">
     <div class="rgform">
       <div class="info">
@@ -36,3 +37,37 @@
       <button mat-raised-button  class="submit">Submit</button>
     </div>
 </form>
+
+---->
+
+
+
+<div class="login-box">
+  <img src="/assets/avatar.png" class="avatar">
+      <h1>Register Here</h1>
+          <form #userForm='ngForm' (ngSubmit)="registerUser(userForm.value)">
+
+          <p>Username</p>
+          <input  type="text" name="username" placeholder="Enter Name" id="ime" required [(ngModel)]="ime">
+          <p>Surname</p>
+          <input type="text" name="prezime" placeholder="Enter Surname" id="prezime" required [(ngModel)]="prezime">
+          <p>Username</p>
+          <input type="text" name="korisnickoIme" placeholder="Enter Username" id="korisnickoIme" required [(ngModel)]="korisnickoIme">
+          <p>Email</p>
+          <input type="text" name="email" placeholder="Enter Email" id="email" required [(ngModel)]="email">
+          <p>Password</p>
+          <input type="password" name="sifra" placeholder="Enter Password" id="sifra" required [(ngModel)]="sifra">
+
+          <input type="submit" name="submit" value="Register"  [disabled]="!ime || !prezime || !korisnickoIme || !email || !sifra ">
+
+          <br>
+          <br>
+          <div class="signup">
+          <span class="signup">Already have an account?
+            <label (click)="redirect()">Sign in</label>
+          </span> 
+        </div>
+          </form>
+
+
+        

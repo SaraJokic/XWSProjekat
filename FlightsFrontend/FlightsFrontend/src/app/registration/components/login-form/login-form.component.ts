@@ -16,20 +16,31 @@ export class LoginFormComponent {
     
   }
  
+  ime:any;
+  sifra:any;
+  
+
     loginUser(user: any): void {
      
         let loginUser: loginDto = {
-        username: user.username,
-        password: user.password1
+        username: this.ime,
+        password: this.sifra
         }
       this.authService.login(loginUser)
         .subscribe(response => {
           this.authService.saveToken(response.token);
           alert("Welcome back! You have successfully logged in.")
           this.router.navigate(["/flights"]); 
+        },
+        (error: HttpErrorResponse) => {
+          alert("Incorect username or password");
         });
     }
    
     
+    redirect(){
+      this.router.navigate(["/userRegister"]);
+    }
+
   }
 

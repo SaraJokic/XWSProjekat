@@ -40,28 +40,41 @@
 
   
 
-  
 <div class="col-md-8">
   <div class="input-group mb-3">
+  
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Flight start</mat-label>
+      <input matInput [matDatepicker]="picker1" [(ngModel)]="dateStarting">
+      <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    
+    
     <input
-      type="datetime-local"
-      class="form-control"
-      placeholder="Search by Time"
-      [(ngModel)]="fromDate"
-    />
+    type="time"
+    class="form-control"
+    placeholder="Search nesto"
+   
+    [(ngModel)]="vreme"
+   
+  />
+
+  
+
+
     <div class="input-group-append">
       <button
         class="btn btn-outline-secondary"
         type="button"
-        (click)="forDate()"
+        (click)="FilterbyDate()"
       >
         Search
       </button>
     </div>
   </div>
 </div>
-
-
 
 
 

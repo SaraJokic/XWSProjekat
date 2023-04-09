@@ -15,7 +15,7 @@ func ValidateToken(next http.Handler) http.Handler {
 			return
 		}
 		headerParts := strings.Split(authorizationHeader, " ")
-		if len(headerParts) != 2 || headerParts[0] != "Bearer" {
+		if len(headerParts) != 2 || headerParts[0] != "Bearer" {      
 			http.Error(w, "split didnt work", http.StatusUnauthorized)
 			return
 		}

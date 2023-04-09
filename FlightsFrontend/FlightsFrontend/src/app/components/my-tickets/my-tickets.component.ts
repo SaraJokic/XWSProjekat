@@ -74,8 +74,8 @@ export class MyTicketsComponent implements OnInit{
   }
 
 
-/*
-  deleteTicket(deleting : any){
+
+  obrisiTicket(deleting : any){
     this.message = '';
     this.izabran = deleting.id;
     if(confirm("Are you sure?")){
@@ -114,7 +114,7 @@ export class MyTicketsComponent implements OnInit{
     });
 }
 
-*/
+
 
 
   GoToAllFlightsPage(): void{

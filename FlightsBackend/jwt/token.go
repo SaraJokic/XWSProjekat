@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	jWTPrivateToken = "SecrteTokenSecrteToken"
+	jWTPrivateToken = "SecrteTokenSecrteToken"// privatni kljuc 
 )
 
 func GenerateToken(claims *JwtClaims, expirationTime time.Time) (string, error) {

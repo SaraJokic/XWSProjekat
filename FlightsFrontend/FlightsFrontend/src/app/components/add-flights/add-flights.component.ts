@@ -46,8 +46,8 @@ racunaj(a: any, b:any){
         ticketprice: this.ticketprice,
         numofseats: this.numofseats,
       };
-      data.starttime?.setHours(data.starttime.getHours() + 2)
-      data.endtime?.setHours(data.endtime.getHours() + 2)
+      //data.starttime?.setHours(data.starttime.getHours() + 2)
+      //data.endtime?.setHours(data.endtime.getHours() + 2)
       
       this.flightService.create(data)
         .subscribe({

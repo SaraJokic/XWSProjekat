@@ -164,7 +164,7 @@ func (p *FlightsHandler) GetFlightsFromPlaceToPlace(rw http.ResponseWriter, h *h
 	if flight == nil {
 		http.Error(rw, "Flight with given fromPlace not found", http.StatusNotFound)
 		//p.logger.Printf("Flight with fromPlace: '%s' not found", fromplace)
-		p.logger.Printf("Flight with fromPlace: '%s' not found", fromplace, toplace)
+		p.logger.Printf("Flight with fromPlace: '%s' to place '%s' not found", fromplace, toplace)
 		return
 	}
 
