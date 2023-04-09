@@ -198,9 +198,7 @@ convertDate(date: any):string{
   const year = "2023";
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
-  const hours = ("0" + date.getHours()).slice(-2);
-  //const hours = "16";
-  //const minutes = "50"; 
+  const hours = ("0" + date.getHours()).slice(-2); 
   const minutes = ("0" + date.getMinutes()).slice(-2);
   const seconds = ("0" + date.getSeconds()).slice(-2);
   const niz= this.vreme.split(":");
@@ -222,13 +220,7 @@ convertDate(date: any):string{
 }
 
 
-/*
-Nadji(nesto:any){
-  this.flightService.Proba(nesto)
-  .subscribe((data:any)=>{
-    this.flights.data = data.push; //iLI data.push
-  } )
-    */
+
 
 }
 
@@ -237,16 +229,6 @@ Nadji(nesto:any){
 
 
 
-/*
-onSubmitSearch(inputSearch : any){
-  
-  this.flightService.Search(inputSearch.searchinput).subscribe((data) => {
-    this.flights = data;
-    
-  });
-}
-
-*/
 
 
 
