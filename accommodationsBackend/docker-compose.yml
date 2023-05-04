@@ -39,6 +39,16 @@ services:
     restart: on-failure
     networks:
       - network
+  mongo_express:
+    image: mongo-express
+    container_name: mongo_express
+    ports:
+      - ${MONGO_EXPRESS_PORT}:${MONGO_EXPRESS_PORT}
+    environment:
+      ME_CONFIG_MONGODB_SERVER: user_db
+    networks:
+      - network
+
   nats:
     image: nats
     container_name: nats
