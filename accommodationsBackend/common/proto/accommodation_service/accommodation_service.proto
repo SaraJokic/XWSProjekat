@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option go_package="proto/accommodation_service";
+
+import "google/api/annotations.proto";
+
+service AccommodationService{
+  rpc Get(GetRequest) returns(GetResponse) {
+    option (google.api.http) = {
+      get: "/accommodations/get/{id}"
+    };
+  }
+  rpc GetAll(GetAllRequest) returns(GetAllResponse) {
+    option (google.api.http) = {
+      get: "/accommodations"
+    };
+  }
+}
+message GetRequest {
+  string id = 1;
+}
+
+message GetResponse {
+  Accommodation acc = 1;
+}
+message GetAllRequest {
+}
+
+message GetAllResponse {
+  repeated Accommodation acc = 1;
+
+}
+
+message Accommodation {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+  repeated Benefits be = 4;
+  int32 minGuests= 5;
+  int32 MaxGuests =6;
+}
+
+message Benefits{
+  bool wifi = 1;
+    bool freeParking =2;
+}
+
+
