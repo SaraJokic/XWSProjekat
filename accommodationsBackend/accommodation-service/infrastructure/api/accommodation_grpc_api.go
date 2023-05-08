@@ -2,6 +2,7 @@ package api
 
 import (
 	"accommodationsBackend/accommodations-service/application"
+	"accommodationsBackend/common/proto/accommodation_service"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -11,40 +12,40 @@ type AccommodationHandler struct {
 	service *application.AccommodationService
 }
 
-func NewProductHandler(service *application.AccommodationService) *AccommodationHandler {
+func NewAccommodationHandler(service *application.AccommodationService) *AccommodationHandler {
 	return &AccommodationHandler{
 		service: service,
 	}
 }
 
-func (handler *AccommodationHandler) Get(ctx context.Context, request *accommodation_service.GetRequest) (*accommodation_service.GetResponse, error) {
+func (handler *AccommodationHandler) Get(ctx context.Context, request *accommodation_service.AccGetRequest) (*accommodation_service.AccGetResponse, error) {
 	id := request.Id
 	objectId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, err
 	}
-	user, err := handler.service.Get(objectId)
+	accommodation, err := handler.service.Get(objectId)
 	if err != nil {
 		return nil, err
 	}
-	userMapped := accMapped(user)
-	response := &accommodation_service.GetResponse{
-		User: userMapped,
+	accMapped := mapAccommodation(accommodation)
+	response := &accommodation_service.AccGetResponse{
+		Acc: accMapped,
 	}
 	return response, nil
 }
 
-func (handler *AccommodationHandler) GetAll(ctx context.Context, request *accommodation_service.GetAllRequest) (*accommodation_service.GetAllResponse, error) {
-	users, err := handler.service.GetAll()
+func (handler *AccommodationHandler) GetAll(ctx context.Context, request *accommodation_service.AccGetAllRequest) (*accommodation_service.AccGetAllResponse, error) {
+	accommodations, err := handler.service.GetAll()
 	if err != nil {
 		return nil, err
 	}
-	response := &uaccommodation_service.GetAllResponse{
-		Users: []*accommodation_service.User{},
+	response := &accommodation_service.AccGetAllResponse{
+		Acc: []*accommodation_service.Accommodation{},
 	}
-	for _, user := range users {
-		current := accMapped(user)
-		response.Users = append(response.Users, current)
+	for _, accommodation := range accommodations {
+		current := mapAccommodation(accommodation)
+		response.Acc = append(response.Acc, current)
 	}
 	return response, nil
 }

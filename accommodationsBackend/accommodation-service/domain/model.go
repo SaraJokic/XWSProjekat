@@ -6,7 +6,7 @@ type Accommodation struct {
 	Id        primitive.ObjectID `bson:"_id"`
 	Name      string             `bson:"name"`
 	Location  string             `bson:"surname"`
-	Benefits  []Benefits         `bson:"benefits"`
+	Benefits  Benefits           `bson:"benefits"`
 	MinGuests int                `bson:"minGuests"`
 	MaxGuests int                `bson:"maxGuests"`
 }

@@ -1,11 +1,12 @@
 package startup
 
 import (
+	"accommodationsBackend/accommodations-service/application"
 	"accommodationsBackend/accommodations-service/domain"
 	"accommodationsBackend/accommodations-service/infrastructure/api"
 	"accommodationsBackend/accommodations-service/infrastructure/persistence"
 	"accommodationsBackend/accommodations-service/startup/config"
-
+	"accommodationsBackend/common/proto/accommodation_service"
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
@@ -25,28 +26,28 @@ func NewServer(config *config.Config) *Server {
 
 func (server *Server) Start() {
 	mongoClient := server.initMongoClient()
-	productStore := server.initUsersStore(mongoClient)
+	productStore := server.initAccommodationsStore(mongoClient)
 
-	productService := server.initUserService(productStore)
+	productService := server.initAccommodationService(productStore)
 
-	productHandler := server.initUserHandler(productService)
+	productHandler := server.initAccommodationHandler(productService)
 
 	server.startGrpcServer(productHandler)
 }
 
 func (server *Server) initMongoClient() *mongo.Client {
-	client, err := persistence.GetClient(server.config.UserDBHost, server.config.UserDBPort)
+	client, err := persistence.GetClient(server.config.AccommodationDBHost, server.config.AccommodationDBPort)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return client
 }
 
-func (server *Server) initUsersStore(client *mongo.Client) domain.AccommodationStore {
-	store := persistence.NewUserMongoDBStore(client)
+func (server *Server) initAccommodationsStore(client *mongo.Client) domain.AccommodationStore {
+	store := persistence.NewAccommodationMongoDBStore(client)
 	store.DeleteAll()
-	for _, user := range accommodations {
-		err := store.Insert(user)
+	for _, accommodation := range accommodations {
+		err := store.Insert(accommodation)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -54,21 +55,21 @@ func (server *Server) initUsersStore(client *mongo.Client) domain.AccommodationS
 	return store
 }
 
-func (server *Server) initUserService(store domain.AccommodationStore) *application.AccommodationService {
-	return application.NewUserService(store)
+func (server *Server) initAccommodationService(store domain.AccommodationStore) *application.AccommodationService {
+	return application.NewAccommodationService(store)
 }
 
-func (server *Server) initUserHandler(service *application.AccommodationService) *api.UserHandler {
-	return api.NewProductHandler(service)
+func (server *Server) initAccommodationHandler(service *application.AccommodationService) *api.AccommodationHandler {
+	return api.NewAccommodationHandler(service)
 }
 
-func (server *Server) startGrpcServer(userHandler *api.UserHandler) {
+func (server *Server) startGrpcServer(accHandler *api.AccommodationHandler) {
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%s", server.config.Port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
-	user_service.RegisterUserServiceServer(grpcServer, userHandler)
+	accommodation_service.RegisterAccommodationServiceServer(grpcServer, accHandler)
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %s", err)
 	}

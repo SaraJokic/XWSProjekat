@@ -9,7 +9,7 @@ type AccommodationService struct {
 	store domain.AccommodationStore
 }
 
-func NewUserService(store domain.AccommodationStore) *AccommodationService {
+func NewAccommodationService(store domain.AccommodationStore) *AccommodationService {
 	return &AccommodationService{
 		store: store,
 	}

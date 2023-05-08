@@ -26,13 +26,13 @@ func NewServer(config *config.Config) *Server {
 
 func (server *Server) Start() {
 	mongoClient := server.initMongoClient()
-	productStore := server.initUsersStore(mongoClient)
+	usersStore := server.initUsersStore(mongoClient)
 
-	productService := server.initUserService(productStore)
+	userService := server.initUserService(usersStore)
 
-	productHandler := server.initUserHandler(productService)
+	userHandler := server.initUserHandler(userService)
 
-	server.startGrpcServer(productHandler)
+	server.startGrpcServer(userHandler)
 }
 
 func (server *Server) initMongoClient() *mongo.Client {
@@ -60,7 +60,7 @@ func (server *Server) initUserService(store domain.UserStore) *application.UserS
 }
 
 func (server *Server) initUserHandler(service *application.UserService) *api.UserHandler {
-	return api.NewProductHandler(service)
+	return api.NewUserHandler(service)
 }
 
 func (server *Server) startGrpcServer(userHandler *api.UserHandler) {
