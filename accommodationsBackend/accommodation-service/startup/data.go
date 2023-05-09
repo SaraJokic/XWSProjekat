@@ -2,12 +2,10 @@ package startup
 
 import (
 	"accommodationsBackend/accommodations-service/domain"
-	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var benefits = domain.Benefits{
-	ID:          uuid.New(),
 	Wifi:        true,
 	Kitchen:     true,
 	FreeParking: false,

@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AccommodationService_Get_FullMethodName    = "/AccommodationService/Get"
-	AccommodationService_GetAll_FullMethodName = "/AccommodationService/GetAll"
+	AccommodationService_Get_FullMethodName                    = "/AccommodationService/Get"
+	AccommodationService_GetAll_FullMethodName                 = "/AccommodationService/GetAll"
+	AccommodationService_CreateNewAccommodation_FullMethodName = "/AccommodationService/CreateNewAccommodation"
 )
 
 // AccommodationServiceClient is the client API for AccommodationService service.
@@ -29,6 +30,7 @@ const (
 type AccommodationServiceClient interface {
 	Get(ctx context.Context, in *AccGetRequest, opts ...grpc.CallOption) (*AccGetResponse, error)
 	GetAll(ctx context.Context, in *AccGetAllRequest, opts ...grpc.CallOption) (*AccGetAllResponse, error)
+	CreateNewAccommodation(ctx context.Context, in *AccCreateRequest, opts ...grpc.CallOption) (*AccCreateResponse, error)
 }
 
 type accommodationServiceClient struct {
@@ -57,12 +59,22 @@ func (c *accommodationServiceClient) GetAll(ctx context.Context, in *AccGetAllRe
 	return out, nil
 }
 
+func (c *accommodationServiceClient) CreateNewAccommodation(ctx context.Context, in *AccCreateRequest, opts ...grpc.CallOption) (*AccCreateResponse, error) {
+	out := new(AccCreateResponse)
+	err := c.cc.Invoke(ctx, AccommodationService_CreateNewAccommodation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccommodationServiceServer is the server API for AccommodationService service.
 // All implementations must embed UnimplementedAccommodationServiceServer
 // for forward compatibility
 type AccommodationServiceServer interface {
 	Get(context.Context, *AccGetRequest) (*AccGetResponse, error)
 	GetAll(context.Context, *AccGetAllRequest) (*AccGetAllResponse, error)
+	CreateNewAccommodation(context.Context, *AccCreateRequest) (*AccCreateResponse, error)
 	mustEmbedUnimplementedAccommodationServiceServer()
 }
 
@@ -75,6 +87,9 @@ func (UnimplementedAccommodationServiceServer) Get(context.Context, *AccGetReque
 }
 func (UnimplementedAccommodationServiceServer) GetAll(context.Context, *AccGetAllRequest) (*AccGetAllResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
+}
+func (UnimplementedAccommodationServiceServer) CreateNewAccommodation(context.Context, *AccCreateRequest) (*AccCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewAccommodation not implemented")
 }
 func (UnimplementedAccommodationServiceServer) mustEmbedUnimplementedAccommodationServiceServer() {}
 
@@ -125,6 +140,24 @@ func _AccommodationService_GetAll_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AccommodationService_CreateNewAccommodation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccCreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccommodationServiceServer).CreateNewAccommodation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccommodationService_CreateNewAccommodation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccommodationServiceServer).CreateNewAccommodation(ctx, req.(*AccCreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AccommodationService_ServiceDesc is the grpc.ServiceDesc for AccommodationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +172,10 @@ var AccommodationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAll",
 			Handler:    _AccommodationService_GetAll_Handler,
+		},
+		{
+			MethodName: "CreateNewAccommodation",
+			Handler:    _AccommodationService_CreateNewAccommodation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

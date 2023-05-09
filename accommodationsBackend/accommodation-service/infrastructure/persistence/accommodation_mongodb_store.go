@@ -35,6 +35,9 @@ func (store *AccommodationMongoDBStore) GetAll() ([]*domain.Accommodation, error
 }
 
 func (store *AccommodationMongoDBStore) Insert(accommodation *domain.Accommodation) error {
+	if accommodation.Id.IsZero() {
+		accommodation.Id = primitive.NewObjectID()
+	}
 	result, err := store.accommodations.InsertOne(context.TODO(), accommodation)
 	if err != nil {
 		return err

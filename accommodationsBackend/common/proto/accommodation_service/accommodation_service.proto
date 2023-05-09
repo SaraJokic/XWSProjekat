@@ -15,6 +15,12 @@ service AccommodationService{
       get: "/accommodations"
     };
   }
+  rpc CreateNewAccommodation(AccCreateRequest) returns(AccCreateResponse) {
+    option (google.api.http) = {
+      post: "/accommodations/create"
+      body: "*"
+    };
+  }
 }
 message AccGetRequest {
   string id = 1;
@@ -30,6 +36,13 @@ message AccGetAllResponse {
   repeated Accommodation acc = 1;
 
 }
+message AccCreateRequest {
+  NewAccommodation acc = 1;
+}
+
+message AccCreateResponse {
+  string id = 1;
+}
 
 message Accommodation {
   string id = 1;
@@ -37,14 +50,20 @@ message Accommodation {
   string location = 3;
   Benefits benefits = 4;
   int32 minGuests= 5;
-  int32 MaxGuests =6;
+  int32 maxGuests =6;
 }
 
 message Benefits{
-  string id = 4;
   bool wifi = 1;
   bool freeParking =2;
   bool kitchen = 3;
+}
+message NewAccommodation{
+  string name = 2;
+  string location = 3;
+  Benefits benefits = 4;
+  int32 minGuests= 5;
+  int32 maxGuests =6;
 }
 
 

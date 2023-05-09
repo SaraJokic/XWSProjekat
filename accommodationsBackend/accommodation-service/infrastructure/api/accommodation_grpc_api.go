@@ -49,3 +49,16 @@ func (handler *AccommodationHandler) GetAll(ctx context.Context, request *accomm
 	}
 	return response, nil
 }
+func (handler *AccommodationHandler) CreateNewAccommodation(ctx context.Context, request *accommodation_service.AccCreateRequest) (*accommodation_service.AccCreateResponse, error) {
+
+	acc := mapNewAccommodation(request.Acc)
+
+	err := handler.service.Create(acc)
+	if err != nil {
+		return nil, err
+	}
+
+	accommodation := accommodation_service.AccCreateResponse{Id: acc.Id.Hex()}
+
+	return &accommodation, nil
+}

@@ -22,3 +22,10 @@ func (service *AccommodationService) Get(id primitive.ObjectID) (*domain.Accommo
 func (service *AccommodationService) GetAll() ([]*domain.Accommodation, error) {
 	return service.store.GetAll()
 }
+
+func (service *AccommodationService) Create(acc *domain.Accommodation) error {
+	return service.store.Insert(acc)
+}
+func (service *AccommodationService) DeleteAll() {
+	service.store.DeleteAll()
+}
