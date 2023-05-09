@@ -17,6 +17,23 @@ services:
     networks:
       - network
 
+  accommodation_service:
+    image:  accommodation-service
+    container_name:  accommodation-service
+    build:
+      context: .
+      dockerfile: ./accommodation-service/Dockerfile
+    restart: on-failure
+    environment:
+      ACCOMMODATION_DB_HOST: ${ACCOMMODATION_DB_HOST}
+      ACCOMMODATION_DB_PORT: ${ACCOMMODATION_DB_PORT}
+      ACCOMMODATION_SERVICE_PORT: ${ACCOMMODATION_SERVICE_PORT}
+    depends_on:
+      - accommodation_db
+    networks:
+      - network
+
+
   api_gateway:
     image: api_gateway
     container_name: api_gateway
@@ -30,8 +47,12 @@ services:
       GATEWAY_PORT: ${GATEWAY_PORT}
       USER_SERVICE_HOST: ${USER_SERVICE_HOST}
       USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+
+      ACCOMMODATION_SERVICE_HOST: ${ACCOMMODATION_SERVICE_HOST}
+      ACCOMMODATION_SERVICE_PORT: ${ACCOMMODATION_SERVICE_PORT}
     networks:
       - network
+
 
   user_db:
     image: mongo
@@ -39,13 +60,11 @@ services:
     restart: on-failure
     networks:
       - network
-  mongo_express:
-    image: mongo-express
-    container_name: mongo_express
-    ports:
-      - ${MONGO_EXPRESS_PORT}:${MONGO_EXPRESS_PORT}
-    environment:
-      ME_CONFIG_MONGODB_SERVER: user_db
+
+  accommodation_db:
+    image: mongo
+    container_name: accommodation_db
+    restart: on-failure
     networks:
       - network
 
@@ -55,6 +74,7 @@ services:
     restart: on-failure
     networks:
       - network
+
 networks:
   network:
     driver: bridge

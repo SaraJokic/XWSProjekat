@@ -12,7 +12,7 @@ type UserHandler struct {
 	service *application.UserService
 }
 
-func NewProductHandler(service *application.UserService) *UserHandler {
+func NewUserHandler(service *application.UserService) *UserHandler {
 	return &UserHandler{
 		service: service,
 	}
