@@ -15,6 +15,13 @@ service UserService{
       get: "/users"
     };
   }
+  rpc Register(RegisterRequest) returns(RegisterResponse) {
+    option (google.api.http) = {
+      post: "/users/register"
+      body: "*"
+    };
+  }
+
 }
 message GetRequest {
   string id = 1;
@@ -30,8 +37,25 @@ message GetAllResponse {
   repeated User users = 1;
 }
 
+message RegisterRequest {
+  User user = 1;
+}
+message RegisterResponse {
+  string message = 1;
+}
+
 message User {
   string id = 1;
-  string name = 2;
-  string surname = 3;
+  string Username = 2;
+  string Password = 3;
+  string Email = 4;
+  string Name = 5;
+  string LastName = 6;
+  UserType Role = 7;
 }
+
+enum UserType {
+  Customer = 0;
+  Admin = 1;
+}
+
