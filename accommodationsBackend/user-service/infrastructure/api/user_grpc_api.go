@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserHandler struct {
@@ -56,6 +57,13 @@ func (handler *UserHandler) Register(ctx context.Context, request *user_service.
 		}
 
 		newUser.Password = hashedPassword*/
+
+	hashedPassword, err := handler.HashPassword(newUser.Password)
+	if err != nil {
+		response := &user_service.RegisterResponse{Message: "Hashing password unsuccesfull"}
+		return response, nil
+	}
+	newUser.Password = hashedPassword
 	fmt.Println("ovo je newUser", newUser)
 
 	userMapped := reverseMapUser(newUser)
@@ -69,7 +77,10 @@ func (handler *UserHandler) Register(ctx context.Context, request *user_service.
 	return response, nil
 
 }
-
+func (handler *UserHandler) HashPassword(password string) (string, error) {
+	passwordbytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(passwordbytes), err
+}
 func (handler *UserHandler) GetAll(ctx context.Context, request *user_service.GetAllRequest) (*user_service.GetAllResponse, error) {
 	users, err := handler.service.GetAll()
 	if err != nil {
