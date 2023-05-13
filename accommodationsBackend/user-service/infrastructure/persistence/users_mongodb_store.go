@@ -76,6 +76,21 @@ func (store *UserMongoDBStore) UpdateUser(id string, user *domain.User) error {
 	return nil
 }
 
+func (store *UserMongoDBStore) Delete(id string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	objID, _ := primitive.ObjectIDFromHex(id)
+	filter := bson.D{{Key: "_id", Value: objID}}
+	_, err := store.users.DeleteOne(ctx, filter)
+	if err != nil {
+
+		return err
+	}
+
+	return nil
+}
+
 func (store *UserMongoDBStore) DeleteAll() {
 	store.users.DeleteMany(context.TODO(), bson.D{{}})
 }

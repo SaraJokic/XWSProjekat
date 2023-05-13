@@ -33,3 +33,7 @@ func (service *UserService) CheckIfEmailAndUsernameExist(email string, username 
 func (service *UserService) UpdateUser(id string, user *domain.User) error {
 	return service.store.UpdateUser(id, user)
 }
+
+func (service *UserService) Delete(id string) error {
+	return service.store.Delete(id)
+}

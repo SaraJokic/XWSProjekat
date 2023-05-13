@@ -84,16 +84,6 @@ func (handler *UserHandler) HashPassword(password string) (string, error) {
 	return string(passwordbytes), err
 }
 
-/*
-	func (handler *UserHandler) UpdateFlight(ctx context.Context, request *user_service.UpdateRequest) (*user_service.UpdateResponse, error) {
-		vars := mux.Vars(h)
-		id := vars["id"]
-		flight := h.Context().Value(KeyProduct{}).(*model.Flight)
-
-		p.repo.UpdateFlight(id, flight)
-		rw.WriteHeader(http.StatusOK)
-	}
-*/
 func (handler *UserHandler) UpdateUser(ctx context.Context, request *user_service.UpdateRequest) (*user_service.UpdateResponse, error) {
 	id := request.UserId // ID korisnika koji se ažurira
 	user := request.User // Novi podaci korisnika
@@ -108,6 +98,27 @@ func (handler *UserHandler) UpdateUser(ctx context.Context, request *user_servic
 	return &user_service.UpdateResponse{Message: "Update succesfull"}, nil // Vraćanje potvrde da je ažuriranje uspelo
 }
 
+/*
+	func (handler *UserHandler) DeleteUser(ctx context.Context, request *user_service.DeleteRequest) (*user_service.DeleteResponse, error) {
+		id := request.UserId
+		fmt.Println("ovo je userid", id)
+		err := handler.service.Delete(id)
+		if err != nil {
+			return &user_service.DeleteResponse{Message: "User delete failed"}, nil
+		}
+
+		return &user_service.DeleteResponse{Message: "User deleted"}, nil
+	}
+*/
+func (handler *UserHandler) DeleteUser(ctx context.Context, request *user_service.DeleteRequest) (*user_service.DeleteResponse, error) {
+	id := request.Id
+
+	err := handler.service.Delete(id)
+	if err != nil {
+		return &user_service.DeleteResponse{Message: "User delete failed"}, nil
+	}
+	return &user_service.DeleteResponse{Message: "User deleted"}, nil
+}
 func (handler *UserHandler) GetAll(ctx context.Context, request *user_service.GetAllRequest) (*user_service.GetAllResponse, error) {
 	users, err := handler.service.GetAll()
 	if err != nil {
