@@ -51,7 +51,9 @@ message User {
   string Email = 4;
   string Name = 5;
   string LastName = 6;
-  UserType Role = 7;
+  string City = 7;
+  string Country = 8;
+  UserType Role = 9;
 }
 
 enum UserType {

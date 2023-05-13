@@ -9,6 +9,8 @@ type User struct {
 	Email    string             `bson:"email"    json:"email"`
 	Name     string             `bson:"name"     json:"name"`
 	LastName string             `bson:"lastname" json:"lastname"`
+	City     string             `bson:"city"     json:"city"`
+	Country  string             `bson:"country"  json:"country"`
 	Role     UserType           `bson:"role" json:"role"`
 }
 

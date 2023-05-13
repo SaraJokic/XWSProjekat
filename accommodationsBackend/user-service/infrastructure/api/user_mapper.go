@@ -14,6 +14,8 @@ func mapUser(user *domain.User) *user_service.User {
 		Email:    user.Email,
 		Name:     user.Name,
 		LastName: user.LastName,
+		City:     user.City,
+		Country:  user.Country,
 		Role:     user_service.UserType(user.Role),
 	}
 	return userMapped
@@ -34,6 +36,8 @@ func reverseMapUser(user *user_service.User) *domain.User {
 		Email:    user.Email,
 		Name:     user.Name,
 		LastName: user.LastName,
+		City:     user.City,
+		Country:  user.Country,
 		Role:     domain.UserType(user.Role),
 	}
 	fmt.Println("ovo je user u reversemapper-u", userMapped)
