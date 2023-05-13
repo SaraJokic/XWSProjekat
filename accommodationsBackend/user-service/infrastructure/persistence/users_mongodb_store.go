@@ -51,6 +51,31 @@ func (store *UserMongoDBStore) Register(user *domain.User) error {
 	return nil
 }
 
+func (store *UserMongoDBStore) UpdateUser(id string, user *domain.User) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	fmt.Println("ovo je user koji je stigao u repo", user)
+	objID, _ := primitive.ObjectIDFromHex(id)
+	filter := bson.M{"_id": objID}
+	update := bson.M{"$set": bson.M{
+		"Username": user.Username,
+		"Password": user.Password,
+		"Email":    user.Email,
+		"Name":     user.Email,
+		"LastName": user.LastName,
+		"City":     user.City,
+		"Country":  user.Country,
+		"Role":     user.Role,
+	}}
+	_, err := store.users.UpdateOne(ctx, filter, update)
+
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
 func (store *UserMongoDBStore) DeleteAll() {
 	store.users.DeleteMany(context.TODO(), bson.D{{}})
 }

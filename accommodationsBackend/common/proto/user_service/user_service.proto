@@ -21,8 +21,25 @@ service UserService{
       body: "*"
     };
   }
+  rpc UpdateUser(UpdateRequest) returns (UpdateResponse) {
+    option (google.api.http) = {
+      put: "/users/update"
+      body: "*"
+    };
+  }
 
 }
+
+message UpdateRequest{
+  string id = 1;
+  string UserId = 2;
+  User user = 3;
+}
+
+message UpdateResponse {
+  string message = 1;
+}
+
 message GetRequest {
   string id = 1;
 }
@@ -30,6 +47,7 @@ message GetRequest {
 message GetResponse {
   User user = 1;
 }
+
 message GetAllRequest {
 }
 

@@ -29,3 +29,7 @@ func (service *UserService) Register(user *domain.User) error {
 func (service *UserService) CheckIfEmailAndUsernameExist(email string, username string) (bool, error) {
 	return service.store.CheckIfEmailAndUsernameExist(email, username)
 }
+
+func (service *UserService) UpdateUser(id string, user *domain.User) error {
+	return service.store.UpdateUser(id, user)
+}
