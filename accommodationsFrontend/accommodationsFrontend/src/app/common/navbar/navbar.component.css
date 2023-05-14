@@ -1,0 +1,20 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+.Homebutton{
+  height: 100%;
+  font-size: 2.4rem;
+  margin: 15%;
+  
+}
+.NavBarButton{
+    height: 100%;
+    font-size: 1.2rem;
+    margin: 1rem;
+}
+.mat-toolbar{
+   background-color: #a5a2a2;
+   height: 12%;
+   color: white;
+}
+
