@@ -7,6 +7,10 @@ import { MaterialModule } from './material/material.module';
 import { NewAccommodationComponent } from './pages/new-accommodation/new-accommodation.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegistrationFormComponent } from './pages/registration-form/registration-form.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { LoginFormComponent } from './pages/login-form/login-form.component';
+import { MyAccommodationsComponent } from './pages/my-accommodations/my-accommodations.component';
 
 
 
@@ -14,7 +18,11 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     NavbarComponent,
-    NewAccommodationComponent
+    NewAccommodationComponent,
+    RegistrationFormComponent,
+    UserProfileComponent,
+    LoginFormComponent,
+    MyAccommodationsComponent
   ],
   imports: [
     BrowserModule,

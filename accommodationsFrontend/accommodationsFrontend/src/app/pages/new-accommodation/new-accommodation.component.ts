@@ -39,7 +39,12 @@ export class NewAccommodationComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  checkIfNull(){
+    const slotovi = this.accommodationForm?.get('availability.availableSlots')?.value;
+    
+  }
   onSubmit() {
+
     const accommodation: Accommodation = {
       name: this.accommodationForm?.get('name')?.value,
       location: this.accommodationForm?.get('location')?.value,
