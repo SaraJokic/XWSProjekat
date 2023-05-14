@@ -7,6 +7,7 @@ replace accommodationsBackend/common => ../common
 require (
 	accommodationsBackend/common v0.0.0-00010101000000-000000000000
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
+	github.com/rs/cors v1.9.0
 	google.golang.org/grpc v1.54.0
 )
 

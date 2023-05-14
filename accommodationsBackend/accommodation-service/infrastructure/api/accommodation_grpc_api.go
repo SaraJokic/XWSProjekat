@@ -4,6 +4,7 @@ import (
 	"accommodationsBackend/accommodations-service/application"
 	"accommodationsBackend/common/proto/accommodation_service"
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -50,7 +51,7 @@ func (handler *AccommodationHandler) GetAll(ctx context.Context, request *accomm
 	return response, nil
 }
 func (handler *AccommodationHandler) CreateNewAccommodation(ctx context.Context, request *accommodation_service.AccCreateRequest) (*accommodation_service.AccCreateResponse, error) {
-
+	fmt.Println("Ovo je ceo request:", request.Acc)
 	acc := mapNewAccommodation(request.Acc)
 
 	err := handler.service.Create(acc)
