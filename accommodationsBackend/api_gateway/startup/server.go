@@ -1,8 +1,10 @@
 package startup
 
 import (
+	"accommodationsBackend/api_gateway/middleware"
 	cfg "accommodationsBackend/api_gateway/startup/config"
 	"accommodationsBackend/common/proto/accommodation_service"
+	auth_service "accommodationsBackend/common/proto/auth-service"
 	availability_service "accommodationsBackend/common/proto/availability-service"
 	userGw "accommodationsBackend/common/proto/user_service"
 	"context"
@@ -49,6 +51,12 @@ func (server *Server) initHandlers() {
 	if err != nil {
 		panic(err)
 	}
+
+	authEmdpoint := fmt.Sprintf("%s:%s", server.config.AuthHost, server.config.AuthPort)
+	err = auth_service.RegisterAuthServiceHandlerFromEndpoint(context.TODO(), server.mux, authEmdpoint, opts)
+	if err != nil {
+		panic(err)
+	}
 }
 
 /*func (server *Server) initCustomHandlers() {
@@ -60,7 +68,7 @@ func (server *Server) initHandlers() {
 }*/
 
 func (server *Server) Start() {
-	handlerFunc := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	mainHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "OPTIONS" {
 			w.WriteHeader(http.StatusOK)
 			return
@@ -68,7 +76,12 @@ func (server *Server) Start() {
 		server.mux.ServeHTTP(w, r)
 	})
 
-	corsHandler := cors.Default().Handler(handlerFunc)
+	corsHandler := cors.Default().Handler(mainHandler)
 
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", server.config.Port), corsHandler))
+	mux := http.NewServeMux()
+	mux.Handle("/", corsHandler)
+
+	handler := middleware.ValidateToken(mux)
+
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", server.config.Port), handler))
 }

@@ -1,27 +1,22 @@
 package api
 
 import (
-	"accommodationsBackend/common/proto/user_service"
-	"accommodationsBackend/user-service/domain"
+	"accommodationsBackend/auth-service/domain"
+	auth_service "accommodationsBackend/common/proto/auth-service"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func mapUser(user *domain.User) *user_service.User {
-	userMapped := &user_service.User{
+func mapUser(user *domain.User) *auth_service.AuthUser {
+	userMapped := &auth_service.AuthUser{
 		Id:       user.Id.Hex(),
 		Username: user.Username,
 		Password: user.Password,
-		Email:    user.Email,
-		Name:     user.Name,
-		LastName: user.LastName,
-		City:     user.City,
-		Country:  user.Country,
-		Role:     user_service.UserType(user.Role),
 	}
 	return userMapped
 }
-func reverseMapUser(user *user_service.User) *domain.User {
+
+func reverseMapUser(user *auth_service.AuthUser) *domain.User {
 
 	fmt.Println("usao sam u reversemapper funjciju")
 	fmt.Println("userid", user.Id)
@@ -34,17 +29,11 @@ func reverseMapUser(user *user_service.User) *domain.User {
 
 		Username: user.Username,
 		Password: user.Password,
-		Email:    user.Email,
-		Name:     user.Name,
-		LastName: user.LastName,
-		City:     user.City,
-		Country:  user.Country,
-		Role:     domain.UserType(user.Role),
 	}
 	fmt.Println("ovo je user u reversemapper-u", userMapped)
 	return userMapped
 }
-func reverseMapUserWithId(user *user_service.User) *domain.User {
+func reverseMapUserWithId(user *auth_service.AuthUser) *domain.User {
 
 	fmt.Println("usao sam u reversemapper funjciju")
 	fmt.Println("userid", user.Id)
@@ -57,12 +46,6 @@ func reverseMapUserWithId(user *user_service.User) *domain.User {
 		Id:       id,
 		Username: user.Username,
 		Password: user.Password,
-		Email:    user.Email,
-		Name:     user.Name,
-		LastName: user.LastName,
-		City:     user.City,
-		Country:  user.Country,
-		Role:     domain.UserType(user.Role),
 	}
 	fmt.Println("ovo je user u reversemapper-u", userMapped)
 	return userMapped

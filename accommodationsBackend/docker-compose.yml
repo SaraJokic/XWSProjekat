@@ -46,6 +46,20 @@ services:
       AVAILABILITY_SERVICE_PORT: ${AVAILABILITY_SERVICE_PORT}
     depends_on:
       - availability_db
+
+  auth_service:
+    image:  auth-service
+    container_name:  auth-service
+    build:
+      context: .
+      dockerfile: ./auth-service/Dockerfile
+    restart: on-failure
+    environment:
+      AUTH_DB_HOST: ${AUTH_DB_HOST}
+      AUTH_DB_PORT: ${AUTH_DB_PORT}
+      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
+    depends_on:
+      - auth_db
     networks:
       - network
 
@@ -69,8 +83,13 @@ services:
 
       AVAILABILITY_SERVICE_HOST: ${AVAILABILITY_SERVICE_HOST}
       AVAILABILITY_SERVICE_PORT: ${AVAILABILITY_SERVICE_PORT}
+
+      AUTH_SERVICE_HOST: ${AUTH_SERVICE_HOST}
+      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
     networks:
       - network
+
+
 
 
   user_db:
@@ -90,6 +109,13 @@ services:
   availability_db:
     image: mongo
     container_name: availability_db
+    restart: on-failure
+    networks:
+      - network
+
+  auth_db:
+    image: mongo
+    container_name: auth_db
     restart: on-failure
     networks:
       - network
