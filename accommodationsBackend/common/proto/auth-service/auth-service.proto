@@ -17,8 +17,22 @@ service AuthService{
       body: "*"
     };
   }
+  rpc Login(LoginRequest) returns(LoginResponse) {
+    option (google.api.http) = {
+      post: "/auth/login"
+      body: "*"
+    };
+  }
 }
 
+message LoginRequest {
+  string id = 1;
+  string username = 2;
+  string password = 3;
+}
+message LoginResponse {
+  string message = 1;
+}
 message InsertRequest {
   string id = 1;
   string username = 2;

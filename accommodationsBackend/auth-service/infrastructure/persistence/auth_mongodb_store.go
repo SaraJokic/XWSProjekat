@@ -5,6 +5,8 @@ import (
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"golang.org/x/crypto/bcrypt"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 
@@ -48,6 +50,28 @@ func (store *AuthMongoDBStore) Insert(user *domain.User) error {
 
 	user.Id = result.InsertedID.(primitive.ObjectID)
 	return nil
+}
+
+func (store *AuthMongoDBStore) ValidateUsernameAndPassword(username string, password string) (*domain.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	//usersCollection := store.getCollection()
+	var user domain.User
+	err := store.users.FindOne(ctx, bson.M{"username": username}).Decode(&user)
+	if err != nil {
+
+		return nil, err
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		// password does not match hash
+		return nil, err
+	} else {
+		// password matches hash
+		return &user, nil
+	}
+
 }
 
 func (store *AuthMongoDBStore) filter(filter interface{}) ([]*domain.User, error) {

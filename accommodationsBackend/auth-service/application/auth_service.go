@@ -22,3 +22,6 @@ func (service *AuthService) Insert(user *domain.User) error {
 func (service *AuthService) GetAll() ([]*domain.User, error) {
 	return service.store.GetAll()
 }
+func (service *AuthService) ValidateUsernameAndPassword(username string, password string) (*domain.User, error) {
+	return service.store.ValidateUsernameAndPassword(username, password)
+}
