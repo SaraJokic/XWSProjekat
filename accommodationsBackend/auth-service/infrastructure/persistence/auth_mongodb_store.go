@@ -61,12 +61,12 @@ func (store *AuthMongoDBStore) ValidateUsernameAndPassword(username string, pass
 	err := store.users.FindOne(ctx, bson.M{"username": username}).Decode(&user)
 	if err != nil {
 
-		return nil, err
+		return nil, fmt.Errorf("failed to validate username and password")
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
 		// password does not match hash
-		return nil, err
+		return nil, fmt.Errorf("failed to validate username and password")
 	} else {
 		// password matches hash
 		return &user, nil

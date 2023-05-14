@@ -1,6 +1,7 @@
 package startup
 
 import (
+	"accommodationsBackend/api_gateway/middleware"
 	cfg "accommodationsBackend/api_gateway/startup/config"
 	"accommodationsBackend/common/proto/accommodation_service"
 	auth_service "accommodationsBackend/common/proto/auth-service"
@@ -60,4 +61,11 @@ func (server *Server) initCustomHandlers() {
 
 func (server *Server) Start() {
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", server.config.Port), server.mux))
+	serveMux := http.NewServeMux()
+	serveMux.Handle("/", server.mux)
+
+	handler := middleware.ValidateToken(serveMux)
+
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", server.config.Port), handler))
+
 }

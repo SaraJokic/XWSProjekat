@@ -44,6 +44,8 @@ message InsertResponse {
 }
 
 message AllRequest {
+  string id = 1;
+  string token =2;
 }
 
 message AllResponse {

@@ -1,8 +1,20 @@
 package middleware
 
-/*
+import (
+	"accommodationsBackend/api_gateway/jwt"
+	"context"
+	"net/http"
+	"strings"
+)
+
 func ValidateToken(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		if r.URL.Path == "/api/login" {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		authorizationHeader := r.Header.Get("Authorization")
 		if authorizationHeader == "" {
 			http.Error(w, "Empty string", http.StatusUnauthorized)
@@ -28,4 +40,3 @@ func ValidateToken(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
-*/

@@ -1,13 +1,14 @@
 package jwt
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
 
 const (
-	jWTPrivateToken = "SecrteTokenSecrteToken" // privatni kljuc
+	jWTPrivateToken = "SecrteTokenSecrteToken"// privatni kljuc 
 )
 
 func GenerateToken(claims *JwtClaims, expirationTime time.Time) (string, error) {
@@ -24,7 +25,6 @@ func GenerateToken(claims *JwtClaims, expirationTime time.Time) (string, error) 
 	return tokenString, nil
 }
 
-/*
 func VerifyToken(tokenString string) (bool, *JwtClaims) {
 	claims := &JwtClaims{}
 	token, _ := getTokenFromString(tokenString, claims)
@@ -47,7 +47,4 @@ func getTokenFromString(tokenString string, claims *JwtClaims) (*jwt.Token, erro
 		}
 		return []byte(jWTPrivateToken), nil
 	})
-
-
 }
-*/

@@ -42,17 +42,11 @@ func (handler *AuthHandler) Insert(ctx context.Context, request *auth_service.In
 }
 
 func (handler *AuthHandler) Login(ctx context.Context, request *auth_service.LoginRequest) (*auth_service.LoginResponse, error) {
-	/*var loginObj model.LoginRequest
-	err := json.NewDecoder(r.Body).Decode(&loginObj)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("error decoding request body: %v", err), http.StatusBadRequest)
-		return
-	}
-	*/
+
 	var user *domain.User
 	user, err := handler.service.ValidateUsernameAndPassword(request.Username, request.Password)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to validate username and password")
 	}
 
 	var claims = &jwt.JwtClaims{}
@@ -61,7 +55,7 @@ func (handler *AuthHandler) Login(ctx context.Context, request *auth_service.Log
 	claims.Username = request.Username
 
 	var tokenCreationTime = time.Now().UTC()
-	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Hour)
+	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Second)
 	tokenString, err := jwt.GenerateToken(claims, expirationTime)
 
 	if err != nil {
@@ -81,14 +75,6 @@ func (handler *AuthHandler) Login(ctx context.Context, request *auth_service.Log
 
 	return &auth_service.LoginResponse{Message: string(jsonResponse)}, nil
 
-	/*jsonResponse, err := json.Marshal(response)
-	if err != nil {
-		return nil, err
-	}
-
-	//response.Header().Set("Content-Type", "application/json")
-	//w.WriteHeader(http.StatusOK)
-	w.Write(jsonResponse)*/
 }
 func (handler *AuthHandler) GetAll(ctx context.Context, request *auth_service.AllRequest) (*auth_service.AllResponse, error) {
 	users, err := handler.service.GetAll()
@@ -102,5 +88,36 @@ func (handler *AuthHandler) GetAll(ctx context.Context, request *auth_service.Al
 		current := mapUser(user)
 		response.Users = append(response.Users, current)
 	}
+
 	return response, nil
 }
+
+/*
+func (handler *AuthHandler) ValidateToken(next http.HandlerFunc) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		authorizationHeader := r.Header.Get("Authorization")
+		if authorizationHeader == "" {
+			http.Error(w, "Empty string", http.StatusUnauthorized)
+			return
+		}
+		headerParts := strings.Split(authorizationHeader, " ")
+		if len(headerParts) != 2 || headerParts[0] != "Bearer" {
+			http.Error(w, "split didnt work", http.StatusUnauthorized)
+			return
+		}
+		tokenString := headerParts[1]
+
+		valid, claims := jwt.VerifyToken(tokenString)
+		if !valid {
+			http.Error(w, "token not verified", http.StatusUnauthorized)
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), "Id", claims.Id)
+		ctx = context.WithValue(ctx, "Name", claims.Name)
+		ctx = context.WithValue(ctx, "Username", claims.Username)
+
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+*/
