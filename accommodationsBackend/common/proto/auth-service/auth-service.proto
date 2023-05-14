@@ -31,7 +31,7 @@ message LoginRequest {
   string password = 3;
 }
 message LoginResponse {
-  string message = 1;
+  string token = 1;
 }
 message InsertRequest {
   string id = 1;

@@ -6,7 +6,6 @@ import (
 	"accommodationsBackend/auth-service/jwt"
 	auth_service "accommodationsBackend/common/proto/auth-service"
 	"context"
-	"encoding/json"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
@@ -61,19 +60,19 @@ func (handler *AuthHandler) Login(ctx context.Context, request *auth_service.Log
 	if err != nil {
 		return nil, err
 	}
+	/*
+		response := struct {
+			Token string `json:"token"`
+		}{
+			Token: tokenString,
+		}
 
-	response := struct {
-		Token string `json:"token"`
-	}{
-		Token: tokenString,
-	}
-
-	jsonResponse, err := json.Marshal(response)
-	if err != nil {
-		return nil, err
-	}
-
-	return &auth_service.LoginResponse{Message: string(jsonResponse)}, nil
+		jsonResponse, err := json.Marshal(response)
+		if err != nil {
+			return nil, err
+		}
+	*/
+	return &auth_service.LoginResponse{Token: tokenString}, nil
 
 }
 func (handler *AuthHandler) GetAll(ctx context.Context, request *auth_service.AllRequest) (*auth_service.AllResponse, error) {
