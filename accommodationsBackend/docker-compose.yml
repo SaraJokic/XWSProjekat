@@ -46,6 +46,8 @@ services:
       AVAILABILITY_SERVICE_PORT: ${AVAILABILITY_SERVICE_PORT}
     depends_on:
       - availability_db
+    networks:
+      - network
 
   auth_service:
     image:  auth-service

@@ -1,7 +1,6 @@
 package startup
 
 import (
-	"accommodationsBackend/api_gateway/middleware"
 	cfg "accommodationsBackend/api_gateway/startup/config"
 	"accommodationsBackend/common/proto/accommodation_service"
 	auth_service "accommodationsBackend/common/proto/auth-service"
@@ -76,12 +75,16 @@ func (server *Server) Start() {
 		server.mux.ServeHTTP(w, r)
 	})
 
-	corsHandler := cors.Default().Handler(mainHandler)
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{"Content-Type", "Authorization"},
+	}).Handler(mainHandler)
 
-	mux := http.NewServeMux()
-	mux.Handle("/", corsHandler)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", server.config.Port), corsHandler))
 
-	handler := middleware.ValidateToken(mux)
+	//mux := http.NewServeMux()
+	//mux.Handle("/", corsHandler)
 
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", server.config.Port), handler))
+	//handler := middleware.ValidateToken(mux)
 }

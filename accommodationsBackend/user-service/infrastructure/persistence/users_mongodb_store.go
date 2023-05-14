@@ -61,7 +61,7 @@ func (store *UserMongoDBStore) UpdateUser(id string, user *domain.User) error {
 		"Username": user.Username,
 		"Password": user.Password,
 		"Email":    user.Email,
-		"Name":     user.Email,
+		"Name":     user.Name,
 		"LastName": user.LastName,
 		"City":     user.City,
 		"Country":  user.Country,
