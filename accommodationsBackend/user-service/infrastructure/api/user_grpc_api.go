@@ -75,6 +75,18 @@ func (handler *UserHandler) Register(ctx context.Context, request *user_service.
 	if err != nil {
 		return nil, err
 	}
+	/*	authUser := &domain.UserAuth{
+			Username: newUser.Username,
+			Password: newUser.Password,
+		}
+		authClient := servces.NewAuthClient("http://auth-service:8000/")
+		mappedAuthUser := mapAuthUser(authUser)
+		_, err = authClient.Insert(ctx, &auth_service.InsertRequest{Username: mappedAuthUser.Username, Password: mappedAuthUser.Password})
+		if err != nil {
+			return nil, err
+		}
+
+	*/
 	response := &user_service.RegisterResponse{Message: "Registration successful!"}
 	return response, nil
 

@@ -87,6 +87,11 @@ message User {
   UserType Role = 9;
 }
 
+message UserAuth{
+  string id = 1;
+  string Username = 2;
+  string Password = 3;
+}
 enum UserType {
   Customer = 0;
   Admin = 1;

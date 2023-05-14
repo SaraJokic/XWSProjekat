@@ -13,7 +13,11 @@ type User struct {
 	Country  string             `bson:"country"  json:"country"`
 	Role     UserType           `bson:"role" json:"role"`
 }
-
+type UserAuth struct {
+	Id       primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Username string             `bson:"username" json:"username"`
+	Password string             `bson:"password" json:"password"`
+}
 type UserType int32
 
 const (

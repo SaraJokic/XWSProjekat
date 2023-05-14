@@ -67,3 +67,13 @@ func reverseMapUserWithId(user *user_service.User) *domain.User {
 	fmt.Println("ovo je user u reversemapper-u", userMapped)
 	return userMapped
 }
+
+/*
+func mapAuthUser(user *domain.UserAuth) *user_service.UserAuth {
+	userMapped := &user_service.UserAuth{
+		Username: user.Username,
+		Password: user.Password,
+	}
+	return userMapped
+}
+*/
