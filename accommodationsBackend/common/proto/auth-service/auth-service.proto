@@ -5,31 +5,22 @@ option go_package="proto/auth-service";
 import "google/api/annotations.proto";
 
 service AuthService{
-  rpc PostUser(RegisterRequest) returns(RegisterResponse) {
+  rpc GetAll(AllRequest) returns(AllResponse) {
     option (google.api.http) = {
-      post: "/auth/register"
-      body: "*"
+      get: "/auth/all"
     };
   }
 }
 
-message RegisterRequest {
-  User user = 1;
-}
-message RegisterResponse {
+message AllRequest {
 }
 
-message User {
+message AllResponse {
+  repeated AuthUser users = 1;
+}
+message AuthUser {
   string id = 1;
   string Username = 2;
   string Password = 3;
-  string Email = 4;
-  string Name = 5;
-  string LastName = 6;
-  string Role = 7;
-}
 
-enum UserType {
-  Customer = 0;
-  Admin = 1;
 }

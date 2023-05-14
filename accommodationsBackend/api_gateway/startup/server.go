@@ -3,6 +3,7 @@ package startup
 import (
 	cfg "accommodationsBackend/api_gateway/startup/config"
 	"accommodationsBackend/common/proto/accommodation_service"
+	auth_service "accommodationsBackend/common/proto/auth-service"
 	userGw "accommodationsBackend/common/proto/user_service"
 	"context"
 	"fmt"
@@ -38,6 +39,12 @@ func (server *Server) initHandlers() {
 
 	accommodationEmdpoint := fmt.Sprintf("%s:%s", server.config.AccommodationHost, server.config.AccommodationPort)
 	err = accommodation_service.RegisterAccommodationServiceHandlerFromEndpoint(context.TODO(), server.mux, accommodationEmdpoint, opts)
+	if err != nil {
+		panic(err)
+	}
+
+	authEmdpoint := fmt.Sprintf("%s:%s", server.config.AuthHost, server.config.AuthPort)
+	err = auth_service.RegisterAuthServiceHandlerFromEndpoint(context.TODO(), server.mux, authEmdpoint, opts)
 	if err != nil {
 		panic(err)
 	}
