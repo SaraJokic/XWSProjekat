@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+option go_package="proto/availability_service";
+
+import "google/api/annotations.proto";
+
+service AvailabilityService{
+  rpc Get(GetAvailableRequest) returns(GetAvailableResponse) {
+    option (google.api.http) = {
+      get: "/availability/get/{id}"
+    };
+  }
+  rpc GetAll(GetAllAvailableRequest) returns(GetAllAvailableResponse) {
+    option (google.api.http) = {
+      get: "/availability"
+    };
+  }
+  rpc CreatePriceChange(CreatePriceChangeRequest) returns(CreatePriceChangeResponse) {
+    option (google.api.http) = {
+      post: "/availability/addpricechange"
+      body: "*"
+    };
+  }
+  rpc AddAvailableSlot(AddAvailableSlotRequest) returns(AddAvailableSlotResponse) {
+    option (google.api.http) = {
+      post: "/availability/addavailableslot"
+      body: "*"
+    };
+  }
+  rpc GetByAccommodationId(GetByAccIdRequest) returns (GetByAccIdResponse){
+    option (google.api.http) = {
+      get: "/availability/getbyaccid/{id}"
+    };
+  }
+  rpc UpdateAvailableSlot(UpdateAvailableSlotRequest) returns(UpdateAvailableSlotResponse){
+    option (google.api.http) = {
+      post: "/availability/update/availableslot"
+      body: "*"
+    };
+  }
+  rpc CreateNewAvailability(CreateNewAvailabilityRequest) returns (CreateNewAvailabilityResponse) {
+    option (google.api.http) = {
+      post: "/availability/add"
+      body: "*"
+    };
+  }
+
+}
+message CreateNewAvailabilityRequest{
+  string accommodationId = 2;
+  repeated AvailableSlots availableSlots = 3;
+  float price = 4;
+  repeated PriceChange changePrice = 5;
+  bool isPricePerPerson = 6;
+}
+message CreateNewAvailabilityResponse{
+  string poruka = 1;
+}
+message GetByAccIdRequest{
+  string id = 1;
+
+}
+message GetByAccIdResponse{
+  Availability availability = 1;
+
+}
+message UpdateAvailableSlotRequest{
+  string availabilityId = 1;
+  string startDate = 2;
+  AvailableSlots availabilitySlot = 3;
+}
+message UpdateAvailableSlotResponse{
+  string poruka = 1;
+}
+message CreatePriceChangeRequest{
+  PriceChange priceChange = 1;
+  string availabilityID = 2;
+
+}
+message CreatePriceChangeResponse{
+  string poruka = 1;
+}
+message GetAvailableRequest {
+  string id = 1;
+}
+
+message GetAvailableResponse {
+  Availability availability = 1;
+}
+message GetAllAvailableRequest {
+}
+
+message GetAllAvailableResponse {
+  repeated Availability availability = 1;
+}
+message Availability {
+  string id = 1;
+  string accommodationId = 2;
+  repeated AvailableSlots availableSlots = 3;
+  float price = 4;
+  repeated PriceChange changePrice = 5;
+  bool isPricePerPerson = 6;
+}
+message AvailableSlots{
+  string slotId = 3;
+  string start_date = 1;
+  string end_date = 2;
+}
+message PriceChange{
+  string startdate = 1;
+  string enddate = 2;
+  float change = 3;
+}
+message AddAvailableSlotRequest {
+  string id = 1;
+  AvailableSlots availableSlot = 2;
+}
+
+message AddAvailableSlotResponse {
+  string poruka = 1;
+}

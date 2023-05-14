@@ -24,6 +24,9 @@ func (service *AccommodationService) GetAll() ([]*domain.Accommodation, error) {
 }
 
 func (service *AccommodationService) Create(acc *domain.Accommodation) error {
+	if acc.Id.IsZero() {
+		acc.Id = primitive.NewObjectID()
+	}
 	return service.store.Insert(acc)
 }
 func (service *AccommodationService) DeleteAll() {
