@@ -33,6 +33,22 @@ services:
     networks:
       - network
 
+  availability_service:
+    image: availability-service
+    container_name: availability-service
+    build:
+      context: .
+      dockerfile: ./availability-service/Dockerfile
+    restart: on-failure
+    environment:
+      AVAILABILITY_DB_HOST: ${AVAILABILITY_DB_HOST}
+      AVAILABILITY_DB_PORT: ${AVAILABILITY_DB_PORT}
+      AVAILABILITY_SERVICE_PORT: ${AVAILABILITY_SERVICE_PORT}
+    depends_on:
+      - availability_db
+    networks:
+      - network
+
 
   api_gateway:
     image: api_gateway
@@ -50,6 +66,9 @@ services:
 
       ACCOMMODATION_SERVICE_HOST: ${ACCOMMODATION_SERVICE_HOST}
       ACCOMMODATION_SERVICE_PORT: ${ACCOMMODATION_SERVICE_PORT}
+
+      AVAILABILITY_SERVICE_HOST: ${AVAILABILITY_SERVICE_HOST}
+      AVAILABILITY_SERVICE_PORT: ${AVAILABILITY_SERVICE_PORT}
     networks:
       - network
 
@@ -64,6 +83,13 @@ services:
   accommodation_db:
     image: mongo
     container_name: accommodation_db
+    restart: on-failure
+    networks:
+      - network
+
+  availability_db:
+    image: mongo
+    container_name: availability_db
     restart: on-failure
     networks:
       - network

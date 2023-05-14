@@ -5,3 +5,5 @@ type Benefits struct {
 	Kitchen     bool `bson:"kitchen"`
 	FreeParking bool `bson:"freeparking"`
 }
+
+//TODO: dodati jos benefitsa

@@ -10,3 +10,5 @@ type Accommodation struct {
 	MinGuests int                `bson:"minGuests"`
 	MaxGuests int                `bson:"maxGuests"`
 }
+
+//TODO: dodati sliku, description

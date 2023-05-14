@@ -1,15 +1,13 @@
-module accommodationsBackend/accommodations-service
+module accommodationsBackend/availability-service
 
 go 1.20
 
 replace accommodationsBackend/common => ../common
 
-replace accommodationsBackend/api_gateway => ../api_gateway
-
 require (
 	accommodationsBackend/common v0.0.0-00010101000000-000000000000
 	go.mongodb.org/mongo-driver v1.11.6
-	google.golang.org/grpc v1.55.0
+	google.golang.org/grpc v1.54.0
 )
 
 require (
