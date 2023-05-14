@@ -10,6 +10,23 @@ service AuthService{
       get: "/auth/all"
     };
   }
+
+  rpc Insert(InsertRequest) returns(InsertResponse) {
+    option (google.api.http) = {
+      post: "/auth/insert"
+      body: "*"
+    };
+  }
+}
+
+message InsertRequest {
+  string id = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message InsertResponse {
+  string message = 1;
 }
 
 message AllRequest {

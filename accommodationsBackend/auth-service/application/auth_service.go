@@ -15,11 +15,10 @@ func NewAuthService(store domain.AuthStore) *AuthService {
 
 }
 
-/*
-	func (service *AuthService) Insert(user *domain.User) error {
-		return service.store.Insert(user)
-	}
-*/
+func (service *AuthService) Insert(user *domain.User) error {
+	return service.store.Insert(user)
+}
+
 func (service *AuthService) GetAll() ([]*domain.User, error) {
 	return service.store.GetAll()
 }
