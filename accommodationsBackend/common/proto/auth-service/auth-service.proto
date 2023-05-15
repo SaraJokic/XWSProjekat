@@ -37,6 +37,7 @@ message InsertRequest {
   string id = 1;
   string username = 2;
   string password = 3;
+  string role = 4;
 }
 
 message InsertResponse {
@@ -55,5 +56,6 @@ message AuthUser {
   string id = 1;
   string Username = 2;
   string Password = 3;
+  string Role = 4;
 
 }

@@ -12,6 +12,7 @@ func mapUser(user *domain.User) *auth_service.AuthUser {
 		Id:       user.Id.Hex(),
 		Username: user.Username,
 		Password: user.Password,
+		Role:     user.Role,
 	}
 	return userMapped
 }

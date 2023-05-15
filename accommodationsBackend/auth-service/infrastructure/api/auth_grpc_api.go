@@ -27,6 +27,7 @@ func (handler *AuthHandler) Insert(ctx context.Context, request *auth_service.In
 		//Id:       primitive.NewObjectID(),
 		Username: request.Username,
 		Password: request.Password,
+		Role:     request.Role,
 	}
 	fmt.Println("ovo je newuseer u insert handleru", newUser.Username, newUser.Password)
 	newUser.Id = primitive.NewObjectID()
@@ -52,6 +53,7 @@ func (handler *AuthHandler) Login(ctx context.Context, request *auth_service.Log
 	claims.Id = user.Id
 	claims.Name = user.Username
 	claims.Username = request.Username
+	claims.Role = user.Role
 
 	var tokenCreationTime = time.Now().UTC()
 	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Second)
