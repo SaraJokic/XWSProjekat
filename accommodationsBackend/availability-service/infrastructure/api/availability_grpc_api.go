@@ -5,6 +5,7 @@ import (
 	"accommodationsBackend/availability-service/domain"
 	availability_service "accommodationsBackend/common/proto/availability-service"
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -90,6 +91,7 @@ func (handler *AvailabilityHandler) CreatePriceChange(ctx context.Context, reque
 }
 
 func (handler *AvailabilityHandler) AddAvailableSlot(ctx context.Context, request *availability_service.AddAvailableSlotRequest) (*availability_service.AddAvailableSlotResponse, error) {
+	fmt.Println("Ovo je ceo availability request:", request)
 	id, err := primitive.ObjectIDFromHex(request.Id)
 	if err != nil {
 		return nil, err
@@ -140,6 +142,7 @@ func (handler *AvailabilityHandler) GetByAccommodationId(ctx context.Context, re
 	return response, nil
 }
 func (handler *AvailabilityHandler) CreateNewAvailability(ctx context.Context, request *availability_service.CreateNewAvailabilityRequest) (*availability_service.CreateNewAvailabilityResponse, error) {
+	fmt.Println("Ovo je ceo availability request:", request)
 	availability := mapDomainAvailability(request)
 
 	err := handler.service.Insert(availability)

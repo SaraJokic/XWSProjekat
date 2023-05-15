@@ -6,7 +6,10 @@ replace accommodationsBackend/common => ../common
 
 require (
 	accommodationsBackend/common v0.0.0-00010101000000-000000000000
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
+	github.com/rs/cors v1.9.0
+	go.mongodb.org/mongo-driver v1.11.6
 	google.golang.org/grpc v1.54.0
 )
 

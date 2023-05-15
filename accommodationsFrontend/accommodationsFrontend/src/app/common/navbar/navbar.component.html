@@ -4,8 +4,12 @@
     </span>
     <span class="spacer"></span>
        
-        <a mat-button  class="NavBarButton" routerLink="/userRegister" >Register</a>
-        <a mat-button  class="NavBarButton" routerLink="/userLogin" >Login</a>
+        <a mat-button  class="NavBarButton" routerLink="/register" >Register</a>
+        <a mat-button  class="NavBarButton" routerLink="/login" >Login</a>
+        <a mat-button  class="NavBarButton" routerLink="/new/accommodation" >List your Accommodation</a>
+        <a mat-button  class="NavBarButton" routerLink="/myprofile" >My profile</a>
+        <a mat-button  class="NavBarButton" routerLink="userLogin" class="nav-link" (click)="logout()">Logout</a>
+          
        
 </mat-toolbar>
 

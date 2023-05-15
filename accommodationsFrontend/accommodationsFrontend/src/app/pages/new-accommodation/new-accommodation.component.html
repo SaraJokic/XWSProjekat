@@ -1,0 +1,89 @@
+<form [formGroup]="accommodationForm" (ngSubmit)="onSubmit()">
+  <label>
+    Name:
+    <input type="text" formControlName="name">
+  </label>
+
+  <label>
+    Location:
+    <input type="text" formControlName="location">
+  </label>
+
+  <div formGroupName="benefits">
+    <label>
+      <input type="checkbox" formControlName="wifi">
+      Wifi
+    </label>
+    <label>
+      <input type="checkbox" formControlName="freeParking">
+      Free Parking
+    </label>
+    <label>
+      <input type="checkbox" formControlName="kitchen">
+      Kitchen
+    </label>
+  </div>
+
+  <label>
+    Minimum Guests:
+    <input type="number" formControlName="minguests">
+  </label>
+
+  <label>
+    Maximum Guests:
+    <input type="number" formControlName="maxguests">
+  </label>
+
+  <h2>Availability</h2>
+
+  <div formGroupName="availability">
+
+    <div formArrayName="availableSlots">
+      <h3>Available Slots</h3>
+      <div *ngFor="let slot of availabilitySlots.controls; let i = index" [formGroupName]="i">
+        <label>
+          Start Date:
+          <input type="date" formControlName="startDate">
+        </label>
+        <label>
+          End Date:
+          <input type="date" formControlName="endDate">
+        </label>
+        <button type="button" (click)="removeAvailabilitySlot(i)">Remove Slot</button>
+      </div>
+      <button type="button" (click)="addAvailabilitySlot()">Add Slot</button>
+    </div>
+
+    <label>
+      Price:
+      <input type="number" formControlName="price">
+    </label>
+
+    <label>
+      <input type="checkbox" formControlName="isPricePerGuest">
+      Price per Guest
+    </label>
+
+    <div formArrayName="changePrice">
+      <h3>Price Change</h3>
+      <div *ngFor="let change of changePrice.controls; let i = index" [formGroupName]="i">
+        <label>
+          Start Date:
+          <input type="date" formControlName="startDate">
+        </label>
+        <label>
+          End Date:
+          <input type="date" formControlName="endDate">
+        </label>
+        <label>
+          Change:
+          <input type="number" formControlName="change">
+        </label>
+        <button type="button" (click)="removePriceChange(i)">Remove Change</button>
+      </div>
+      <button type="button" (click)="addPriceChange()">Add Change</button>
+    </div>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
