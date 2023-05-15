@@ -16,11 +16,15 @@ export class LoginFormComponent {
     
   }
  
+  ime:any;
+  sifra:any;
+  
+
     loginUser(user: any): void {
      
         let loginUser: loginDto = {
-        username: user.username,
-        password: user.password1
+        username: this.ime,
+        password: this.sifra
         }
       this.authService.login(loginUser)
         .subscribe(response => {
@@ -34,5 +38,9 @@ export class LoginFormComponent {
     }
    
     
+    redirect(){
+      this.router.navigate(["/userRegister"]);
+    }
+
   }
 

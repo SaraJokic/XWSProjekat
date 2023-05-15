@@ -1,0 +1,26 @@
+<form (ngSubmit)="onSubmit()">
+  <label>First Name:</label>
+  <input type="text" [(ngModel)]="user.Name" name="firstName">
+
+  <label>Last Name:</label>
+  <input type="text" [(ngModel)]="user.LastName" name="lastName">
+
+  <label>Email:</label>
+  <input type="text" [(ngModel)]="user.Email" name="email">
+
+  <label>City:</label>
+  <input type="text" [(ngModel)]="user.City" name="city">
+
+  <label>Country:</label>
+  <input type="text" [(ngModel)]="user.Country" name="country">
+
+  <label>Username:</label>
+  <input type="text" [(ngModel)]="user.Username" name="username">
+
+  <label>Password:</label>
+  <input type="password" [(ngModel)]="user.Password" name="password">
+  
+  <button type="button" (click)="deleteProfile(user.id)">Delete Account</button>
+
+  <button type="submit">Save Changes</button>
+</form>
