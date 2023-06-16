@@ -8,10 +8,10 @@ import (
 type Availability struct {
 	Id              primitive.ObjectID `bson:"_id"`
 	AccommodationId primitive.ObjectID `bson:"accommodationId"`
-	AvailableSlots  []AvailabilitySlot `bson:"availability"`
+	AvailableSlots  []AvailabilitySlot `bson:"availability, omitempty"`
 	Price           float64            `bson:"price"`
 	IsPricePerGuest bool               `bson:"ispriceperperson"`
-	ChangePrice     []PriceChange      `bson:"changePrice"`
+	ChangePrice     []PriceChange      `bson:"changePrice, omitempty"`
 }
 
 type AvailabilitySlot struct {

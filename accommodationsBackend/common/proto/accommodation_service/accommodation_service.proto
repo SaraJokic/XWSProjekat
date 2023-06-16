@@ -4,10 +4,17 @@ option go_package="proto/accommodation_service";
 
 import "google/api/annotations.proto";
 
+
+
 service AccommodationService{
   rpc Get(AccGetRequest) returns(AccGetResponse) {
     option (google.api.http) = {
       get: "/accommodations/get/{id}"
+    };
+  }
+  rpc GetByUserId(AccGetByUserIdRequest) returns(AccGetByUserIdResponse) {
+    option (google.api.http) = {
+      get: "/accommodations/getbyhostid/{id}"
     };
   }
   rpc GetAll(AccGetAllRequest) returns(AccGetAllResponse) {
@@ -21,6 +28,40 @@ service AccommodationService{
       body: "*"
     };
   }
+  rpc UpdateAccommodation(UpdateAccommodationRequest) returns (UpdateAccommodationResponse) {
+    option (google.api.http) = {
+      put: "/accommodations/update"
+      body: "*"
+    };
+  }
+  rpc Search(SearchRequest) returns (AccGetAllResponse) {
+    option (google.api.http) = {
+      post: "/accommodations/search"
+      body: "*"
+    };
+  }
+}
+
+message SearchRequest {
+  string location = 1;
+  int32 guests = 2;
+  string start_date = 3;
+  string end_date = 4;
+}
+
+
+message UpdateAccommodationRequest{
+  string id = 1;
+  Accommodation accommodation = 2;
+}
+message UpdateAccommodationResponse{
+  Accommodation accommodation = 2;
+}
+message AccGetByUserIdRequest{
+  string id = 1;
+}
+message AccGetByUserIdResponse{
+  repeated Accommodation acc = 1;
 }
 message AccGetRequest {
   string id = 1;
@@ -51,6 +92,10 @@ message Accommodation {
   Benefits benefits = 4;
   int32 minGuests= 5;
   int32 maxGuests =6;
+  repeated string pictures = 7;
+  string description = 8;
+  string hostId = 9;
+  bool automaticApprove = 10;
 }
 
 message Benefits{
@@ -64,6 +109,10 @@ message NewAccommodation{
   Benefits benefits = 4;
   int32 minGuests= 5;
   int32 maxGuests =6;
+  repeated string pictures = 7;
+  string description = 8;
+  string hostId = 9;
+  bool automaticApprove = 10;
 }
 
 

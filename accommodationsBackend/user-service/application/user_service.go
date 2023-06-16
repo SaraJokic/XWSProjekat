@@ -37,3 +37,6 @@ func (service *UserService) UpdateUser(id string, user *domain.User) error {
 func (service *UserService) Delete(id string) error {
 	return service.store.Delete(id)
 }
+func (service *UserService) GetByUsername(username string) (*domain.User, error) {
+	return service.store.GetByUsername(username)
+}

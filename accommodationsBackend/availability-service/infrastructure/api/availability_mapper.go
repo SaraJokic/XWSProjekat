@@ -3,6 +3,7 @@ package api
 import (
 	"accommodationsBackend/availability-service/domain"
 	availability_service "accommodationsBackend/common/proto/availability-service"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"log"
 	"time"
@@ -39,6 +40,66 @@ func mapDomainAvailability(a *availability_service.CreateNewAvailabilityRequest)
 		return nil
 	}
 	availabilityMapped := &domain.Availability{
+		AccommodationId: accId,
+		Price:           float64(a.Price),
+		IsPricePerGuest: a.IsPricePerPerson,
+	}
+
+	for _, slot := range a.AvailableSlots {
+		layout := "2006-01-02T15:04:05Z"
+		//fmt.Println("Start datum price change", request.PriceChange.Startdate)
+		startdate, err := time.Parse(layout, slot.StartDate)
+		if err != nil {
+			log.Println("Failed to parse the string of StartDate: ", err)
+			return nil
+		}
+		enddate, err := time.Parse(layout, slot.EndDate)
+		if err != nil {
+			log.Println("Failed to parse the string of EndDate: ", err)
+			return nil
+		}
+		availabilityMapped.AvailableSlots = append(availabilityMapped.AvailableSlots,
+			domain.AvailabilitySlot{
+				SlotId:    primitive.NewObjectID(),
+				StartDate: startdate,
+				EndDate:   enddate,
+			})
+	}
+	for _, prange := range a.ChangePrice {
+		layout := "2006-01-02T15:04:05Z"
+		//fmt.Println("Start datum price change", request.PriceChange.Startdate)
+		startdate, err := time.Parse(layout, prange.Startdate)
+		if err != nil {
+			log.Println("Failed to parse the string of StartDate: ", err)
+			return nil
+		}
+		enddate, err := time.Parse(layout, prange.Enddate)
+		if err != nil {
+			log.Println("Failed to parse the string of EndDate: ", err)
+			return nil
+		}
+		availabilityMapped.ChangePrice = append(availabilityMapped.ChangePrice,
+			domain.PriceChange{
+				StartDate: startdate,
+				EndDate:   enddate,
+				Change:    float64(prange.Change),
+			})
+	}
+	return availabilityMapped
+}
+func mapUpdatevailability(a *availability_service.Availability) *domain.Availability {
+	accId, err := primitive.ObjectIDFromHex(a.AccommodationId)
+	if err != nil {
+		return nil
+	}
+	fmt.Println("AVAILABILITI MAPIRANJE: accID ", accId)
+	availabilityId, err := primitive.ObjectIDFromHex(a.Id)
+	if err != nil {
+		return nil
+	}
+	fmt.Println("AVAILABILITI MAPIRANJE: availabilityID ", availabilityId)
+	availabilityMapped := &domain.Availability{
+		Id:              availabilityId,
 		AccommodationId: accId,
 		Price:           float64(a.Price),
 		IsPricePerGuest: a.IsPricePerPerson,

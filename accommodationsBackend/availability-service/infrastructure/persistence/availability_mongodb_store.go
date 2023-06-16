@@ -69,6 +69,24 @@ func (store *AvailabilityMongoDBStore) filterOne(filter interface{}) (a *domain.
 	err = result.Decode(&a)
 	return
 }
+func (store *AvailabilityMongoDBStore) FindAvailabilitySlotsByDateRange(startDate time.Time, endDate time.Time) ([]domain.AvailabilitySlot, error) {
+	allAvailability, err := store.GetAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var slots []domain.AvailabilitySlot
+
+	for _, availability := range allAvailability {
+		for _, slot := range availability.AvailableSlots {
+			if slot.StartDate.After(startDate) && slot.EndDate.Before(endDate) {
+				slots = append(slots, slot)
+			}
+		}
+	}
+
+	return slots, nil
+}
 
 func decode(cursor *mongo.Cursor) (availabilities []*domain.Availability, err error) {
 	for cursor.Next(context.TODO()) {

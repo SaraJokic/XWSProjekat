@@ -32,6 +32,11 @@ service UserService{
       delete: "/users/delete/{id}"
     };
   }
+  rpc GetByUsername(GetRequest) returns(GetResponse) {
+    option (google.api.http) = {
+      get: "/users/getusername/{id}"
+    };
+  }
 
 
 }
@@ -85,6 +90,7 @@ message User {
   string City = 7;
   string Country = 8;
   UserType Role = 9;
+  int64 timesCancelled = 10;
 }
 
 enum UserType {

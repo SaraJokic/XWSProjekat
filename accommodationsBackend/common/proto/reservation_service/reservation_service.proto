@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+option go_package="proto/reservation_service";
+
+import "google/api/annotations.proto";
+
+service ReservationService{
+  rpc Get(GetReservationRequest) returns(GetReservationResponse) {
+    option (google.api.http) = {
+      get: "/reservations/get/{id}"
+    };
+  }
+  rpc GetAll(GetAllReservationsRequest) returns(GetAllReservationsResponse) {
+    option (google.api.http) = {
+      get: "/reservations"
+    };
+  }
+  rpc CreateNewReservation(CreateReservationRequest) returns(CreateReservationResponse) {
+    option (google.api.http) = {
+      post: "/reservations/create"
+      body: "*"
+    };
+  }
+  rpc UpdateReservation(UpdateReservationRequest) returns (UpdateReservationResponse) {
+    option (google.api.http) = {
+      put: "/reservations/update"
+      body: "*"
+    };
+  }
+  rpc DeleteReservation(DeleteReservationRequest) returns (DeleteReservationResponse) {
+    option (google.api.http) = {
+      delete: "/reservations/delete/{id}"
+    };
+  }
+  rpc GetReservationByUserId(GetReservationByUserIdRequest) returns(GetAllReservationsResponse) {
+    option (google.api.http) = {
+      get: "/reservations/get/userid/{id}"
+    };
+  }
+  rpc GetByAccommodationId(GetReservationByAccIdRequest) returns(GetAllReservationsResponse) {
+    option (google.api.http) = {
+      get: "/reservations/get/accommodationid/{id}"
+    };
+  }
+  rpc ChangeStatusReservation(ChangeStatusReservationRequest) returns (ChangeStatusReservationResponse) {
+    option (google.api.http) = {
+      put: "/reservations/changestatus"
+      body: "*"
+    };
+  }
+}
+message GetReservationByUserIdRequest{
+  string id = 1;
+}
+message GetReservationByAccIdRequest{
+  string id = 1;
+}
+message ChangeStatusReservationRequest{
+  string id = 1;
+  int64 status = 2;
+}
+message ChangeStatusReservationResponse{
+  string message = 1;
+}
+message DeleteReservationRequest{
+  string id = 1;
+}
+
+message DeleteReservationResponse{
+  string message = 1;
+}
+
+message UpdateReservationRequest{
+  string id = 1;
+  Reservation reservation = 2;
+}
+
+message UpdateReservationResponse {
+  Reservation reservation = 1;
+}
+
+message GetReservationRequest {
+  string id = 1;
+}
+
+message GetReservationResponse {
+  Reservation reservation = 1;
+}
+
+message GetAllReservationsRequest {
+}
+
+message GetAllReservationsResponse {
+  repeated Reservation reservations = 1;
+}
+
+message CreateReservationRequest {
+  string guestId = 2;
+  string accommodationId = 3;
+  string startDate = 4;
+  string endDate = 5;
+  int64 numOfGuests = 6;
+  Status status = 7;
+}
+message CreateReservationResponse {
+  string id = 1;
+}
+
+message Reservation {
+  string id = 1;
+  string guestId = 2;
+  string accommodationId = 3;
+  string startDate = 4;
+  string endDate = 5;
+  int64 numOfGuests = 6;
+  Status status = 7;
+}
+
+enum Status {
+  Pending = 0;
+  Approved = 1;
+  Denied = 2;
+}

@@ -44,7 +44,52 @@ service AvailabilityService{
       body: "*"
     };
   }
+  rpc UpdateAvailability(UpdateAvailabilityRequest) returns (UpdateAvailabilityResponse) {
+    option (google.api.http) = {
+      put: "/availability/update"
+      body: "*"
+    };
+  }
+  rpc UpdateAfterReservation(UpdateAfterReservationRequest) returns (UpdateAfterReservationResponse) {
+    option (google.api.http) = {
+      put: "/availability/updateafter"
+      body: "*"
+    };
+  }
+  rpc Search(SearchAvailabilityRequest) returns (SearchAvailabilityResponse) {
+    option (google.api.http) = {
+      post: "/availability/search"
+      body: "*"
+    };
+  }
+}
 
+message SearchAvailabilityRequest {
+  string location = 1;
+  int32 guests = 2;
+  string start_date = 3;
+  string end_date = 4;
+}
+
+message SearchAvailabilityResponse {
+
+}
+
+
+message UpdateAfterReservationRequest{
+  string selectedStartDate = 1;
+  string selectedEndDate = 2;
+  string id = 3;
+}
+message UpdateAfterReservationResponse{
+  string message = 1;
+}
+message UpdateAvailabilityRequest{
+  string id = 1;
+  Availability availability = 2;
+}
+message UpdateAvailabilityResponse{
+  Availability availability = 1;
 }
 message CreateNewAvailabilityRequest{
   string accommodationId = 2;

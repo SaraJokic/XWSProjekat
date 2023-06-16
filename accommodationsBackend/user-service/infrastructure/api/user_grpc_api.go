@@ -1,14 +1,20 @@
 package api
 
 import (
+	auth_service "accommodationsBackend/common/proto/auth-service"
+	"accommodationsBackend/common/proto/reservation_service"
 	"accommodationsBackend/common/proto/user_service"
 	"accommodationsBackend/user-service/application"
+	"accommodationsBackend/user-service/domain"
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
+	"log"
 )
 
 type UserHandler struct {
@@ -41,7 +47,6 @@ func (handler *UserHandler) Get(ctx context.Context, request *user_service.GetRe
 
 func (handler *UserHandler) Register(ctx context.Context, request *user_service.RegisterRequest) (*user_service.RegisterResponse, error) {
 	newUser := request.User
-	fmt.Println("usao sam u register funjciju, a oo je newUser", request.User.Name)
 	exists, err := handler.service.CheckIfEmailAndUsernameExist(newUser.Email, newUser.Username)
 	if err != nil {
 		return nil, err
@@ -51,45 +56,49 @@ func (handler *UserHandler) Register(ctx context.Context, request *user_service.
 		return response, nil
 	}
 
-	/*	hashedPassword, err := p.HashPassword(newUser.Password)
-		if err != nil {
-			p.logger.Print("Error while hashing password:", err)
-			http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
-			return
-		}
-
-		newUser.Password = hashedPassword*/
-
 	hashedPassword, err := handler.HashPassword(newUser.Password)
 	if err != nil {
 		response := &user_service.RegisterResponse{Message: "Hashing password unsuccesfull"}
 		return response, nil
 	}
 	newUser.Password = hashedPassword
-	fmt.Println("ovo je newUser", newUser)
 
 	userMapped := reverseMapUser(newUser)
 	userMapped.Id = primitive.NewObjectID()
-	fmt.Println("ovo je userMaped", userMapped)
 	err = handler.service.Register(userMapped)
 	if err != nil {
 		return nil, err
 	}
+	client := NewAuthClient()
+
+	client.Insert(context.Background(), &auth_service.InsertRequest{Username: userMapped.Username, Password: userMapped.Password, Role: handler.MapRole(userMapped.Role)})
+
 	response := &user_service.RegisterResponse{Message: "Registration successful!"}
 	return response, nil
 
 }
+func (handler *UserHandler) MapRole(role domain.UserType) string {
+	if role == domain.Customer {
+		return "Customer"
+	}
+	return "Admin"
+}
+
 func (handler *UserHandler) HashPassword(password string) (string, error) {
 	passwordbytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	return string(passwordbytes), err
 }
-
+func NewAuthClient() auth_service.AuthServiceClient {
+	conn, err := grpc.Dial("auth-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection to Accommodation service: %v", err)
+	}
+	return auth_service.NewAuthServiceClient(conn)
+}
 func (handler *UserHandler) UpdateUser(ctx context.Context, request *user_service.UpdateRequest) (*user_service.UpdateResponse, error) {
 	id := request.UserId // ID korisnika koji se ažurira
 	user := request.User // Novi podaci korisnika
-	fmt.Println("ovo je user sa id-em", id, user.Username)
 	userMapped := reverseMapUser(user)
-	fmt.Println("ovo je mapirani user", userMapped.Username)
 	err := handler.service.UpdateUser(id, userMapped) // Ažuriranje korisnika u repozitorijumu
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Failed to update user") // Vraćanje greške ako ažuriranje nije uspelo
@@ -113,6 +122,26 @@ func (handler *UserHandler) UpdateUser(ctx context.Context, request *user_servic
 func (handler *UserHandler) DeleteUser(ctx context.Context, request *user_service.DeleteRequest) (*user_service.DeleteResponse, error) {
 	id := request.Id
 
+	user, _ := handler.Get(context.Background(), &user_service.GetRequest{Id: id})
+	fmt.Println("USER: ovo je nadjen user:", user)
+	fmt.Println("Username nadjenog usera: ", user.User.Username)
+	client := NewAuthClient()
+	auth, _ := client.GetAuthByUsername(context.Background(), &auth_service.GetAuthRequest{Id: user.User.Username})
+	fmt.Println("USER: nadjen auth user: ", auth)
+	client.DeleteAuthUser(context.Background(), &auth_service.DeleteAuthRequest{Id: auth.User.Id})
+
+	rClient := NewReservationClient()
+	reservations, _ := rClient.GetReservationByUserId(context.Background(), &reservation_service.GetReservationByUserIdRequest{
+		Id: user.User.Id,
+	})
+	for _, r := range reservations.Reservations {
+		_, err := rClient.DeleteReservation(context.Background(), &reservation_service.DeleteReservationRequest{Id: r.Id})
+		if err != nil {
+			// Handle the error
+			fmt.Printf("Failed to delete reservation with ID %s: %v\n", r.Id, err)
+		}
+	}
+
 	err := handler.service.Delete(id)
 	if err != nil {
 		return &user_service.DeleteResponse{Message: "User delete failed"}, nil
@@ -132,4 +161,22 @@ func (handler *UserHandler) GetAll(ctx context.Context, request *user_service.Ge
 		response.Users = append(response.Users, current)
 	}
 	return response, nil
+}
+func (handler *UserHandler) GetByUsername(ctx context.Context, request *user_service.GetRequest) (*user_service.GetResponse, error) {
+	user, err := handler.service.GetByUsername(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	userMapped := mapUser(user)
+	response := &user_service.GetResponse{
+		User: userMapped,
+	}
+	return response, nil
+}
+func NewReservationClient() reservation_service.ReservationServiceClient {
+	conn, err := grpc.Dial("reservation-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection to Accommodation service: %v", err)
+	}
+	return reservation_service.NewReservationServiceClient(conn)
 }

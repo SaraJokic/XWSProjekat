@@ -56,7 +56,7 @@ func (handler *AuthHandler) Login(ctx context.Context, request *auth_service.Log
 	claims.Role = user.Role
 
 	var tokenCreationTime = time.Now().UTC()
-	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Second)
+	var expirationTime = tokenCreationTime.Add(time.Duration(2) * time.Hour)
 	tokenString, err := jwt.GenerateToken(claims, expirationTime)
 
 	if err != nil {
@@ -94,31 +94,54 @@ func (handler *AuthHandler) GetAll(ctx context.Context, request *auth_service.Al
 }
 
 /*
-func (handler *AuthHandler) ValidateToken(next http.HandlerFunc) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		authorizationHeader := r.Header.Get("Authorization")
-		if authorizationHeader == "" {
-			http.Error(w, "Empty string", http.StatusUnauthorized)
-			return
-		}
-		headerParts := strings.Split(authorizationHeader, " ")
-		if len(headerParts) != 2 || headerParts[0] != "Bearer" {
-			http.Error(w, "split didnt work", http.StatusUnauthorized)
-			return
-		}
-		tokenString := headerParts[1]
+	func (handler *AuthHandler) ValidateToken(next http.HandlerFunc) http.HandlerFunc {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			authorizationHeader := r.Header.Get("Authorization")
+			if authorizationHeader == "" {
+				http.Error(w, "Empty string", http.StatusUnauthorized)
+				return
+			}
+			headerParts := strings.Split(authorizationHeader, " ")
+			if len(headerParts) != 2 || headerParts[0] != "Bearer" {
+				http.Error(w, "split didnt work", http.StatusUnauthorized)
+				return
+			}
+			tokenString := headerParts[1]
 
-		valid, claims := jwt.VerifyToken(tokenString)
-		if !valid {
-			http.Error(w, "token not verified", http.StatusUnauthorized)
-			return
-		}
+			valid, claims := jwt.VerifyToken(tokenString)
+			if !valid {
+				http.Error(w, "token not verified", http.StatusUnauthorized)
+				return
+			}
 
-		ctx := context.WithValue(r.Context(), "Id", claims.Id)
-		ctx = context.WithValue(ctx, "Name", claims.Name)
-		ctx = context.WithValue(ctx, "Username", claims.Username)
+			ctx := context.WithValue(r.Context(), "Id", claims.Id)
+			ctx = context.WithValue(ctx, "Name", claims.Name)
+			ctx = context.WithValue(ctx, "Username", claims.Username)
 
-		next.ServeHTTP(w, r.WithContext(ctx))
-	})
-}
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
+	}
 */
+func (handler *AuthHandler) GetAuthByUsername(ctx context.Context, request *auth_service.GetAuthRequest) (*auth_service.GetAuthResponse, error) {
+	fmt.Println("EVO USAU U AUTH")
+	user, err := handler.service.GetByUsername(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println("AUTH: nadjen user: ", user)
+	userMapped := mapUser(user)
+	fmt.Println("AUTH: mapiran user:", userMapped)
+	response := &auth_service.GetAuthResponse{
+		User: userMapped,
+	}
+	return response, nil
+}
+func (handler *AuthHandler) DeleteAuthUser(ctx context.Context, request *auth_service.DeleteAuthRequest) (*auth_service.DeleteAuthResponse, error) {
+	id := request.Id
+
+	err := handler.service.Delete(id)
+	if err != nil {
+		return &auth_service.DeleteAuthResponse{Message: "User delete failed"}, nil
+	}
+	return &auth_service.DeleteAuthResponse{Message: "Auth User deleted"}, nil
+}

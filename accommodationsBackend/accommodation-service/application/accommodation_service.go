@@ -3,6 +3,7 @@ package application
 import (
 	"accommodationsBackend/accommodations-service/domain"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
 )
 
 type AccommodationService struct {
@@ -31,4 +32,19 @@ func (service *AccommodationService) Create(acc *domain.Accommodation) error {
 }
 func (service *AccommodationService) DeleteAll() {
 	service.store.DeleteAll()
+}
+func (service *AccommodationService) GetAccommodationByUserId(id primitive.ObjectID) ([]*domain.Accommodation, error) {
+	return service.store.GetAccommodationByUserId(id)
+}
+func (service *AccommodationService) UpdateAccommodation(id string, accommodation *domain.Accommodation) error {
+	return service.store.UpdateAccommodation(id, accommodation)
+}
+func (service *AccommodationService) GetAccommodationByLocation(location string) ([]*domain.Accommodation, error) {
+	return service.store.GetAccommodationByLocation(location)
+}
+func (service *AccommodationService) GetAccommodationByNumberOfGuests(guest int) ([]*domain.Accommodation, error) {
+	return service.store.GetAccommodationByNumberOfGuests(guest)
+}
+func (service *AccommodationService) GetAccommodationByDateRange(startDate, endDate time.Time) ([]*domain.Accommodation, error) {
+	return service.store.GetAccommodationByDateRange(startDate, endDate)
 }
