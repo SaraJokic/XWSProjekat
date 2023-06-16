@@ -17,15 +17,12 @@
           <input type="text" name="country" placeholder="Enter City" id="city" required [(ngModel)]="city">
           <p>Password</p>
           <input type="password" name="sifra" placeholder="Enter Password" id="sifra" required [(ngModel)]="sifra">
+            
+          <p>Are you making an account for host?</p>
+            <label>
+              <input type="checkbox" name="isHost" [(ngModel)]="isHost">
+            </label>
 
           <input type="submit" name="submit" value="Register"  [disabled]="!ime || !prezime || !korisnickoIme || !email || !sifra ">
-
-          <br>
-          <br>
-          <div class="signup">
-          <span class="signup">Already have an account?
-            <label (click)="redirect()">Sign in</label>
-          </span> 
-        </div>
           </form>
 

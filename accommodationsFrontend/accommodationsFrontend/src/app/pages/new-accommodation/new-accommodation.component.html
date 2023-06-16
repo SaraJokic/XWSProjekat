@@ -33,6 +33,20 @@
     Maximum Guests:
     <input type="number" formControlName="maxguests">
   </label>
+  <div>
+    <label for="imageUpload">Add Images:</label>
+    <input id="imageUpload" type="file" (change)="handleImageUpload($event)" multiple>
+  
+  </div>
+  <label>
+    Description:
+    <input type="text" formControlName="description">
+  </label>
+  <label>
+    <input type="checkbox" formControlName="automaticApprove">
+    Approve requests automatically
+  </label>
+
 
   <h2>Availability</h2>
 
@@ -49,9 +63,9 @@
           End Date:
           <input type="date" formControlName="endDate">
         </label>
-        <button type="button" (click)="removeAvailabilitySlot(i)">Remove Slot</button>
+        <button mat-raised-button type="button" (click)="removeAvailabilitySlot(i)">Remove Slot</button>
       </div>
-      <button type="button" (click)="addAvailabilitySlot()">Add Slot</button>
+      <button mat-raised-button type="button" (click)="addAvailabilitySlot()">Add Slot</button>
     </div>
 
     <label>
@@ -79,11 +93,11 @@
           Change:
           <input type="number" formControlName="change">
         </label>
-        <button type="button" (click)="removePriceChange(i)">Remove Change</button>
+        <button mat-raised-button type="button" (click)="removePriceChange(i)">Remove Change</button>
       </div>
-      <button type="button" (click)="addPriceChange()">Add Change</button>
+      <button mat-raised-button type="button" (click)="addPriceChange()">Add Change</button>
     </div>
   </div>
 
-  <button type="submit">Submit</button>
+  <button mat-raised-button type="submit">Submit</button>
 </form>

@@ -8,4 +8,5 @@ export interface User {
     City: string,
     Country: string,
     Role: number
+    timesCancelled: number,
 }

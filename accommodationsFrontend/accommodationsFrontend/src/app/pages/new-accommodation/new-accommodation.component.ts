@@ -1,10 +1,16 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Accommodation } from 'src/app/model/accommodation';
 import { AccommodationAvailability, AvailabilitySlot, PriceChange } from 'src/app/model/accommodation-availability';
 import { CreateAccommodationDto } from 'src/app/model/create-accommodation-dto';
+import { LoggedUserInfo } from 'src/app/model/logged-user-info';
+import { User } from 'src/app/model/user';
 import { AccommodationServiceService } from 'src/app/services/accommodation-service.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AvailabilityServiceService } from 'src/app/services/availability-service.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-new-accommodation',
@@ -14,12 +20,37 @@ import { AvailabilityServiceService } from 'src/app/services/availability-servic
 export class NewAccommodationComponent implements OnInit {
   accommodationForm: FormGroup;
   newaccommodationID: string | undefined;
+  selectedImages: File[] = [];
+  accImages: string[] = [];
+  slots: AvailabilitySlot[] = [];
+  pricechanges: PriceChange[] = [];
+  user: User = {
+    Name: '',
+    LastName: '',
+    City: '',
+    Country: '',
+    Username: '',
+    Password: '',
+    Role: 0,
+    Email: '',
+    id: '',
+    timesCancelled: 0
+  };
+  logedUser: LoggedUserInfo = {
+    id: "",
+    username: "",
+    role: "",
+    name: ''
+  };
   
   constructor(private accommodationService: AccommodationServiceService, private fb: FormBuilder
-    , private availabilityService: AvailabilityServiceService) {
+    , private availabilityService: AvailabilityServiceService, private userService: UserService,
+    private router: Router, private authService: AuthService) {
     this.accommodationForm = this.fb.group({
       name: ['', Validators.required],
       location: ['', Validators.required],
+      description: ['', Validators.required],
+      automaticApprove: false,
       benefits: this.fb.group({
         wifi: false,
         freeParking: false,
@@ -38,19 +69,30 @@ export class NewAccommodationComponent implements OnInit {
    }
 
   ngOnInit(): void {
-  }
-  checkIfNull(){
-    const slotovi = this.accommodationForm?.get('availability.availableSlots')?.value;
-    
-  }
-  onSubmit() {
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
 
+    this.getUser();
+  }
+  getUser(){
+    this.userService.getUserByUsername(this.logedUser.username).subscribe(
+      (data) => {
+        this.user = data.user
+      }
+    );
+  }
+  
+  onSubmit() {
+    
     const accommodation: Accommodation = {
       name: this.accommodationForm?.get('name')?.value,
       location: this.accommodationForm?.get('location')?.value,
       benefits: this.accommodationForm?.get('benefits')?.value,
       minGuests: this.accommodationForm?.get('minguests')?.value, 
       maxGuests: this.accommodationForm?.get('maxguests')?.value, 
+      description: this.accommodationForm?.get('description')?.value, 
+      pictures: this.accImages,
+      hostId: this.user.id,
+      automaticApprove: this.accommodationForm?.get('automaticApprove')?.value, 
     };
     const availabilityFormData: AccommodationAvailability = {
       accommodationId: "",
@@ -66,27 +108,39 @@ export class NewAccommodationComponent implements OnInit {
         change: change.change,
       })),
     };
+    if (this.accommodationForm?.get('availability.availableSlots')?.value.length === 0){
+      availabilityFormData.availableSlots = this.slots;
+    }
+    if (this.accommodationForm?.get('availability.changePrice')?.value.length === 0){
+      availabilityFormData.changePrice = this.pricechanges;
+    }
     console.log(accommodation)
     console.log(availabilityFormData)
     console.log(this.accommodationForm.get('availability.changePrice')?.value);
-      this.accommodationService.createAccommodation(accommodation).subscribe(
-        response => {
-          console.log(response);
-          this.newaccommodationID = response.id;
-        },
-        error => {
-          console.log(error);
-        }
-    );
-    availabilityFormData.accommodationId = this.newaccommodationID || " ";
-    this.availabilityService.createNewAvailability(availabilityFormData).subscribe(
+    this.accommodationService.createAccommodation(accommodation).subscribe(
       response => {
         console.log(response);
+        this.newaccommodationID = response.id;
+    
+        setTimeout(() => {
+    
+          availabilityFormData.accommodationId = this.newaccommodationID || " ";
+          this.availabilityService.createNewAvailability(availabilityFormData).subscribe(
+            response => {
+              console.log(response);
+              this.router.navigate(["/myaccommodations"]);
+              
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        }, 2000);
       },
       error => {
         console.log(error);
       }
-  );
+    );
   }
   get availabilitySlots() {
     return this.accommodationForm.get('availability.availableSlots') as FormArray;
@@ -122,6 +176,14 @@ export class NewAccommodationComponent implements OnInit {
       endDate: ['', Validators.required],
       change: ['', Validators.required]
     }));
+  }
+  handleImageUpload(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.selectedImages = Array.from(inputElement.files || []);
+    for(let i = 0; i < this.selectedImages.length; i++){
+      this.accImages.push('/assets/' + this.selectedImages[i].name)
+    }
+    console.log("selektovane slike: ", this.accImages)
   }
     
 

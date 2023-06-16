@@ -1,4 +1,5 @@
 export interface AccommodationAvailability {
+    id?: string
     accommodationId: string;
     availableSlots: AvailabilitySlot[];
     price: number;

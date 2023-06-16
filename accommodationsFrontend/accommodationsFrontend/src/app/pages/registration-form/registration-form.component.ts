@@ -26,19 +26,25 @@ export class RegistrationFormComponent {
   email:any;
   city:any;
   country:any;
+  isHost: boolean = false;
 
 
   registerUser(user: any){
     let newUser: User = {
-    id: "",
-    Username: this.korisnickoIme,
-    Password: this.sifra,
-    Email: this.email,
-    Name: this.ime,
-    LastName: this.prezime,
-    Role: 0,
-    City: this.city,
-    Country:this.country
+      id: "",
+      Username: this.korisnickoIme,
+      Password: this.sifra,
+      Email: this.email,
+      Name: this.ime,
+      LastName: this.prezime,
+      Role: 0,
+      City: this.city,
+      Country: this.country,
+      timesCancelled: 0
+    }
+    console.log(typeof this.isHost)
+    if(this.isHost == true){
+      newUser.Role = 1;
     }
     let request: RegisterUserRequest = {
       user: newUser
@@ -48,7 +54,7 @@ export class RegistrationFormComponent {
     this.registrationService.add(request).subscribe(
       (data) => {
         alert(data.message);
-        //this.router.navigate(["/login"]);
+        this.router.navigate(["/login"]);
       },
       (error: HttpErrorResponse) => {
         alert("Username or email are already taken");

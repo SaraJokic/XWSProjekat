@@ -4,12 +4,15 @@
     </span>
     <span class="spacer"></span>
        
-        <a mat-button  class="NavBarButton" routerLink="/register" >Register</a>
-        <a mat-button  class="NavBarButton" routerLink="/login" >Login</a>
-        <a mat-button  class="NavBarButton" routerLink="/new/accommodation" >List your Accommodation</a>
-        <a mat-button  class="NavBarButton" routerLink="/myprofile" >My profile</a>
-        <a mat-button  class="NavBarButton" routerLink="userLogin" class="nav-link" (click)="logout()">Logout</a>
+        <a mat-button  class="NavBarButton" routerLink="/register" *ngIf="userRole === 'ROLE_NOTAUTH'" >Register</a>
+        <a mat-button  class="NavBarButton" routerLink="/login" *ngIf="userRole === 'ROLE_NOTAUTH'" >Login</a>
+        <a mat-button  class="NavBarButton" routerLink="/new/accommodation" *ngIf="userRole === 'Admin' || userRole === 'admin'">List your Accommodation</a>
+        <a mat-button  class="NavBarButton" routerLink="/myprofile" *ngIf="userRole != 'ROLE_NOTAUTH'" >My profile</a>
+        <a mat-button  class="NavBarButton" routerLink="/myaccommodations" *ngIf="userRole === 'Admin' || userRole === 'admin'">My accommodations</a>
+        <a mat-button  class="NavBarButton" routerLink="/myreservationrequests" *ngIf="userRole === 'Customer' || userRole === 'customer'">My reservations</a>
+        <a mat-button  class="NavBarButton" routerLink="userLogin" class="nav-link" *ngIf="userRole != 'ROLE_NOTAUTH'" (click)="logout()">Logout</a>
           
+
        
 </mat-toolbar>
 
