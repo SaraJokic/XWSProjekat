@@ -7,32 +7,32 @@ import "google/api/annotations.proto";
 service RatingService{
   rpc GetRateAccommodation(GetRateAccommodationRequest) returns(GetRateAccommodationResponse) {
     option (google.api.http) = {
-      get: "/ratings/get/hostrating/{id}"
+      get: "/ratings/get/accommodation/{id}"
     };
   }
   rpc GetRateHost(GetRateHostRequest) returns(GetRateHostResponse) {
     option (google.api.http) = {
-      get: "/ratings/get/accrating/{id}"
+      get: "/ratings/get/host/{id}"
     };
   }
   rpc GetHostRatingsByGuestId(GetRateHostByGuestRequest) returns(GetRateHostByGuestResponse) {
     option (google.api.http) = {
-      get: "/ratings/getbyguest/hostrating/{id}"
+      get: "/ratings/getbyguest/host/{id}"
     };
   }
   rpc GetAccommodationsRatingsByGuestId(GetRateAccommodationByGuestRequest) returns(GetRateAccommodationByGuestResponse) {
     option (google.api.http) = {
-      get: "/ratings/getbyguest/accrating/{id}"
+      get: "/ratings/getbyguest/accommodation/{id}"
     };
   }
   rpc GetAccommodationsRatingsByAccommodationId(GetRateAccommodationByAccommodationRequest) returns(GetRateAccommodationByAccommodationResponse) {
     option (google.api.http) = {
-      get: "/ratings/getbyacc/accrating/{id}"
+      get: "/ratings/getbyacc/accommodation/{id}"
     };
   }
   rpc GetHostRatingsByHostId(GetRateHostByHostRequest) returns(GetRateHostByHostResponse) {
     option (google.api.http) = {
-      get: "/ratings/getbyhost/hostrating/{id}"
+      get: "/ratings/getbyhost/host/{id}"
     };
   }
   rpc UpdateAccommodationRating(UpdateAccommodationRatingRequest) returns (UpdateAccommodationRatingResponse) {

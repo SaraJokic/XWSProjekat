@@ -69,7 +69,7 @@ func (store *RatingsMongoDBStore) InsertAccommodationRating(ratingAccommodation 
 }
 
 func (store *RatingsMongoDBStore) InsertHostRating(ratingHost *domain.RateHost) error {
-	result, err := store.accommodations.InsertOne(context.TODO(), ratingHost)
+	result, err := store.hosts.InsertOne(context.TODO(), ratingHost)
 	if err != nil {
 		return err
 	}

@@ -493,7 +493,7 @@ func RegisterRatingServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetRateAccommodation", runtime.WithHTTPPathPattern("/ratings/get/hostrating/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetRateAccommodation", runtime.WithHTTPPathPattern("/ratings/get/accommodation/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -518,7 +518,7 @@ func RegisterRatingServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetRateHost", runtime.WithHTTPPathPattern("/ratings/get/accrating/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetRateHost", runtime.WithHTTPPathPattern("/ratings/get/host/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -543,7 +543,7 @@ func RegisterRatingServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetHostRatingsByGuestId", runtime.WithHTTPPathPattern("/ratings/getbyguest/hostrating/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetHostRatingsByGuestId", runtime.WithHTTPPathPattern("/ratings/getbyguest/host/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -568,7 +568,7 @@ func RegisterRatingServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetAccommodationsRatingsByGuestId", runtime.WithHTTPPathPattern("/ratings/getbyguest/accrating/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetAccommodationsRatingsByGuestId", runtime.WithHTTPPathPattern("/ratings/getbyguest/accommodation/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -593,7 +593,7 @@ func RegisterRatingServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetAccommodationsRatingsByAccommodationId", runtime.WithHTTPPathPattern("/ratings/getbyacc/accrating/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetAccommodationsRatingsByAccommodationId", runtime.WithHTTPPathPattern("/ratings/getbyacc/accommodation/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -618,7 +618,7 @@ func RegisterRatingServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetHostRatingsByHostId", runtime.WithHTTPPathPattern("/ratings/getbyhost/hostrating/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/.RatingService/GetHostRatingsByHostId", runtime.WithHTTPPathPattern("/ratings/getbyhost/host/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -782,7 +782,7 @@ func RegisterRatingServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetRateAccommodation", runtime.WithHTTPPathPattern("/ratings/get/hostrating/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetRateAccommodation", runtime.WithHTTPPathPattern("/ratings/get/accommodation/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -804,7 +804,7 @@ func RegisterRatingServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetRateHost", runtime.WithHTTPPathPattern("/ratings/get/accrating/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetRateHost", runtime.WithHTTPPathPattern("/ratings/get/host/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -826,7 +826,7 @@ func RegisterRatingServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetHostRatingsByGuestId", runtime.WithHTTPPathPattern("/ratings/getbyguest/hostrating/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetHostRatingsByGuestId", runtime.WithHTTPPathPattern("/ratings/getbyguest/host/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -848,7 +848,7 @@ func RegisterRatingServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetAccommodationsRatingsByGuestId", runtime.WithHTTPPathPattern("/ratings/getbyguest/accrating/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetAccommodationsRatingsByGuestId", runtime.WithHTTPPathPattern("/ratings/getbyguest/accommodation/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -870,7 +870,7 @@ func RegisterRatingServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetAccommodationsRatingsByAccommodationId", runtime.WithHTTPPathPattern("/ratings/getbyacc/accrating/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetAccommodationsRatingsByAccommodationId", runtime.WithHTTPPathPattern("/ratings/getbyacc/accommodation/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -892,7 +892,7 @@ func RegisterRatingServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetHostRatingsByHostId", runtime.WithHTTPPathPattern("/ratings/getbyhost/hostrating/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/.RatingService/GetHostRatingsByHostId", runtime.WithHTTPPathPattern("/ratings/getbyhost/host/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1000,17 +1000,17 @@ func RegisterRatingServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 }
 
 var (
-	pattern_RatingService_GetRateAccommodation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "get", "hostrating", "id"}, ""))
+	pattern_RatingService_GetRateAccommodation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "get", "accommodation", "id"}, ""))
 
-	pattern_RatingService_GetRateHost_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "get", "accrating", "id"}, ""))
+	pattern_RatingService_GetRateHost_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "get", "host", "id"}, ""))
 
-	pattern_RatingService_GetHostRatingsByGuestId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "getbyguest", "hostrating", "id"}, ""))
+	pattern_RatingService_GetHostRatingsByGuestId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "getbyguest", "host", "id"}, ""))
 
-	pattern_RatingService_GetAccommodationsRatingsByGuestId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "getbyguest", "accrating", "id"}, ""))
+	pattern_RatingService_GetAccommodationsRatingsByGuestId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "getbyguest", "accommodation", "id"}, ""))
 
-	pattern_RatingService_GetAccommodationsRatingsByAccommodationId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "getbyacc", "accrating", "id"}, ""))
+	pattern_RatingService_GetAccommodationsRatingsByAccommodationId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "getbyacc", "accommodation", "id"}, ""))
 
-	pattern_RatingService_GetHostRatingsByHostId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "getbyhost", "hostrating", "id"}, ""))
+	pattern_RatingService_GetHostRatingsByHostId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"ratings", "getbyhost", "host", "id"}, ""))
 
 	pattern_RatingService_UpdateAccommodationRating_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"ratings", "updateacc"}, ""))
 

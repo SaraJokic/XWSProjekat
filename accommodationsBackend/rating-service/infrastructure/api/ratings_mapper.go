@@ -3,6 +3,7 @@ package api
 import (
 	"accommodationsBackend/common/proto/rating_service"
 	"accommodationsBackend/rating-service/domain"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"log"
 	"time"
@@ -37,6 +38,8 @@ func mapNewHostRating(rating *rating_service.CreateNewHostRatingRequest) *domain
 		log.Println("Failed to parse the string of EndDate: ", err)
 		return nil
 	}
+	fmt.Println("-------------------RATING MAPPING Ovo je guest id koji se cuva: ", guestId)
+	fmt.Println("-------------------RATING MAPPING Ovo je host id koji se cuva: ", hostId)
 	mapped := &domain.RateHost{
 		GuestId: guestId,
 		HostId:  hostId,
