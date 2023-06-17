@@ -6,6 +6,7 @@ import (
 	"accommodationsBackend/common/proto/accommodation_service"
 	auth_service "accommodationsBackend/common/proto/auth-service"
 	availability_service "accommodationsBackend/common/proto/availability-service"
+	"accommodationsBackend/common/proto/rating_service"
 	"accommodationsBackend/common/proto/reservation_service"
 	userGw "accommodationsBackend/common/proto/user_service"
 	"context"
@@ -61,6 +62,12 @@ func (server *Server) initHandlers() {
 
 	reservationEmdpoint := fmt.Sprintf("%s:%s", server.config.ReservationHost, server.config.ReservationPort)
 	err = reservation_service.RegisterReservationServiceHandlerFromEndpoint(context.TODO(), server.mux, reservationEmdpoint, opts)
+	if err != nil {
+		panic(err)
+	}
+
+	ratingEmdpoint := fmt.Sprintf("%s:%s", server.config.RatingHost, server.config.RatingPort)
+	err = rating_service.RegisterRatingServiceHandlerFromEndpoint(context.TODO(), server.mux, ratingEmdpoint, opts)
 	if err != nil {
 		panic(err)
 	}
