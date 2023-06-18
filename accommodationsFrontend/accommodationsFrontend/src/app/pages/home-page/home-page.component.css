@@ -1,23 +1,94 @@
 .accommodation-card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-   
-  }
-  .cards{
-    padding-top: 4%;
-  }
-  .pictures {
-    display: flex;
-  }
-  .search {
-    width: 40%;
-    margin-left: 20%;
-  }
-  .pictures img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.cards {
+  padding-top: 4%;
+}
+
+.pictures {
+  display: flex;
+}
+
+.search-filtriraj {
+  display: flex;
+}
+
+.search {
+  flex: 1;
+  width: 40%;
+  margin-left: 20%;
+}
+
+.filtriraj {
+  flex: 1;
+}
+
+.pictures img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 15px;
+}
+
+.toggle input {
+  display: none;
+}
+
+.slider-checkbox {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 17px;
+}
+
+.checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+}
+
+.checkbox:checked + .slider {
+  background-color: #2196F3;
+}
+
+.checkbox:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.checkbox:checked + .slider:before {
+  transform: translateX(26px);
+}
+
