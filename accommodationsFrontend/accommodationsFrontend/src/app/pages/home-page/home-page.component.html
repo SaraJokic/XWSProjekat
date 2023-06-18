@@ -31,8 +31,10 @@
   </div>
 
   <div class="filtriraj">
-    <div><b>Benefits:</b></div>
-    <div>
+    <b>Benefits:</b>
+    <div class="container">
+
+    <div class="benefits">
       <label>Wifi:</label>
       <label class="slider-checkbox">
         <input type="checkbox" class="checkbox" [(ngModel)]="WIFI">
@@ -50,8 +52,24 @@
         <input type="checkbox" class="checkbox" [(ngModel)]="FREEPARKING">
         <span class="slider"></span>
       </label>
+      </div>
+
+      <div class="price-range">
+
+      <mat-form-field appearance="fill">
+      <mat-label>Price Range (Min)</mat-label>
+      <input matInput type="number" [(ngModel)]="selectedPriceValue.min" name="minPrice" placeholder="Min Price"
+      min="1" onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+      <mat-label>Price Range (Max)</mat-label>
+      <input matInput type="number" [(ngModel)]="selectedPriceValue.max" name="maxPrice" placeholder="Max Price"
+       onkeyup="if(this.value<0)this.value=1" onblur="if(this.value<0)this.value=1">
+      </mat-form-field>
 
       <button mat-raised-button (click)="applyFilters()">Filter</button>
+      </div>
     </div>
   </div>
   
@@ -65,12 +83,13 @@
       <p>{{ accommodation.location }}</p>
       <p>Min Guests: {{ accommodation.minGuests }}</p>
       <p>Max Guests: {{ accommodation.maxGuests }}</p>
+      <p>Price: {{ accommodation.id ? accommodationPrices[accommodation.id] : 'N/A' }}</p>
       <p>Benefits:
         <span *ngIf="accommodation.benefits?.freeParking && onlyTrue(accommodation.benefits)">freeParking, </span>
         <span *ngIf="accommodation.benefits?.wifi && onlyTrue(accommodation.benefits)">wifi, </span>
         <span *ngIf="accommodation.benefits?.kitchen && onlyTrue(accommodation.benefits)">kitchen</span>
       </p>
-      <p>{{ accommodation.description }}</p>
+      <p> Description: {{ accommodation.description }}</p>
       <div class="pictures">
         <div *ngFor="let picture of accommodation.pictures">
           <img [src]="picture" alt="Accommodation Picture">

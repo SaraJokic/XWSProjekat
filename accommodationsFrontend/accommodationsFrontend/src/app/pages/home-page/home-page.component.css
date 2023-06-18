@@ -92,3 +92,8 @@
   transform: translateX(26px);
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adjust the desired spacing */
+}
