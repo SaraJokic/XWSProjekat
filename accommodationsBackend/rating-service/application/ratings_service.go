@@ -23,23 +23,19 @@ func (service *RatingsService) GetRateAccommodation(id primitive.ObjectID) (*dom
 }
 
 func (service *RatingsService) GetAccommodationsRatingsByGuestId(id primitive.ObjectID) ([]*domain.RateAccommodation, error) {
-	//TODO implement me
-	panic("implement me")
+	return service.store.GetAccommodationsRatingsByGuestId(id)
 }
 
 func (service *RatingsService) GetHostRatingsByGuestId(id primitive.ObjectID) ([]*domain.RateHost, error) {
-	//TODO implement me
-	panic("implement me")
+	return service.store.GetHostRatingsByGuestId(id)
 }
 
 func (service *RatingsService) GetAccommodationsRatingsByAccommodationId(id primitive.ObjectID) ([]*domain.RateAccommodation, error) {
-	//TODO implement me
-	panic("implement me")
+	return service.store.GetAccommodationsRatingsByAccommodationId(id)
 }
 
 func (service *RatingsService) GetHostRatingsByHostId(id primitive.ObjectID) ([]*domain.RateHost, error) {
-	//TODO implement me
-	panic("implement me")
+	return service.store.GetHostRatingsByHostId(id)
 }
 
 func (service *RatingsService) CreateRateHost(host *domain.RateHost) error {
@@ -56,16 +52,13 @@ func (service *RatingsService) CreateRateAccommodation(acc *domain.RateAccommoda
 }
 
 func (service *RatingsService) UpdateAccommodationRating(id string, rating *domain.RateAccommodation) error {
-	//TODO implement me
-	panic("implement me")
+	return service.store.UpdateAccommodationRating(id, rating)
 }
 
 func (service *RatingsService) UpdateHostRating(id string, rating *domain.RateHost) error {
-	//TODO implement me
-	panic("implement me")
+	return service.store.UpdateHostRating(id, rating)
 }
 
 func (service *RatingsService) DeleteAll() {
-	//TODO implement me
-	panic("implement me")
+	service.store.DeleteAll()
 }

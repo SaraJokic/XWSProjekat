@@ -29,6 +29,8 @@ const (
 	RatingService_UpdateHostRating_FullMethodName                          = "/RatingService/UpdateHostRating"
 	RatingService_CreateNewHostRating_FullMethodName                       = "/RatingService/CreateNewHostRating"
 	RatingService_CreateNewAccommodationRating_FullMethodName              = "/RatingService/CreateNewAccommodationRating"
+	RatingService_GetAvgRatingHost_FullMethodName                          = "/RatingService/GetAvgRatingHost"
+	RatingService_GetAvgAccommodationRating_FullMethodName                 = "/RatingService/GetAvgAccommodationRating"
 )
 
 // RatingServiceClient is the client API for RatingService service.
@@ -45,6 +47,8 @@ type RatingServiceClient interface {
 	UpdateHostRating(ctx context.Context, in *UpdateHostRatingRequest, opts ...grpc.CallOption) (*UpdateHostRatingResponse, error)
 	CreateNewHostRating(ctx context.Context, in *CreateNewHostRatingRequest, opts ...grpc.CallOption) (*CreateNewHostRatingResponse, error)
 	CreateNewAccommodationRating(ctx context.Context, in *CreateNewAccommodationRatingRequest, opts ...grpc.CallOption) (*CreateNewAccommodationRatingResponse, error)
+	GetAvgRatingHost(ctx context.Context, in *GetAvgHostRatingRequest, opts ...grpc.CallOption) (*GetAvgHostRatingResponse, error)
+	GetAvgAccommodationRating(ctx context.Context, in *GetAvgAccommodationRatingRequest, opts ...grpc.CallOption) (*GetAvgAccommodationRatingResponse, error)
 }
 
 type ratingServiceClient struct {
@@ -145,6 +149,24 @@ func (c *ratingServiceClient) CreateNewAccommodationRating(ctx context.Context, 
 	return out, nil
 }
 
+func (c *ratingServiceClient) GetAvgRatingHost(ctx context.Context, in *GetAvgHostRatingRequest, opts ...grpc.CallOption) (*GetAvgHostRatingResponse, error) {
+	out := new(GetAvgHostRatingResponse)
+	err := c.cc.Invoke(ctx, RatingService_GetAvgRatingHost_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ratingServiceClient) GetAvgAccommodationRating(ctx context.Context, in *GetAvgAccommodationRatingRequest, opts ...grpc.CallOption) (*GetAvgAccommodationRatingResponse, error) {
+	out := new(GetAvgAccommodationRatingResponse)
+	err := c.cc.Invoke(ctx, RatingService_GetAvgAccommodationRating_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RatingServiceServer is the server API for RatingService service.
 // All implementations must embed UnimplementedRatingServiceServer
 // for forward compatibility
@@ -159,6 +181,8 @@ type RatingServiceServer interface {
 	UpdateHostRating(context.Context, *UpdateHostRatingRequest) (*UpdateHostRatingResponse, error)
 	CreateNewHostRating(context.Context, *CreateNewHostRatingRequest) (*CreateNewHostRatingResponse, error)
 	CreateNewAccommodationRating(context.Context, *CreateNewAccommodationRatingRequest) (*CreateNewAccommodationRatingResponse, error)
+	GetAvgRatingHost(context.Context, *GetAvgHostRatingRequest) (*GetAvgHostRatingResponse, error)
+	GetAvgAccommodationRating(context.Context, *GetAvgAccommodationRatingRequest) (*GetAvgAccommodationRatingResponse, error)
 	mustEmbedUnimplementedRatingServiceServer()
 }
 
@@ -195,6 +219,12 @@ func (UnimplementedRatingServiceServer) CreateNewHostRating(context.Context, *Cr
 }
 func (UnimplementedRatingServiceServer) CreateNewAccommodationRating(context.Context, *CreateNewAccommodationRatingRequest) (*CreateNewAccommodationRatingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewAccommodationRating not implemented")
+}
+func (UnimplementedRatingServiceServer) GetAvgRatingHost(context.Context, *GetAvgHostRatingRequest) (*GetAvgHostRatingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAvgRatingHost not implemented")
+}
+func (UnimplementedRatingServiceServer) GetAvgAccommodationRating(context.Context, *GetAvgAccommodationRatingRequest) (*GetAvgAccommodationRatingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAvgAccommodationRating not implemented")
 }
 func (UnimplementedRatingServiceServer) mustEmbedUnimplementedRatingServiceServer() {}
 
@@ -389,6 +419,42 @@ func _RatingService_CreateNewAccommodationRating_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RatingService_GetAvgRatingHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAvgHostRatingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RatingServiceServer).GetAvgRatingHost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RatingService_GetAvgRatingHost_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RatingServiceServer).GetAvgRatingHost(ctx, req.(*GetAvgHostRatingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RatingService_GetAvgAccommodationRating_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAvgAccommodationRatingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RatingServiceServer).GetAvgAccommodationRating(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RatingService_GetAvgAccommodationRating_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RatingServiceServer).GetAvgAccommodationRating(ctx, req.(*GetAvgAccommodationRatingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RatingService_ServiceDesc is the grpc.ServiceDesc for RatingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -435,6 +501,14 @@ var RatingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateNewAccommodationRating",
 			Handler:    _RatingService_CreateNewAccommodationRating_Handler,
+		},
+		{
+			MethodName: "GetAvgRatingHost",
+			Handler:    _RatingService_GetAvgRatingHost_Handler,
+		},
+		{
+			MethodName: "GetAvgAccommodationRating",
+			Handler:    _RatingService_GetAvgAccommodationRating_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
