@@ -66,8 +66,6 @@ export class HomePageComponent implements OnInit {
     this.accommodationService.Search(searchQuery).subscribe(
       (accommodations) => {
         this.accommodations = accommodations.acc;
-        this.filteredAccommodations = this.accommodations; // Sa searchUpadate
-        this.applyFilters(); // Apply filters 
         console.log(accommodations);
       },
       (error: any) => {
@@ -90,10 +88,10 @@ export class HomePageComponent implements OnInit {
   applyFilters() {
     this.filteredAccommodations = this.accommodations.filter(accommodation => {
       const price = this.accommodationPrices[accommodation.id || ''];
-      const isWithinPriceRange =
-        !this.selectedPriceValue || // If no price range is selected, consider it as a match
-        (price >= this.selectedPriceValue.min && price <= this.selectedPriceValue.max);
-  
+      const isWithinPriceRange =!this.selectedPriceValue || (price >= this.selectedPriceValue.min && price <= this.selectedPriceValue.max);
+
+      console.log("Cena od " + this.selectedPriceValue.min + " do " + this.selectedPriceValue.max)
+      
       return (
         isWithinPriceRange &&
         (!this.WIFI || accommodation.benefits?.wifi) &&
