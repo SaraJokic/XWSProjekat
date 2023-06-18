@@ -21,6 +21,194 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type DeleteAccommodationRateResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Response string `protobuf:"bytes,1,opt,name=response,proto3" json:"response,omitempty"`
+}
+
+func (x *DeleteAccommodationRateResponse) Reset() {
+	*x = DeleteAccommodationRateResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rating_service_rating_service_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteAccommodationRateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteAccommodationRateResponse) ProtoMessage() {}
+
+func (x *DeleteAccommodationRateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rating_service_rating_service_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteAccommodationRateResponse.ProtoReflect.Descriptor instead.
+func (*DeleteAccommodationRateResponse) Descriptor() ([]byte, []int) {
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *DeleteAccommodationRateResponse) GetResponse() string {
+	if x != nil {
+		return x.Response
+	}
+	return ""
+}
+
+type DeleteAccommodationRateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *DeleteAccommodationRateRequest) Reset() {
+	*x = DeleteAccommodationRateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rating_service_rating_service_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteAccommodationRateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteAccommodationRateRequest) ProtoMessage() {}
+
+func (x *DeleteAccommodationRateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rating_service_rating_service_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteAccommodationRateRequest.ProtoReflect.Descriptor instead.
+func (*DeleteAccommodationRateRequest) Descriptor() ([]byte, []int) {
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *DeleteAccommodationRateRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteHostRateResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Response string `protobuf:"bytes,1,opt,name=response,proto3" json:"response,omitempty"`
+}
+
+func (x *DeleteHostRateResponse) Reset() {
+	*x = DeleteHostRateResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rating_service_rating_service_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteHostRateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteHostRateResponse) ProtoMessage() {}
+
+func (x *DeleteHostRateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rating_service_rating_service_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteHostRateResponse.ProtoReflect.Descriptor instead.
+func (*DeleteHostRateResponse) Descriptor() ([]byte, []int) {
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *DeleteHostRateResponse) GetResponse() string {
+	if x != nil {
+		return x.Response
+	}
+	return ""
+}
+
+type DeleteHostRateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *DeleteHostRateRequest) Reset() {
+	*x = DeleteHostRateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rating_service_rating_service_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteHostRateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteHostRateRequest) ProtoMessage() {}
+
+func (x *DeleteHostRateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rating_service_rating_service_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteHostRateRequest.ProtoReflect.Descriptor instead.
+func (*DeleteHostRateRequest) Descriptor() ([]byte, []int) {
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *DeleteHostRateRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 type GetAvgAccommodationRatingRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -32,7 +220,7 @@ type GetAvgAccommodationRatingRequest struct {
 func (x *GetAvgAccommodationRatingRequest) Reset() {
 	*x = GetAvgAccommodationRatingRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[0]
+		mi := &file_rating_service_rating_service_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -45,7 +233,7 @@ func (x *GetAvgAccommodationRatingRequest) String() string {
 func (*GetAvgAccommodationRatingRequest) ProtoMessage() {}
 
 func (x *GetAvgAccommodationRatingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[0]
+	mi := &file_rating_service_rating_service_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +246,7 @@ func (x *GetAvgAccommodationRatingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAvgAccommodationRatingRequest.ProtoReflect.Descriptor instead.
 func (*GetAvgAccommodationRatingRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{0}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetAvgAccommodationRatingRequest) GetId() string {
@@ -79,7 +267,7 @@ type GetAvgAccommodationRatingResponse struct {
 func (x *GetAvgAccommodationRatingResponse) Reset() {
 	*x = GetAvgAccommodationRatingResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[1]
+		mi := &file_rating_service_rating_service_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -92,7 +280,7 @@ func (x *GetAvgAccommodationRatingResponse) String() string {
 func (*GetAvgAccommodationRatingResponse) ProtoMessage() {}
 
 func (x *GetAvgAccommodationRatingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[1]
+	mi := &file_rating_service_rating_service_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -105,7 +293,7 @@ func (x *GetAvgAccommodationRatingResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use GetAvgAccommodationRatingResponse.ProtoReflect.Descriptor instead.
 func (*GetAvgAccommodationRatingResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{1}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetAvgAccommodationRatingResponse) GetAvg() float32 {
@@ -126,7 +314,7 @@ type GetAvgHostRatingRequest struct {
 func (x *GetAvgHostRatingRequest) Reset() {
 	*x = GetAvgHostRatingRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[2]
+		mi := &file_rating_service_rating_service_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -139,7 +327,7 @@ func (x *GetAvgHostRatingRequest) String() string {
 func (*GetAvgHostRatingRequest) ProtoMessage() {}
 
 func (x *GetAvgHostRatingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[2]
+	mi := &file_rating_service_rating_service_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -152,7 +340,7 @@ func (x *GetAvgHostRatingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAvgHostRatingRequest.ProtoReflect.Descriptor instead.
 func (*GetAvgHostRatingRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{2}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetAvgHostRatingRequest) GetId() string {
@@ -173,7 +361,7 @@ type GetAvgHostRatingResponse struct {
 func (x *GetAvgHostRatingResponse) Reset() {
 	*x = GetAvgHostRatingResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[3]
+		mi := &file_rating_service_rating_service_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -186,7 +374,7 @@ func (x *GetAvgHostRatingResponse) String() string {
 func (*GetAvgHostRatingResponse) ProtoMessage() {}
 
 func (x *GetAvgHostRatingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[3]
+	mi := &file_rating_service_rating_service_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -199,7 +387,7 @@ func (x *GetAvgHostRatingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAvgHostRatingResponse.ProtoReflect.Descriptor instead.
 func (*GetAvgHostRatingResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{3}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetAvgHostRatingResponse) GetAvg() float32 {
@@ -223,7 +411,7 @@ type CreateNewHostRatingRequest struct {
 func (x *CreateNewHostRatingRequest) Reset() {
 	*x = CreateNewHostRatingRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[4]
+		mi := &file_rating_service_rating_service_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -236,7 +424,7 @@ func (x *CreateNewHostRatingRequest) String() string {
 func (*CreateNewHostRatingRequest) ProtoMessage() {}
 
 func (x *CreateNewHostRatingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[4]
+	mi := &file_rating_service_rating_service_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -249,7 +437,7 @@ func (x *CreateNewHostRatingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateNewHostRatingRequest.ProtoReflect.Descriptor instead.
 func (*CreateNewHostRatingRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{4}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *CreateNewHostRatingRequest) GetGuestId() string {
@@ -291,7 +479,7 @@ type CreateNewHostRatingResponse struct {
 func (x *CreateNewHostRatingResponse) Reset() {
 	*x = CreateNewHostRatingResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[5]
+		mi := &file_rating_service_rating_service_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -304,7 +492,7 @@ func (x *CreateNewHostRatingResponse) String() string {
 func (*CreateNewHostRatingResponse) ProtoMessage() {}
 
 func (x *CreateNewHostRatingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[5]
+	mi := &file_rating_service_rating_service_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -317,7 +505,7 @@ func (x *CreateNewHostRatingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateNewHostRatingResponse.ProtoReflect.Descriptor instead.
 func (*CreateNewHostRatingResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{5}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CreateNewHostRatingResponse) GetRating() *RateHost {
@@ -341,7 +529,7 @@ type CreateNewAccommodationRatingRequest struct {
 func (x *CreateNewAccommodationRatingRequest) Reset() {
 	*x = CreateNewAccommodationRatingRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[6]
+		mi := &file_rating_service_rating_service_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -354,7 +542,7 @@ func (x *CreateNewAccommodationRatingRequest) String() string {
 func (*CreateNewAccommodationRatingRequest) ProtoMessage() {}
 
 func (x *CreateNewAccommodationRatingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[6]
+	mi := &file_rating_service_rating_service_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -367,7 +555,7 @@ func (x *CreateNewAccommodationRatingRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use CreateNewAccommodationRatingRequest.ProtoReflect.Descriptor instead.
 func (*CreateNewAccommodationRatingRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{6}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *CreateNewAccommodationRatingRequest) GetGuestId() string {
@@ -409,7 +597,7 @@ type CreateNewAccommodationRatingResponse struct {
 func (x *CreateNewAccommodationRatingResponse) Reset() {
 	*x = CreateNewAccommodationRatingResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[7]
+		mi := &file_rating_service_rating_service_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -422,7 +610,7 @@ func (x *CreateNewAccommodationRatingResponse) String() string {
 func (*CreateNewAccommodationRatingResponse) ProtoMessage() {}
 
 func (x *CreateNewAccommodationRatingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[7]
+	mi := &file_rating_service_rating_service_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -435,7 +623,7 @@ func (x *CreateNewAccommodationRatingResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use CreateNewAccommodationRatingResponse.ProtoReflect.Descriptor instead.
 func (*CreateNewAccommodationRatingResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{7}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *CreateNewAccommodationRatingResponse) GetRating() *RateAccommodation {
@@ -456,7 +644,7 @@ type GetRateHostRequest struct {
 func (x *GetRateHostRequest) Reset() {
 	*x = GetRateHostRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[8]
+		mi := &file_rating_service_rating_service_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -469,7 +657,7 @@ func (x *GetRateHostRequest) String() string {
 func (*GetRateHostRequest) ProtoMessage() {}
 
 func (x *GetRateHostRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[8]
+	mi := &file_rating_service_rating_service_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -482,7 +670,7 @@ func (x *GetRateHostRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRateHostRequest.ProtoReflect.Descriptor instead.
 func (*GetRateHostRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{8}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetRateHostRequest) GetId() string {
@@ -503,7 +691,7 @@ type GetRateAccommodationRequest struct {
 func (x *GetRateAccommodationRequest) Reset() {
 	*x = GetRateAccommodationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[9]
+		mi := &file_rating_service_rating_service_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -516,7 +704,7 @@ func (x *GetRateAccommodationRequest) String() string {
 func (*GetRateAccommodationRequest) ProtoMessage() {}
 
 func (x *GetRateAccommodationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[9]
+	mi := &file_rating_service_rating_service_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -529,7 +717,7 @@ func (x *GetRateAccommodationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRateAccommodationRequest.ProtoReflect.Descriptor instead.
 func (*GetRateAccommodationRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{9}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetRateAccommodationRequest) GetId() string {
@@ -550,7 +738,7 @@ type GetRateHostResponse struct {
 func (x *GetRateHostResponse) Reset() {
 	*x = GetRateHostResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[10]
+		mi := &file_rating_service_rating_service_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -563,7 +751,7 @@ func (x *GetRateHostResponse) String() string {
 func (*GetRateHostResponse) ProtoMessage() {}
 
 func (x *GetRateHostResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[10]
+	mi := &file_rating_service_rating_service_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -576,7 +764,7 @@ func (x *GetRateHostResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRateHostResponse.ProtoReflect.Descriptor instead.
 func (*GetRateHostResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{10}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetRateHostResponse) GetResponse() *RateHost {
@@ -597,7 +785,7 @@ type GetRateAccommodationResponse struct {
 func (x *GetRateAccommodationResponse) Reset() {
 	*x = GetRateAccommodationResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[11]
+		mi := &file_rating_service_rating_service_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -610,7 +798,7 @@ func (x *GetRateAccommodationResponse) String() string {
 func (*GetRateAccommodationResponse) ProtoMessage() {}
 
 func (x *GetRateAccommodationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[11]
+	mi := &file_rating_service_rating_service_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -623,7 +811,7 @@ func (x *GetRateAccommodationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRateAccommodationResponse.ProtoReflect.Descriptor instead.
 func (*GetRateAccommodationResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{11}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetRateAccommodationResponse) GetResponse() *RateAccommodation {
@@ -644,7 +832,7 @@ type GetRateHostByGuestRequest struct {
 func (x *GetRateHostByGuestRequest) Reset() {
 	*x = GetRateHostByGuestRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[12]
+		mi := &file_rating_service_rating_service_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -657,7 +845,7 @@ func (x *GetRateHostByGuestRequest) String() string {
 func (*GetRateHostByGuestRequest) ProtoMessage() {}
 
 func (x *GetRateHostByGuestRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[12]
+	mi := &file_rating_service_rating_service_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -670,7 +858,7 @@ func (x *GetRateHostByGuestRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRateHostByGuestRequest.ProtoReflect.Descriptor instead.
 func (*GetRateHostByGuestRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{12}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetRateHostByGuestRequest) GetId() string {
@@ -691,7 +879,7 @@ type GetRateAccommodationByGuestRequest struct {
 func (x *GetRateAccommodationByGuestRequest) Reset() {
 	*x = GetRateAccommodationByGuestRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[13]
+		mi := &file_rating_service_rating_service_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -704,7 +892,7 @@ func (x *GetRateAccommodationByGuestRequest) String() string {
 func (*GetRateAccommodationByGuestRequest) ProtoMessage() {}
 
 func (x *GetRateAccommodationByGuestRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[13]
+	mi := &file_rating_service_rating_service_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -717,7 +905,7 @@ func (x *GetRateAccommodationByGuestRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use GetRateAccommodationByGuestRequest.ProtoReflect.Descriptor instead.
 func (*GetRateAccommodationByGuestRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{13}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetRateAccommodationByGuestRequest) GetId() string {
@@ -738,7 +926,7 @@ type GetRateHostByGuestResponse struct {
 func (x *GetRateHostByGuestResponse) Reset() {
 	*x = GetRateHostByGuestResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[14]
+		mi := &file_rating_service_rating_service_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -751,7 +939,7 @@ func (x *GetRateHostByGuestResponse) String() string {
 func (*GetRateHostByGuestResponse) ProtoMessage() {}
 
 func (x *GetRateHostByGuestResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[14]
+	mi := &file_rating_service_rating_service_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -764,7 +952,7 @@ func (x *GetRateHostByGuestResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRateHostByGuestResponse.ProtoReflect.Descriptor instead.
 func (*GetRateHostByGuestResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{14}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GetRateHostByGuestResponse) GetResponse() []*RateHost {
@@ -785,7 +973,7 @@ type GetRateAccommodationByGuestResponse struct {
 func (x *GetRateAccommodationByGuestResponse) Reset() {
 	*x = GetRateAccommodationByGuestResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[15]
+		mi := &file_rating_service_rating_service_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -798,7 +986,7 @@ func (x *GetRateAccommodationByGuestResponse) String() string {
 func (*GetRateAccommodationByGuestResponse) ProtoMessage() {}
 
 func (x *GetRateAccommodationByGuestResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[15]
+	mi := &file_rating_service_rating_service_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -811,7 +999,7 @@ func (x *GetRateAccommodationByGuestResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GetRateAccommodationByGuestResponse.ProtoReflect.Descriptor instead.
 func (*GetRateAccommodationByGuestResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{15}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GetRateAccommodationByGuestResponse) GetResponse() []*RateAccommodation {
@@ -832,7 +1020,7 @@ type GetRateHostByHostRequest struct {
 func (x *GetRateHostByHostRequest) Reset() {
 	*x = GetRateHostByHostRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[16]
+		mi := &file_rating_service_rating_service_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -845,7 +1033,7 @@ func (x *GetRateHostByHostRequest) String() string {
 func (*GetRateHostByHostRequest) ProtoMessage() {}
 
 func (x *GetRateHostByHostRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[16]
+	mi := &file_rating_service_rating_service_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -858,7 +1046,7 @@ func (x *GetRateHostByHostRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRateHostByHostRequest.ProtoReflect.Descriptor instead.
 func (*GetRateHostByHostRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{16}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetRateHostByHostRequest) GetId() string {
@@ -879,7 +1067,7 @@ type GetRateAccommodationByAccommodationRequest struct {
 func (x *GetRateAccommodationByAccommodationRequest) Reset() {
 	*x = GetRateAccommodationByAccommodationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[17]
+		mi := &file_rating_service_rating_service_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -892,7 +1080,7 @@ func (x *GetRateAccommodationByAccommodationRequest) String() string {
 func (*GetRateAccommodationByAccommodationRequest) ProtoMessage() {}
 
 func (x *GetRateAccommodationByAccommodationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[17]
+	mi := &file_rating_service_rating_service_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -905,7 +1093,7 @@ func (x *GetRateAccommodationByAccommodationRequest) ProtoReflect() protoreflect
 
 // Deprecated: Use GetRateAccommodationByAccommodationRequest.ProtoReflect.Descriptor instead.
 func (*GetRateAccommodationByAccommodationRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{17}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GetRateAccommodationByAccommodationRequest) GetId() string {
@@ -926,7 +1114,7 @@ type GetRateHostByHostResponse struct {
 func (x *GetRateHostByHostResponse) Reset() {
 	*x = GetRateHostByHostResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[18]
+		mi := &file_rating_service_rating_service_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -939,7 +1127,7 @@ func (x *GetRateHostByHostResponse) String() string {
 func (*GetRateHostByHostResponse) ProtoMessage() {}
 
 func (x *GetRateHostByHostResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[18]
+	mi := &file_rating_service_rating_service_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -952,7 +1140,7 @@ func (x *GetRateHostByHostResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRateHostByHostResponse.ProtoReflect.Descriptor instead.
 func (*GetRateHostByHostResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{18}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GetRateHostByHostResponse) GetResponse() []*RateHost {
@@ -973,7 +1161,7 @@ type GetRateAccommodationByAccommodationResponse struct {
 func (x *GetRateAccommodationByAccommodationResponse) Reset() {
 	*x = GetRateAccommodationByAccommodationResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[19]
+		mi := &file_rating_service_rating_service_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -986,7 +1174,7 @@ func (x *GetRateAccommodationByAccommodationResponse) String() string {
 func (*GetRateAccommodationByAccommodationResponse) ProtoMessage() {}
 
 func (x *GetRateAccommodationByAccommodationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[19]
+	mi := &file_rating_service_rating_service_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -999,7 +1187,7 @@ func (x *GetRateAccommodationByAccommodationResponse) ProtoReflect() protoreflec
 
 // Deprecated: Use GetRateAccommodationByAccommodationResponse.ProtoReflect.Descriptor instead.
 func (*GetRateAccommodationByAccommodationResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{19}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GetRateAccommodationByAccommodationResponse) GetResponse() []*RateAccommodation {
@@ -1021,7 +1209,7 @@ type UpdateAccommodationRatingRequest struct {
 func (x *UpdateAccommodationRatingRequest) Reset() {
 	*x = UpdateAccommodationRatingRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[20]
+		mi := &file_rating_service_rating_service_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1034,7 +1222,7 @@ func (x *UpdateAccommodationRatingRequest) String() string {
 func (*UpdateAccommodationRatingRequest) ProtoMessage() {}
 
 func (x *UpdateAccommodationRatingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[20]
+	mi := &file_rating_service_rating_service_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1047,7 +1235,7 @@ func (x *UpdateAccommodationRatingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAccommodationRatingRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAccommodationRatingRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{20}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *UpdateAccommodationRatingRequest) GetId() string {
@@ -1076,7 +1264,7 @@ type UpdateHostRatingRequest struct {
 func (x *UpdateHostRatingRequest) Reset() {
 	*x = UpdateHostRatingRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[21]
+		mi := &file_rating_service_rating_service_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1089,7 +1277,7 @@ func (x *UpdateHostRatingRequest) String() string {
 func (*UpdateHostRatingRequest) ProtoMessage() {}
 
 func (x *UpdateHostRatingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[21]
+	mi := &file_rating_service_rating_service_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1102,7 +1290,7 @@ func (x *UpdateHostRatingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHostRatingRequest.ProtoReflect.Descriptor instead.
 func (*UpdateHostRatingRequest) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{21}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *UpdateHostRatingRequest) GetId() string {
@@ -1130,7 +1318,7 @@ type UpdateHostRatingResponse struct {
 func (x *UpdateHostRatingResponse) Reset() {
 	*x = UpdateHostRatingResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[22]
+		mi := &file_rating_service_rating_service_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1143,7 +1331,7 @@ func (x *UpdateHostRatingResponse) String() string {
 func (*UpdateHostRatingResponse) ProtoMessage() {}
 
 func (x *UpdateHostRatingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[22]
+	mi := &file_rating_service_rating_service_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1156,7 +1344,7 @@ func (x *UpdateHostRatingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHostRatingResponse.ProtoReflect.Descriptor instead.
 func (*UpdateHostRatingResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{22}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *UpdateHostRatingResponse) GetResponse() *RateHost {
@@ -1177,7 +1365,7 @@ type UpdateAccommodationRatingResponse struct {
 func (x *UpdateAccommodationRatingResponse) Reset() {
 	*x = UpdateAccommodationRatingResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[23]
+		mi := &file_rating_service_rating_service_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1190,7 +1378,7 @@ func (x *UpdateAccommodationRatingResponse) String() string {
 func (*UpdateAccommodationRatingResponse) ProtoMessage() {}
 
 func (x *UpdateAccommodationRatingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[23]
+	mi := &file_rating_service_rating_service_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1203,7 +1391,7 @@ func (x *UpdateAccommodationRatingResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use UpdateAccommodationRatingResponse.ProtoReflect.Descriptor instead.
 func (*UpdateAccommodationRatingResponse) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{23}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *UpdateAccommodationRatingResponse) GetResponse() *RateAccommodation {
@@ -1228,7 +1416,7 @@ type RateHost struct {
 func (x *RateHost) Reset() {
 	*x = RateHost{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[24]
+		mi := &file_rating_service_rating_service_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1241,7 +1429,7 @@ func (x *RateHost) String() string {
 func (*RateHost) ProtoMessage() {}
 
 func (x *RateHost) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[24]
+	mi := &file_rating_service_rating_service_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1254,7 +1442,7 @@ func (x *RateHost) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RateHost.ProtoReflect.Descriptor instead.
 func (*RateHost) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{24}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *RateHost) GetId() string {
@@ -1307,7 +1495,7 @@ type RateAccommodation struct {
 func (x *RateAccommodation) Reset() {
 	*x = RateAccommodation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rating_service_rating_service_proto_msgTypes[25]
+		mi := &file_rating_service_rating_service_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1320,7 +1508,7 @@ func (x *RateAccommodation) String() string {
 func (*RateAccommodation) ProtoMessage() {}
 
 func (x *RateAccommodation) ProtoReflect() protoreflect.Message {
-	mi := &file_rating_service_rating_service_proto_msgTypes[25]
+	mi := &file_rating_service_rating_service_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1333,7 +1521,7 @@ func (x *RateAccommodation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RateAccommodation.ProtoReflect.Descriptor instead.
 func (*RateAccommodation) Descriptor() ([]byte, []int) {
-	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{25}
+	return file_rating_service_rating_service_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *RateAccommodation) GetId() string {
@@ -1378,7 +1566,20 @@ var file_rating_service_rating_service_proto_rawDesc = []byte{
 	0x2f, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70,
 	0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x22, 0x32, 0x0a, 0x20, 0x47, 0x65, 0x74, 0x41, 0x76, 0x67, 0x41, 0x63, 0x63,
+	0x6f, 0x74, 0x6f, 0x22, 0x3d, 0x0a, 0x1f, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x63, 0x63,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x61, 0x74, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x30, 0x0a, 0x1e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x02, 0x69, 0x64, 0x22, 0x34, 0x0a, 0x16, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x6f,
+	0x73, 0x74, 0x52, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1a,
+	0x0a, 0x08, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x27, 0x0a, 0x15, 0x44, 0x65,
+	0x6c, 0x65, 0x74, 0x65, 0x48, 0x6f, 0x73, 0x74, 0x52, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x02, 0x69, 0x64, 0x22, 0x32, 0x0a, 0x20, 0x47, 0x65, 0x74, 0x41, 0x76, 0x67, 0x41, 0x63, 0x63,
 	0x6f, 0x6d, 0x6d, 0x6f, 0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x61, 0x74, 0x69, 0x6e, 0x67,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x35, 0x0a, 0x21, 0x47, 0x65, 0x74, 0x41, 0x76,
@@ -1504,7 +1705,7 @@ var file_rating_service_rating_service_proto_rawDesc = []byte{
 	0x18, 0x04, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x12, 0x28,
 	0x0a, 0x0f, 0x61, 0x63, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49,
 	0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x61, 0x63, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
-	0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x32, 0x8e, 0x0c, 0x0a, 0x0d, 0x52, 0x61, 0x74,
+	0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x32, 0x83, 0x0e, 0x0a, 0x0d, 0x52, 0x61, 0x74,
 	0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x7c, 0x0a, 0x14, 0x47, 0x65,
 	0x74, 0x52, 0x61, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x64, 0x61, 0x74, 0x69,
 	0x6f, 0x6e, 0x12, 0x1c, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x61, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f,
@@ -1601,9 +1802,24 @@ var file_rating_service_rating_service_proto_rawDesc = []byte{
 	0x6f, 0x6e, 0x52, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
 	0x22, 0x27, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x21, 0x12, 0x1f, 0x2f, 0x72, 0x61, 0x74, 0x69, 0x6e,
 	0x67, 0x73, 0x2f, 0x61, 0x76, 0x67, 0x2f, 0x61, 0x63, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x64, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x7b, 0x69, 0x64, 0x7d, 0x42, 0x16, 0x5a, 0x14, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x2f, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x7b, 0x69, 0x64, 0x7d, 0x12, 0x66, 0x0a, 0x10, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x48, 0x6f, 0x73, 0x74, 0x52, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x12, 0x16, 0x2e,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x6f, 0x73, 0x74, 0x52, 0x61, 0x74, 0x65, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x6f,
+	0x73, 0x74, 0x52, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x21,
+	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1b, 0x2a, 0x19, 0x2f, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x73,
+	0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x2f, 0x68, 0x6f, 0x73, 0x74, 0x2f, 0x7b, 0x69, 0x64,
+	0x7d, 0x12, 0x8a, 0x01, 0x0a, 0x19, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x12,
+	0x1f, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x64,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x20, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x2a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x24, 0x2a, 0x22, 0x2f, 0x72, 0x61, 0x74,
+	0x69, 0x6e, 0x67, 0x73, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x2f, 0x61, 0x63, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x64, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x7b, 0x69, 0x64, 0x7d, 0x42, 0x16,
+	0x5a, 0x14, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x5f, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1618,74 +1834,82 @@ func file_rating_service_rating_service_proto_rawDescGZIP() []byte {
 	return file_rating_service_rating_service_proto_rawDescData
 }
 
-var file_rating_service_rating_service_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
+var file_rating_service_rating_service_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_rating_service_rating_service_proto_goTypes = []interface{}{
-	(*GetAvgAccommodationRatingRequest)(nil),            // 0: GetAvgAccommodationRatingRequest
-	(*GetAvgAccommodationRatingResponse)(nil),           // 1: GetAvgAccommodationRatingResponse
-	(*GetAvgHostRatingRequest)(nil),                     // 2: GetAvgHostRatingRequest
-	(*GetAvgHostRatingResponse)(nil),                    // 3: GetAvgHostRatingResponse
-	(*CreateNewHostRatingRequest)(nil),                  // 4: CreateNewHostRatingRequest
-	(*CreateNewHostRatingResponse)(nil),                 // 5: CreateNewHostRatingResponse
-	(*CreateNewAccommodationRatingRequest)(nil),         // 6: CreateNewAccommodationRatingRequest
-	(*CreateNewAccommodationRatingResponse)(nil),        // 7: CreateNewAccommodationRatingResponse
-	(*GetRateHostRequest)(nil),                          // 8: GetRateHostRequest
-	(*GetRateAccommodationRequest)(nil),                 // 9: GetRateAccommodationRequest
-	(*GetRateHostResponse)(nil),                         // 10: GetRateHostResponse
-	(*GetRateAccommodationResponse)(nil),                // 11: GetRateAccommodationResponse
-	(*GetRateHostByGuestRequest)(nil),                   // 12: GetRateHostByGuestRequest
-	(*GetRateAccommodationByGuestRequest)(nil),          // 13: GetRateAccommodationByGuestRequest
-	(*GetRateHostByGuestResponse)(nil),                  // 14: GetRateHostByGuestResponse
-	(*GetRateAccommodationByGuestResponse)(nil),         // 15: GetRateAccommodationByGuestResponse
-	(*GetRateHostByHostRequest)(nil),                    // 16: GetRateHostByHostRequest
-	(*GetRateAccommodationByAccommodationRequest)(nil),  // 17: GetRateAccommodationByAccommodationRequest
-	(*GetRateHostByHostResponse)(nil),                   // 18: GetRateHostByHostResponse
-	(*GetRateAccommodationByAccommodationResponse)(nil), // 19: GetRateAccommodationByAccommodationResponse
-	(*UpdateAccommodationRatingRequest)(nil),            // 20: UpdateAccommodationRatingRequest
-	(*UpdateHostRatingRequest)(nil),                     // 21: UpdateHostRatingRequest
-	(*UpdateHostRatingResponse)(nil),                    // 22: UpdateHostRatingResponse
-	(*UpdateAccommodationRatingResponse)(nil),           // 23: UpdateAccommodationRatingResponse
-	(*RateHost)(nil),                                    // 24: RateHost
-	(*RateAccommodation)(nil),                           // 25: RateAccommodation
+	(*DeleteAccommodationRateResponse)(nil),             // 0: DeleteAccommodationRateResponse
+	(*DeleteAccommodationRateRequest)(nil),              // 1: DeleteAccommodationRateRequest
+	(*DeleteHostRateResponse)(nil),                      // 2: DeleteHostRateResponse
+	(*DeleteHostRateRequest)(nil),                       // 3: DeleteHostRateRequest
+	(*GetAvgAccommodationRatingRequest)(nil),            // 4: GetAvgAccommodationRatingRequest
+	(*GetAvgAccommodationRatingResponse)(nil),           // 5: GetAvgAccommodationRatingResponse
+	(*GetAvgHostRatingRequest)(nil),                     // 6: GetAvgHostRatingRequest
+	(*GetAvgHostRatingResponse)(nil),                    // 7: GetAvgHostRatingResponse
+	(*CreateNewHostRatingRequest)(nil),                  // 8: CreateNewHostRatingRequest
+	(*CreateNewHostRatingResponse)(nil),                 // 9: CreateNewHostRatingResponse
+	(*CreateNewAccommodationRatingRequest)(nil),         // 10: CreateNewAccommodationRatingRequest
+	(*CreateNewAccommodationRatingResponse)(nil),        // 11: CreateNewAccommodationRatingResponse
+	(*GetRateHostRequest)(nil),                          // 12: GetRateHostRequest
+	(*GetRateAccommodationRequest)(nil),                 // 13: GetRateAccommodationRequest
+	(*GetRateHostResponse)(nil),                         // 14: GetRateHostResponse
+	(*GetRateAccommodationResponse)(nil),                // 15: GetRateAccommodationResponse
+	(*GetRateHostByGuestRequest)(nil),                   // 16: GetRateHostByGuestRequest
+	(*GetRateAccommodationByGuestRequest)(nil),          // 17: GetRateAccommodationByGuestRequest
+	(*GetRateHostByGuestResponse)(nil),                  // 18: GetRateHostByGuestResponse
+	(*GetRateAccommodationByGuestResponse)(nil),         // 19: GetRateAccommodationByGuestResponse
+	(*GetRateHostByHostRequest)(nil),                    // 20: GetRateHostByHostRequest
+	(*GetRateAccommodationByAccommodationRequest)(nil),  // 21: GetRateAccommodationByAccommodationRequest
+	(*GetRateHostByHostResponse)(nil),                   // 22: GetRateHostByHostResponse
+	(*GetRateAccommodationByAccommodationResponse)(nil), // 23: GetRateAccommodationByAccommodationResponse
+	(*UpdateAccommodationRatingRequest)(nil),            // 24: UpdateAccommodationRatingRequest
+	(*UpdateHostRatingRequest)(nil),                     // 25: UpdateHostRatingRequest
+	(*UpdateHostRatingResponse)(nil),                    // 26: UpdateHostRatingResponse
+	(*UpdateAccommodationRatingResponse)(nil),           // 27: UpdateAccommodationRatingResponse
+	(*RateHost)(nil),                                    // 28: RateHost
+	(*RateAccommodation)(nil),                           // 29: RateAccommodation
 }
 var file_rating_service_rating_service_proto_depIdxs = []int32{
-	24, // 0: CreateNewHostRatingResponse.rating:type_name -> RateHost
-	25, // 1: CreateNewAccommodationRatingResponse.rating:type_name -> RateAccommodation
-	24, // 2: GetRateHostResponse.response:type_name -> RateHost
-	25, // 3: GetRateAccommodationResponse.response:type_name -> RateAccommodation
-	24, // 4: GetRateHostByGuestResponse.response:type_name -> RateHost
-	25, // 5: GetRateAccommodationByGuestResponse.response:type_name -> RateAccommodation
-	24, // 6: GetRateHostByHostResponse.response:type_name -> RateHost
-	25, // 7: GetRateAccommodationByAccommodationResponse.response:type_name -> RateAccommodation
-	25, // 8: UpdateAccommodationRatingRequest.rating:type_name -> RateAccommodation
-	24, // 9: UpdateHostRatingRequest.rating:type_name -> RateHost
-	24, // 10: UpdateHostRatingResponse.response:type_name -> RateHost
-	25, // 11: UpdateAccommodationRatingResponse.response:type_name -> RateAccommodation
-	9,  // 12: RatingService.GetRateAccommodation:input_type -> GetRateAccommodationRequest
-	8,  // 13: RatingService.GetRateHost:input_type -> GetRateHostRequest
-	12, // 14: RatingService.GetHostRatingsByGuestId:input_type -> GetRateHostByGuestRequest
-	13, // 15: RatingService.GetAccommodationsRatingsByGuestId:input_type -> GetRateAccommodationByGuestRequest
-	17, // 16: RatingService.GetAccommodationsRatingsByAccommodationId:input_type -> GetRateAccommodationByAccommodationRequest
-	16, // 17: RatingService.GetHostRatingsByHostId:input_type -> GetRateHostByHostRequest
-	20, // 18: RatingService.UpdateAccommodationRating:input_type -> UpdateAccommodationRatingRequest
-	21, // 19: RatingService.UpdateHostRating:input_type -> UpdateHostRatingRequest
-	4,  // 20: RatingService.CreateNewHostRating:input_type -> CreateNewHostRatingRequest
-	6,  // 21: RatingService.CreateNewAccommodationRating:input_type -> CreateNewAccommodationRatingRequest
-	2,  // 22: RatingService.GetAvgRatingHost:input_type -> GetAvgHostRatingRequest
-	0,  // 23: RatingService.GetAvgAccommodationRating:input_type -> GetAvgAccommodationRatingRequest
-	11, // 24: RatingService.GetRateAccommodation:output_type -> GetRateAccommodationResponse
-	10, // 25: RatingService.GetRateHost:output_type -> GetRateHostResponse
-	14, // 26: RatingService.GetHostRatingsByGuestId:output_type -> GetRateHostByGuestResponse
-	15, // 27: RatingService.GetAccommodationsRatingsByGuestId:output_type -> GetRateAccommodationByGuestResponse
-	19, // 28: RatingService.GetAccommodationsRatingsByAccommodationId:output_type -> GetRateAccommodationByAccommodationResponse
-	18, // 29: RatingService.GetHostRatingsByHostId:output_type -> GetRateHostByHostResponse
-	23, // 30: RatingService.UpdateAccommodationRating:output_type -> UpdateAccommodationRatingResponse
-	22, // 31: RatingService.UpdateHostRating:output_type -> UpdateHostRatingResponse
-	5,  // 32: RatingService.CreateNewHostRating:output_type -> CreateNewHostRatingResponse
-	7,  // 33: RatingService.CreateNewAccommodationRating:output_type -> CreateNewAccommodationRatingResponse
-	3,  // 34: RatingService.GetAvgRatingHost:output_type -> GetAvgHostRatingResponse
-	1,  // 35: RatingService.GetAvgAccommodationRating:output_type -> GetAvgAccommodationRatingResponse
-	24, // [24:36] is the sub-list for method output_type
-	12, // [12:24] is the sub-list for method input_type
+	28, // 0: CreateNewHostRatingResponse.rating:type_name -> RateHost
+	29, // 1: CreateNewAccommodationRatingResponse.rating:type_name -> RateAccommodation
+	28, // 2: GetRateHostResponse.response:type_name -> RateHost
+	29, // 3: GetRateAccommodationResponse.response:type_name -> RateAccommodation
+	28, // 4: GetRateHostByGuestResponse.response:type_name -> RateHost
+	29, // 5: GetRateAccommodationByGuestResponse.response:type_name -> RateAccommodation
+	28, // 6: GetRateHostByHostResponse.response:type_name -> RateHost
+	29, // 7: GetRateAccommodationByAccommodationResponse.response:type_name -> RateAccommodation
+	29, // 8: UpdateAccommodationRatingRequest.rating:type_name -> RateAccommodation
+	28, // 9: UpdateHostRatingRequest.rating:type_name -> RateHost
+	28, // 10: UpdateHostRatingResponse.response:type_name -> RateHost
+	29, // 11: UpdateAccommodationRatingResponse.response:type_name -> RateAccommodation
+	13, // 12: RatingService.GetRateAccommodation:input_type -> GetRateAccommodationRequest
+	12, // 13: RatingService.GetRateHost:input_type -> GetRateHostRequest
+	16, // 14: RatingService.GetHostRatingsByGuestId:input_type -> GetRateHostByGuestRequest
+	17, // 15: RatingService.GetAccommodationsRatingsByGuestId:input_type -> GetRateAccommodationByGuestRequest
+	21, // 16: RatingService.GetAccommodationsRatingsByAccommodationId:input_type -> GetRateAccommodationByAccommodationRequest
+	20, // 17: RatingService.GetHostRatingsByHostId:input_type -> GetRateHostByHostRequest
+	24, // 18: RatingService.UpdateAccommodationRating:input_type -> UpdateAccommodationRatingRequest
+	25, // 19: RatingService.UpdateHostRating:input_type -> UpdateHostRatingRequest
+	8,  // 20: RatingService.CreateNewHostRating:input_type -> CreateNewHostRatingRequest
+	10, // 21: RatingService.CreateNewAccommodationRating:input_type -> CreateNewAccommodationRatingRequest
+	6,  // 22: RatingService.GetAvgRatingHost:input_type -> GetAvgHostRatingRequest
+	4,  // 23: RatingService.GetAvgAccommodationRating:input_type -> GetAvgAccommodationRatingRequest
+	3,  // 24: RatingService.DeleteHostRating:input_type -> DeleteHostRateRequest
+	1,  // 25: RatingService.DeleteAccommodationRating:input_type -> DeleteAccommodationRateRequest
+	15, // 26: RatingService.GetRateAccommodation:output_type -> GetRateAccommodationResponse
+	14, // 27: RatingService.GetRateHost:output_type -> GetRateHostResponse
+	18, // 28: RatingService.GetHostRatingsByGuestId:output_type -> GetRateHostByGuestResponse
+	19, // 29: RatingService.GetAccommodationsRatingsByGuestId:output_type -> GetRateAccommodationByGuestResponse
+	23, // 30: RatingService.GetAccommodationsRatingsByAccommodationId:output_type -> GetRateAccommodationByAccommodationResponse
+	22, // 31: RatingService.GetHostRatingsByHostId:output_type -> GetRateHostByHostResponse
+	27, // 32: RatingService.UpdateAccommodationRating:output_type -> UpdateAccommodationRatingResponse
+	26, // 33: RatingService.UpdateHostRating:output_type -> UpdateHostRatingResponse
+	9,  // 34: RatingService.CreateNewHostRating:output_type -> CreateNewHostRatingResponse
+	11, // 35: RatingService.CreateNewAccommodationRating:output_type -> CreateNewAccommodationRatingResponse
+	7,  // 36: RatingService.GetAvgRatingHost:output_type -> GetAvgHostRatingResponse
+	5,  // 37: RatingService.GetAvgAccommodationRating:output_type -> GetAvgAccommodationRatingResponse
+	2,  // 38: RatingService.DeleteHostRating:output_type -> DeleteHostRateResponse
+	0,  // 39: RatingService.DeleteAccommodationRating:output_type -> DeleteAccommodationRateResponse
+	26, // [26:40] is the sub-list for method output_type
+	12, // [12:26] is the sub-list for method input_type
 	12, // [12:12] is the sub-list for extension type_name
 	12, // [12:12] is the sub-list for extension extendee
 	0,  // [0:12] is the sub-list for field type_name
@@ -1698,7 +1922,7 @@ func file_rating_service_rating_service_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_rating_service_rating_service_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAvgAccommodationRatingRequest); i {
+			switch v := v.(*DeleteAccommodationRateResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1710,7 +1934,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAvgAccommodationRatingResponse); i {
+			switch v := v.(*DeleteAccommodationRateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1722,7 +1946,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAvgHostRatingRequest); i {
+			switch v := v.(*DeleteHostRateResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1734,7 +1958,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAvgHostRatingResponse); i {
+			switch v := v.(*DeleteHostRateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1746,7 +1970,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateNewHostRatingRequest); i {
+			switch v := v.(*GetAvgAccommodationRatingRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1758,7 +1982,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateNewHostRatingResponse); i {
+			switch v := v.(*GetAvgAccommodationRatingResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1770,7 +1994,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateNewAccommodationRatingRequest); i {
+			switch v := v.(*GetAvgHostRatingRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1782,7 +2006,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateNewAccommodationRatingResponse); i {
+			switch v := v.(*GetAvgHostRatingResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1794,7 +2018,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateHostRequest); i {
+			switch v := v.(*CreateNewHostRatingRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1806,7 +2030,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateAccommodationRequest); i {
+			switch v := v.(*CreateNewHostRatingResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1818,7 +2042,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateHostResponse); i {
+			switch v := v.(*CreateNewAccommodationRatingRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1830,7 +2054,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateAccommodationResponse); i {
+			switch v := v.(*CreateNewAccommodationRatingResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1842,7 +2066,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateHostByGuestRequest); i {
+			switch v := v.(*GetRateHostRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1854,7 +2078,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateAccommodationByGuestRequest); i {
+			switch v := v.(*GetRateAccommodationRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1866,7 +2090,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateHostByGuestResponse); i {
+			switch v := v.(*GetRateHostResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1878,7 +2102,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateAccommodationByGuestResponse); i {
+			switch v := v.(*GetRateAccommodationResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1890,7 +2114,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateHostByHostRequest); i {
+			switch v := v.(*GetRateHostByGuestRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1902,7 +2126,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateAccommodationByAccommodationRequest); i {
+			switch v := v.(*GetRateAccommodationByGuestRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1914,7 +2138,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateHostByHostResponse); i {
+			switch v := v.(*GetRateHostByGuestResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1926,7 +2150,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRateAccommodationByAccommodationResponse); i {
+			switch v := v.(*GetRateAccommodationByGuestResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1938,7 +2162,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateAccommodationRatingRequest); i {
+			switch v := v.(*GetRateHostByHostRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1950,7 +2174,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateHostRatingRequest); i {
+			switch v := v.(*GetRateAccommodationByAccommodationRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1962,7 +2186,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateHostRatingResponse); i {
+			switch v := v.(*GetRateHostByHostResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1974,7 +2198,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateAccommodationRatingResponse); i {
+			switch v := v.(*GetRateAccommodationByAccommodationResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1986,7 +2210,7 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RateHost); i {
+			switch v := v.(*UpdateAccommodationRatingRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1998,6 +2222,54 @@ func file_rating_service_rating_service_proto_init() {
 			}
 		}
 		file_rating_service_rating_service_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateHostRatingRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rating_service_rating_service_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateHostRatingResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rating_service_rating_service_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateAccommodationRatingResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rating_service_rating_service_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RateHost); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rating_service_rating_service_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RateAccommodation); i {
 			case 0:
 				return &v.state
@@ -2016,7 +2288,7 @@ func file_rating_service_rating_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_rating_service_rating_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   26,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

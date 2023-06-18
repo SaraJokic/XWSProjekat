@@ -161,7 +161,7 @@ func (handler *RatingsHandler) CreateNewHostRating(ctx context.Context, request 
 }
 func (handler *RatingsHandler) CreateNewAccommodationRating(ctx context.Context, request *rating_service.CreateNewAccommodationRatingRequest) (*rating_service.CreateNewAccommodationRatingResponse, error) {
 	acc := mapNewAccommodationRating(request)
-	canMakeReview, err := handler.hasReservationInAccommodation(request.GuestId, acc.Id.Hex())
+	canMakeReview, err := handler.hasReservationInAccommodation(request.GuestId, acc.AccommodationId.Hex())
 	if !canMakeReview {
 		return nil, err
 	}
@@ -207,6 +207,32 @@ func (handler *RatingsHandler) GetAvgAccommodationRating(ctx context.Context, re
 	}
 	return &rating_service.GetAvgAccommodationRatingResponse{
 		Avg: 0.0,
+	}, nil
+}
+func (handler *RatingsHandler) DeleteHostRating(ctx context.Context, request *rating_service.DeleteHostRateRequest) (*rating_service.DeleteHostRateResponse, error) {
+	ratingId, err := primitive.ObjectIDFromHex(request.Id)
+	if err != nil {
+		return nil, nil
+	}
+	err = handler.service.DeleteRateHost(ratingId)
+	if err != nil {
+		return nil, nil
+	}
+	return &rating_service.DeleteHostRateResponse{
+		Response: "Sucessfully deleted rating.",
+	}, nil
+}
+func (handler *RatingsHandler) DeleteAccommodationRating(ctx context.Context, request *rating_service.DeleteAccommodationRateRequest) (*rating_service.DeleteAccommodationRateResponse, error) {
+	ratingId, err := primitive.ObjectIDFromHex(request.Id)
+	if err != nil {
+		return nil, nil
+	}
+	err = handler.service.DeleteRateAccommodation(ratingId)
+	if err != nil {
+		return nil, nil
+	}
+	return &rating_service.DeleteAccommodationRateResponse{
+		Response: "Sucessfully deleted rating.",
 	}, nil
 }
 func NewReservationClient() reservation_service.ReservationServiceClient {

@@ -180,3 +180,30 @@ func (store *RatingsMongoDBStore) filterHostsRate(filter interface{}) ([]*domain
 	}
 	return decodeH(cursor)
 }
+func (store *RatingsMongoDBStore) DeleteRateHost(id primitive.ObjectID) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.D{{Key: "_id", Value: id}}
+	_, err := store.hosts.DeleteOne(ctx, filter)
+	if err != nil {
+
+		return err
+	}
+
+	return nil
+}
+
+func (store *RatingsMongoDBStore) DeleteRateAccommodation(id primitive.ObjectID) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.D{{Key: "_id", Value: id}}
+	_, err := store.accommodations.DeleteOne(ctx, filter)
+	if err != nil {
+
+		return err
+	}
+
+	return nil
+}

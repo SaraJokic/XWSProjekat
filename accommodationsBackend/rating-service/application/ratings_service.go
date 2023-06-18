@@ -62,3 +62,9 @@ func (service *RatingsService) UpdateHostRating(id string, rating *domain.RateHo
 func (service *RatingsService) DeleteAll() {
 	service.store.DeleteAll()
 }
+func (service *RatingsService) DeleteRateHost(id primitive.ObjectID) error {
+	return service.store.DeleteRateHost(id)
+}
+func (service *RatingsService) DeleteRateAccommodation(id primitive.ObjectID) error {
+	return service.store.DeleteRateAccommodation(id)
+}

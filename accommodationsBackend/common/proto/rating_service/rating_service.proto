@@ -69,6 +69,28 @@ service RatingService{
       get: "/ratings/avg/accommodation/{id}"
     };
   }
+  rpc DeleteHostRating(DeleteHostRateRequest) returns (DeleteHostRateResponse) {
+    option (google.api.http) = {
+      delete: "/ratings/delete/host/{id}"
+    };
+  }
+  rpc DeleteAccommodationRating(DeleteAccommodationRateRequest) returns (DeleteAccommodationRateResponse) {
+    option (google.api.http) = {
+      delete: "/ratings/delete/accommodation/{id}"
+    };
+  }
+}
+message DeleteAccommodationRateResponse{
+  string response = 1;
+}
+message DeleteAccommodationRateRequest{
+  string id = 1;
+}
+message DeleteHostRateResponse{
+  string response = 1;
+}
+message DeleteHostRateRequest{
+  string id = 1;
 }
 message GetAvgAccommodationRatingRequest{
   string id = 1;
