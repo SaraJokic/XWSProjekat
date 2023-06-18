@@ -1,12 +1,18 @@
 package api
 
 import (
+	"accommodationsBackend/common/proto/accommodation_service"
 	"accommodationsBackend/common/proto/rating_service"
+	"accommodationsBackend/common/proto/reservation_service"
 	"accommodationsBackend/rating-service/application"
 	"context"
+	"errors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
+	"log"
 )
 
 type RatingsHandler struct {
@@ -140,7 +146,11 @@ func (handler *RatingsHandler) UpdateHostRating(ctx context.Context, request *ra
 }
 func (handler *RatingsHandler) CreateNewHostRating(ctx context.Context, request *rating_service.CreateNewHostRatingRequest) (*rating_service.CreateNewHostRatingResponse, error) {
 	acc := mapNewHostRating(request)
-	err := handler.service.CreateRateHost(acc)
+	canMakeReview, err := handler.hasReservationWithHost(request.GuestId, acc.HostId.Hex())
+	if !canMakeReview {
+		return nil, err
+	}
+	err = handler.service.CreateRateHost(acc)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +161,11 @@ func (handler *RatingsHandler) CreateNewHostRating(ctx context.Context, request 
 }
 func (handler *RatingsHandler) CreateNewAccommodationRating(ctx context.Context, request *rating_service.CreateNewAccommodationRatingRequest) (*rating_service.CreateNewAccommodationRatingResponse, error) {
 	acc := mapNewAccommodationRating(request)
-	err := handler.service.CreateRateAccommodation(acc)
+	canMakeReview, err := handler.hasReservationInAccommodation(request.GuestId, acc.Id.Hex())
+	if !canMakeReview {
+		return nil, err
+	}
+	err = handler.service.CreateRateAccommodation(acc)
 	if err != nil {
 		return nil, err
 	}
@@ -194,4 +208,45 @@ func (handler *RatingsHandler) GetAvgAccommodationRating(ctx context.Context, re
 	return &rating_service.GetAvgAccommodationRatingResponse{
 		Avg: 0.0,
 	}, nil
+}
+func NewReservationClient() reservation_service.ReservationServiceClient {
+	conn, err := grpc.Dial("reservation-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection to Reservation service: %v", err)
+	}
+	return reservation_service.NewReservationServiceClient(conn)
+}
+func NewAccommodationClient() accommodation_service.AccommodationServiceClient {
+	conn, err := grpc.Dial("accommodation-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection to Accommodation service: %v", err)
+	}
+	return accommodation_service.NewAccommodationServiceClient(conn)
+}
+
+func (handler *RatingsHandler) hasReservationInAccommodation(userid string, accommodationid string) (bool, error) {
+	client := NewReservationClient()
+	reservations, _ := client.GetReservationByUserId(context.Background(), &reservation_service.GetReservationByUserIdRequest{Id: userid})
+
+	for _, reservation := range reservations.Reservations {
+		if reservation.AccommodationId == accommodationid {
+			return true, nil
+		}
+	}
+	return false, errors.New("You need to have at least one reservation in this accommodation to leave a rating.")
+}
+
+func (handler *RatingsHandler) hasReservationWithHost(userid string, hostid string) (bool, error) {
+	clientReservation := NewReservationClient()
+	reservations, _ := clientReservation.GetReservationByUserId(context.Background(), &reservation_service.GetReservationByUserIdRequest{Id: userid})
+
+	clientAccommodation := NewAccommodationClient()
+
+	for _, reservation := range reservations.Reservations {
+		accommodation, _ := clientAccommodation.Get(context.Background(), &accommodation_service.AccGetRequest{Id: reservation.AccommodationId})
+		if accommodation.Acc.HostId == hostid {
+			return true, nil
+		}
+	}
+	return false, errors.New("You need to have at least one reservation in this hosts accommodations to leave a rating.")
 }
