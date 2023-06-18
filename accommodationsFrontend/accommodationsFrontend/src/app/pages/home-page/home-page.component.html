@@ -1,42 +1,75 @@
 <h1>Accommodations</h1>
-<div class="search">
-  <form #userForm="ngForm" (ngSubmit)="search(userForm.value)">
-    <mat-form-field appearance="fill">
-      <mat-label>Location</mat-label>
-      <input matInput ngModel name="location" #location="ngModel" placeholder="Location">
-      <mat-hint>Enter the location</mat-hint>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Guests</mat-label>
-      <input matInput ngModel name="guests" #guests="ngModel" placeholder="Guests">
-      <mat-hint>Enter the number of guests</mat-hint>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Start date</mat-label>
-      <input matInput [matDatepicker]="startDatePicker" ngModel name="sdate" #sdate="ngModel" placeholder="Start date">
-      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #startDatePicker></mat-datepicker>
-      <mat-hint>Enter the starting date</mat-hint>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>End date</mat-label>
-      <input matInput [matDatepicker]="endDatePicker" ngModel name="edate" #edate="ngModel" placeholder="End date">
-      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #endDatePicker></mat-datepicker>
-      <mat-hint>Enter the ending date</mat-hint>
-    </mat-form-field>
-    <button mat-raised-button type="submit" class="submit">Search</button>
-  </form>
-  
+<div class="search-filtriraj">
+  <div class="search">
+    <form #userForm="ngForm" (ngSubmit)="search(userForm.value)">
+      <mat-form-field appearance="fill">
+        <mat-label>Location</mat-label>
+        <input matInput ngModel name="location" #location="ngModel" placeholder="Location">
+        <mat-hint>Enter the location</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Guests</mat-label>
+        <input matInput ngModel name="guests" #guests="ngModel" placeholder="Guests">
+        <mat-hint>Enter the number of guests</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Start date</mat-label>
+        <input matInput [matDatepicker]="startDatePicker" ngModel name="sdate" #sdate="ngModel" placeholder="Start date">
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+        <mat-hint>Enter the starting date</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>End date</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" ngModel name="edate" #edate="ngModel" placeholder="End date">
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+        <mat-hint>Enter the ending date</mat-hint>
+      </mat-form-field>
+      <button mat-raised-button type="submit" class="submit">Search</button>
+    </form>
+  </div>
 
+  <div class="filtriraj">
+    <div><b>Benefits:</b></div>
+    <div>
+      <label>Wifi:</label>
+      <label class="slider-checkbox">
+        <input type="checkbox" class="checkbox" [(ngModel)]="WIFI">
+        <span class="slider"></span>
+      </label>
+  
+      <label>Kitchen:</label>
+      <label class="slider-checkbox">
+        <input type="checkbox" class="checkbox" [(ngModel)]="KITCHEN">
+        <span class="slider"></span>
+      </label>
+    
+      <label>FreeParking:</label>
+      <label class="slider-checkbox">
+        <input type="checkbox" class="checkbox" [(ngModel)]="FREEPARKING">
+        <span class="slider"></span>
+      </label>
+
+      <button mat-raised-button (click)="applyFilters()">Filter</button>
+    </div>
+  </div>
+  
 </div>
+
+
 <div class="cards">
-<div  *ngFor="let accommodation of accommodations">
+  <div *ngFor="let accommodation of filteredAccommodations">
     <div class="accommodation-card">
       <h2>{{ accommodation.name }}</h2>
       <p>{{ accommodation.location }}</p>
       <p>Min Guests: {{ accommodation.minGuests }}</p>
       <p>Max Guests: {{ accommodation.maxGuests }}</p>
+      <p>Benefits:
+        <span *ngIf="accommodation.benefits?.freeParking && onlyTrue(accommodation.benefits)">freeParking, </span>
+        <span *ngIf="accommodation.benefits?.wifi && onlyTrue(accommodation.benefits)">wifi, </span>
+        <span *ngIf="accommodation.benefits?.kitchen && onlyTrue(accommodation.benefits)">kitchen</span>
+      </p>
       <p>{{ accommodation.description }}</p>
       <div class="pictures">
         <div *ngFor="let picture of accommodation.pictures">
