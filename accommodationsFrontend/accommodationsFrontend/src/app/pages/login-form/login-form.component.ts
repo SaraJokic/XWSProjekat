@@ -42,7 +42,7 @@ export class LoginFormComponent {
    
     
     redirect(){
-      this.router.navigate(["/userRegister"]);
+      this.router.navigate(["/register"]);
     }
 
   }

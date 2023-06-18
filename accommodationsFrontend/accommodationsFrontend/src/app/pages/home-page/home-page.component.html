@@ -85,9 +85,9 @@
       <p>Max Guests: {{ accommodation.maxGuests }}</p>
       <p>Price: {{ accommodation.id ? accommodationPrices[accommodation.id] : 'N/A' }}</p>
       <p>Benefits:
-        <span *ngIf="accommodation.benefits?.freeParking && onlyTrue(accommodation.benefits)">freeParking, </span>
-        <span *ngIf="accommodation.benefits?.wifi && onlyTrue(accommodation.benefits)">wifi, </span>
-        <span *ngIf="accommodation.benefits?.kitchen && onlyTrue(accommodation.benefits)">kitchen</span>
+        <span *ngIf="accommodation.benefits?.freeParking && onlyTrue(accommodation.benefits)">FreeParking, </span>
+        <span *ngIf="accommodation.benefits?.wifi && onlyTrue(accommodation.benefits)">Wifi, </span>
+        <span *ngIf="accommodation.benefits?.kitchen && onlyTrue(accommodation.benefits)">Kitchen</span>
       </p>
       <p> Description: {{ accommodation.description }}</p>
       <div class="pictures">
