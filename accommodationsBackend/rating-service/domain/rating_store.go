@@ -16,4 +16,6 @@ type RatingsStore interface {
 	UpdateAccommodationRating(id string, rating *RateAccommodation) error
 	UpdateHostRating(id string, rating *RateHost) error
 	DeleteAll()
+	DeleteRateHost(id primitive.ObjectID) error
+	DeleteRateAccommodation(id primitive.ObjectID) error
 }

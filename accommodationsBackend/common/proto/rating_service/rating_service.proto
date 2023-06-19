@@ -59,6 +59,50 @@ service RatingService{
       body: "*"
     };
   }
+  rpc GetAvgRatingHost(GetAvgHostRatingRequest) returns(GetAvgHostRatingResponse) {
+    option (google.api.http) = {
+      get: "/ratings/avg/host/{id}"
+    };
+  }
+  rpc GetAvgAccommodationRating(GetAvgAccommodationRatingRequest) returns(GetAvgAccommodationRatingResponse) {
+    option (google.api.http) = {
+      get: "/ratings/avg/accommodation/{id}"
+    };
+  }
+  rpc DeleteHostRating(DeleteHostRateRequest) returns (DeleteHostRateResponse) {
+    option (google.api.http) = {
+      delete: "/ratings/delete/host/{id}"
+    };
+  }
+  rpc DeleteAccommodationRating(DeleteAccommodationRateRequest) returns (DeleteAccommodationRateResponse) {
+    option (google.api.http) = {
+      delete: "/ratings/delete/accommodation/{id}"
+    };
+  }
+}
+message DeleteAccommodationRateResponse{
+  string response = 1;
+}
+message DeleteAccommodationRateRequest{
+  string id = 1;
+}
+message DeleteHostRateResponse{
+  string response = 1;
+}
+message DeleteHostRateRequest{
+  string id = 1;
+}
+message GetAvgAccommodationRatingRequest{
+  string id = 1;
+}
+message GetAvgAccommodationRatingResponse{
+  float avg = 1;
+}
+message GetAvgHostRatingRequest{
+  string id = 1;
+}
+message GetAvgHostRatingResponse{
+  float avg = 1;
 }
 message CreateNewHostRatingRequest{
   string guestId = 1;
@@ -126,7 +170,7 @@ message UpdateHostRatingResponse{
   RateHost response = 1;
 }
 message UpdateAccommodationRatingResponse{
-  RateHost response = 1;
+  RateAccommodation response = 1;
 }
 message RateHost{
   string id = 1;

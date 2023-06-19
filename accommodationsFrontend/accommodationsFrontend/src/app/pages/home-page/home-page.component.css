@@ -1,37 +1,72 @@
 .accommodation-card {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-}
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: grid;
+    place-items: center;
+    background-color:#f2f4f5 ;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+  }
 
-.cards {
-  padding-top: 4%;
+  .accommodation-card button{
+    background-color:#dce0e0 ;
+    margin: 0.2%;
+  }
+  .info{
+    display: grid;
+    place-items: center;
+  }
+ 
+  .cards{
+   margin-top: 3%;
+   margin-bottom: 2%;
+   display: flex;
+   margin-left: 5%;
+  }
+  .pictures {
+    display: flex;
+    justify-content: space-between;
+  }
+h1{
+    font-size: 30px;
+    margin-left: 45%;
+    margin-top: 3%;
+    margin-bottom: 2%;
 }
-
-.pictures {
-  display: flex;
+h2{
+  font-size: 20px;
 }
+  .search {
+    width: 80%;
+    margin-left: 26%;
+  }
 
-.search-filtriraj {
-  display: flex;
-}
+  .search mat-form-field{
+    margin-right:1% ;
+  }
+  .pictures img {
+    width: 450px;
+    height: 350px;
+    object-fit: cover;
+    margin-right: 50px;
+    
+  }
+  
 
-.search {
-  flex: 1;
-  width: 40%;
-  margin-left: 20%;
+
+.filtriraj mat-form-field{
+  margin-right:1% ;
 }
 
 .filtriraj {
   flex: 1;
+  width: 80%;
+  margin-left: 26%;
+  margin-top: 2%;
 }
 
-.pictures img {
-  width: 200px;
-  height: 150px;
-  object-fit: cover;
-  margin-right: 10px;
-}
+
 
 
 .toggle {
@@ -57,6 +92,11 @@
   width: 0;
   height: 0;
 }
+
+.slider-checkbox{
+  margin-right: 1%;
+}
+
 
 .slider {
   position: absolute;

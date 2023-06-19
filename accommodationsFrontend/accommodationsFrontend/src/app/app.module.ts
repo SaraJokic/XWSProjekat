@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './common/navbar/navbar.component';
-import { MaterialModule } from './material/material.module';
+
 import { NewAccommodationComponent } from './pages/new-accommodation/new-accommodation.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +22,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReservationRequestsHostComponent } from './pages/reservation-requests-host/reservation-requests-host.component';
 import { ReservationRequestsGuestComponent } from './pages/reservation-requests-guest/reservation-requests-guest.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MaterialModule } from './material/material.module';
+import { RatingDialogComponent } from './pages/rating-dialog/rating-dialog.component';
 
 
 
@@ -39,7 +42,8 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     HomePageComponent,
     MakeReservationDialogComponent,
     ReservationRequestsHostComponent,
-    ReservationRequestsGuestComponent
+    ReservationRequestsGuestComponent,
+    RatingDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +55,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     MatDatepickerModule,
     MatNativeDateModule,
     BrowserAnimationsModule,
-    NoopAnimationsModule,
-    
+    NoopAnimationsModule
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
 ],
