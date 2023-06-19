@@ -326,6 +326,14 @@ type GetResponse struct {
 	User *User `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 }
 
+type UsersGetAllResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Users []*User `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+}
+
 func (x *GetResponse) Reset() {
 	*x = GetResponse{}
 	if protoimpl.UnsafeEnabled {
@@ -559,6 +567,7 @@ type User struct {
 	Country        string   `protobuf:"bytes,8,opt,name=Country,proto3" json:"Country,omitempty"`
 	Role           UserType `protobuf:"varint,9,opt,name=Role,proto3,enum=UserType" json:"Role,omitempty"`
 	TimesCancelled int64    `protobuf:"varint,10,opt,name=timesCancelled,proto3" json:"timesCancelled,omitempty"`
+	ProminentHost  bool     `protobuf:"bytes,11,opt,name=ProminentHost,proto3" json:"prominentHost,omitempty"`
 }
 
 func (x *User) Reset() {

@@ -25,6 +25,7 @@ const (
 	UserService_UpdateUser_FullMethodName    = "/UserService/UpdateUser"
 	UserService_DeleteUser_FullMethodName    = "/UserService/DeleteUser"
 	UserService_GetByUsername_FullMethodName = "/UserService/GetByUsername"
+	UserService_GetAllProminentHosts_FullMethodName = "/UserService/GetAllProminentHosts"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -37,6 +38,7 @@ type UserServiceClient interface {
 	UpdateUser(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	GetByUsername(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	GetAllProminentHosts(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error)
 }
 
 type userServiceClient struct {
@@ -59,6 +61,15 @@ func (c *userServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grp
 func (c *userServiceClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error) {
 	out := new(GetAllResponse)
 	err := c.cc.Invoke(ctx, UserService_GetAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) GetAllProminentHosts(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error) {
+	out := new(GetAllResponse)
+	err := c.cc.Invoke(ctx, UserService_GetAllProminentHosts_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}

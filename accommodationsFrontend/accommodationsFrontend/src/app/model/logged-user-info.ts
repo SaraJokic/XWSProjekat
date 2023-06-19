@@ -3,4 +3,5 @@ export interface LoggedUserInfo {
     username: string,
     role: string
     id: string
+    email:string
 }

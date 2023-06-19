@@ -162,6 +162,24 @@ func (handler *UserHandler) GetAll(ctx context.Context, request *user_service.Ge
 	}
 	return response, nil
 }
+
+func (handler *UserHandler) GetAllProminentHosts(ctx context.Context, request *user_service.UsersGetAllResponse) (*user_service.UsersGetAllResponse, error) {
+	users, err := handler.service.GetAllProminentHosts()
+	if err != nil {
+		return nil, err
+	}
+	response := &user_service.UsersGetAllResponse{
+		Users: []*user_service.User{},
+	}
+	for _, user := range users {
+		if user.ProminentHost { // Samo ove sa  true
+			current := mapUser(user)
+			response.Users = append(response.Users, current)
+		}
+	}
+	return response, nil
+}
+
 func (handler *UserHandler) GetByUsername(ctx context.Context, request *user_service.GetRequest) (*user_service.GetResponse, error) {
 	user, err := handler.service.GetByUsername(request.Id)
 	if err != nil {
