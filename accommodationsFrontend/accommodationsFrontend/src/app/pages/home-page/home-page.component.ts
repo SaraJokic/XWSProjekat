@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable, map } from 'rxjs';
 import { Accommodation } from 'src/app/model/accommodation';
 import { SearchAccommodation } from 'src/app/model/search-accomodation';
 import { AccommodationServiceService } from 'src/app/services/accommodation-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -17,11 +19,13 @@ export class HomePageComponent implements OnInit {
   KITCHEN: boolean = false;
   FREEPARKING: boolean = false;
 
+  PROMINENT: boolean = false;
+
   accommodations: Accommodation[] = [];
   filteredAccommodations!: Accommodation[];
 
   constructor(
-    private accommodationService: AccommodationServiceService,private dialogService: DialogService) {
+    private accommodationService: AccommodationServiceService,private dialogService: DialogService, private userService:UserService) {
       this.selectedPriceValue = { min: 1, max: 1000000 };
     }
 
@@ -85,20 +89,37 @@ export class HomePageComponent implements OnInit {
     return Object.values(benefits).includes(true);
   }
 
+  Nadjen:any;
+
+  
   applyFilters() {
     this.filteredAccommodations = this.accommodations.filter(accommodation => {
       const price = this.accommodationPrices[accommodation.id || ''];
-      const isWithinPriceRange =!this.selectedPriceValue || (price >= this.selectedPriceValue.min && price <= this.selectedPriceValue.max);
-
-      console.log("Cena od " + this.selectedPriceValue.min + " do " + this.selectedPriceValue.max)
+      const isWithinPriceRange = !this.selectedPriceValue || (price >= this.selectedPriceValue.min && price <= this.selectedPriceValue.max);
+  
+      console.log("Cena od " + this.selectedPriceValue.min + " do " + this.selectedPriceValue.max);
+  
+      const isWifiFiltered = !this.WIFI || accommodation.benefits?.wifi;
+      const isKitchenFiltered = !this.KITCHEN || accommodation.benefits?.kitchen;
+      const isFreeParkingFiltered = !this.FREEPARKING || accommodation.benefits?.freeParking;
+      const isProminentHostFilterd = !this.PROMINENT || this.FindProminent();
       
-      return (
-        isWithinPriceRange &&
-        (!this.WIFI || accommodation.benefits?.wifi) &&
-        (!this.KITCHEN || accommodation.benefits?.kitchen) &&
-        (!this.FREEPARKING || accommodation.benefits?.freeParking)
-      );
+  
+      return isWithinPriceRange && isWifiFiltered && isKitchenFiltered && isFreeParkingFiltered && isProminentHostFilterd;
     });
+  }
+  
+  
+  FindProminent() {
+    this.accommodationService.GetAllProminentAccommodation().subscribe(
+      (accommodations) => {
+        this.filteredAccommodations = accommodations.acc; // Assuming the accommodations are returned in the `acc` property
+        console.log(this.filteredAccommodations);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
   

@@ -34,6 +34,7 @@ export class AuthService {
         if (token!=null) {
           const payload: any = jwt_decode(token);
           const Name : string = payload.name;
+          const Email : string = payload.email;
           const Id : string = payload.id;
           const Username: string = payload.username;
           const Role: string = payload.role;
@@ -41,7 +42,8 @@ export class AuthService {
             name: Name,
             username: Username,
             role: Role,
-            id: Id
+            id: Id,
+            email:Email,
             }
             console.log(logedUserInfo)
           return logedUserInfo;

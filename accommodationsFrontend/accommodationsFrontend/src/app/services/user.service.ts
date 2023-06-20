@@ -22,8 +22,8 @@ export class UserService {
   delete(id: any): Observable<any> {
     return this.http.delete(`${url}/${id}`);
   }
-  getUserByUsername(id: any): Observable<any>{
-    return this.http.get<any>(`${baseUrl}/users/getusername/${id}`); 
+  getUserByUsername(username: any): Observable<any>{
+    return this.http.get<any>(`${baseUrl}/users/getusername/${username}`); 
   }
   getUserById(id: any): Observable<any>{
     return this.http.get<any>(`${baseUrl}/users/get/${id}`); 

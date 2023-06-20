@@ -36,6 +36,11 @@ func (store *AccommodationMongoDBStore) GetAll() ([]*domain.Accommodation, error
 	return store.filter(filter)
 }
 
+func (store *AccommodationMongoDBStore) GetAllProminentAccommodation() ([]*domain.Accommodation, error) {
+	filter := bson.D{{}}
+	return store.filter(filter)
+}
+
 func (store *AccommodationMongoDBStore) Insert(accommodation *domain.Accommodation) error {
 	result, err := store.accommodations.InsertOne(context.TODO(), accommodation)
 	if err != nil {

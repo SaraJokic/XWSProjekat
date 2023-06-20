@@ -9,4 +9,5 @@ export interface User {
     Country: string,
     Role: number
     timesCancelled: number,
+    ProminentHost?:boolean,
 }

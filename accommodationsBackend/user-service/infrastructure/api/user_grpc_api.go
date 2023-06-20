@@ -45,6 +45,23 @@ func (handler *UserHandler) Get(ctx context.Context, request *user_service.GetRe
 	return response, nil
 }
 
+func (handler *UserHandler) GetAllProminentHosts(ctx context.Context, request *user_service.GetAllRequest) (*user_service.GetAllResponse, error) {
+	users, err := handler.service.GetAllProminentHosts()
+	if err != nil {
+		return nil, err
+	}
+	response := &user_service.GetAllResponse{
+		Users: []*user_service.User{},
+	}
+	for _, user := range users {
+		if user.ProminentHost { // Samo ove sa  true
+			current := mapUser(user)
+			response.Users = append(response.Users, current)
+		}
+	}
+	return response, nil
+}
+
 func (handler *UserHandler) Register(ctx context.Context, request *user_service.RegisterRequest) (*user_service.RegisterResponse, error) {
 	newUser := request.User
 	exists, err := handler.service.CheckIfEmailAndUsernameExist(newUser.Email, newUser.Username)

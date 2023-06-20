@@ -42,12 +42,13 @@ export class ReservationRequestsGuestComponent implements OnInit{
     id: "",
     username: "",
     role: "",
-    name: ''
+    name: '',
+    email:''
   };
 
 
   ngOnInit(): void {
-    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: "",email:""};
     this.getUser();
   }
   getUser(){

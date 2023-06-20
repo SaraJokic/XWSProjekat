@@ -21,7 +21,8 @@ export class MyAccommodationsComponent implements OnInit{
     id: "",
     username: "",
     role: "",
-    name: ''
+    name: '',
+    email:'',
   };
   user: User = {
     Name: '',
@@ -52,7 +53,7 @@ export class MyAccommodationsComponent implements OnInit{
     );
   }
   getUser(){
-    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: "",email:""};
     this.userService.getUserByUsername(this.logedUser.username).subscribe(
       (data) => {
         this.user = data.user

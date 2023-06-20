@@ -17,6 +17,9 @@ export class AccommodationServiceService {
   
   private apiUrl = 'http://localhost:8000';
   private getApiUrl = 'http://localhost:8000/accommodations';
+
+  private baseUrl='http://localhost:8000/GetAllProminentAccommodation';
+
   constructor(private http: HttpClient) { }
 
   Search(accommodation: any) {
@@ -41,4 +44,9 @@ export class AccommodationServiceService {
     return this.http.get<any>(this.getApiUrl);
   }
 
+  GetAllProminentAccommodation(): Observable<any> {
+    return this.http.get<any>(this.baseUrl);
+  }
+
+  
 }
