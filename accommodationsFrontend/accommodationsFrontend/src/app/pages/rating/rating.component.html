@@ -1,0 +1,11 @@
+
+<h1>Give your rating</h1>
+<form #userForm="ngForm" (ngSubmit)="host(userForm.value)">
+    <mat-form-field appearance="fill">
+      <mat-label>Your grade</mat-label>
+      <input matInput ngModel name="grade" #grade="ngModel" placeholder="Give your grade">
+      <mat-hint>Give your grade</mat-hint>
+    </mat-form-field>
+   
+    <button mat-raised-button type="submit" class="submit">Submit</button>
+  </form>

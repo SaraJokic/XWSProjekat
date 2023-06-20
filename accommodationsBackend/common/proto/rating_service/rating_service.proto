@@ -1,0 +1,188 @@
+syntax = "proto3";
+
+option go_package="proto/rating_service";
+
+import "google/api/annotations.proto";
+
+service RatingService{
+  rpc GetRateAccommodation(GetRateAccommodationRequest) returns(GetRateAccommodationResponse) {
+    option (google.api.http) = {
+      get: "/ratings/get/accommodation/{id}"
+    };
+  }
+  rpc GetRateHost(GetRateHostRequest) returns(GetRateHostResponse) {
+    option (google.api.http) = {
+      get: "/ratings/get/host/{id}"
+    };
+  }
+  rpc GetHostRatingsByGuestId(GetRateHostByGuestRequest) returns(GetRateHostByGuestResponse) {
+    option (google.api.http) = {
+      get: "/ratings/getbyguest/host/{id}"
+    };
+  }
+  rpc GetAccommodationsRatingsByGuestId(GetRateAccommodationByGuestRequest) returns(GetRateAccommodationByGuestResponse) {
+    option (google.api.http) = {
+      get: "/ratings/getbyguest/accommodation/{id}"
+    };
+  }
+  rpc GetAccommodationsRatingsByAccommodationId(GetRateAccommodationByAccommodationRequest) returns(GetRateAccommodationByAccommodationResponse) {
+    option (google.api.http) = {
+      get: "/ratings/getbyacc/accommodation/{id}"
+    };
+  }
+  rpc GetHostRatingsByHostId(GetRateHostByHostRequest) returns(GetRateHostByHostResponse) {
+    option (google.api.http) = {
+      get: "/ratings/getbyhost/host/{id}"
+    };
+  }
+  rpc UpdateAccommodationRating(UpdateAccommodationRatingRequest) returns (UpdateAccommodationRatingResponse) {
+    option (google.api.http) = {
+      put: "/ratings/updateacc"
+      body: "*"
+    };
+  }
+  rpc UpdateHostRating(UpdateHostRatingRequest) returns (UpdateHostRatingResponse) {
+    option (google.api.http) = {
+      put: "/ratings/updatehost"
+      body: "*"
+    };
+  }
+  rpc CreateNewHostRating(CreateNewHostRatingRequest) returns (CreateNewHostRatingResponse) {
+    option (google.api.http) = {
+      post: "/ratings/addhost"
+      body: "*"
+    };
+  }
+  rpc CreateNewAccommodationRating(CreateNewAccommodationRatingRequest) returns (CreateNewAccommodationRatingResponse) {
+    option (google.api.http) = {
+      post: "/ratings/addacc"
+      body: "*"
+    };
+  }
+  rpc GetAvgRatingHost(GetAvgHostRatingRequest) returns(GetAvgHostRatingResponse) {
+    option (google.api.http) = {
+      get: "/ratings/avg/host/{id}"
+    };
+  }
+  rpc GetAvgAccommodationRating(GetAvgAccommodationRatingRequest) returns(GetAvgAccommodationRatingResponse) {
+    option (google.api.http) = {
+      get: "/ratings/avg/accommodation/{id}"
+    };
+  }
+  rpc DeleteHostRating(DeleteHostRateRequest) returns (DeleteHostRateResponse) {
+    option (google.api.http) = {
+      delete: "/ratings/delete/host/{id}"
+    };
+  }
+  rpc DeleteAccommodationRating(DeleteAccommodationRateRequest) returns (DeleteAccommodationRateResponse) {
+    option (google.api.http) = {
+      delete: "/ratings/delete/accommodation/{id}"
+    };
+  }
+}
+message DeleteAccommodationRateResponse{
+  string response = 1;
+}
+message DeleteAccommodationRateRequest{
+  string id = 1;
+}
+message DeleteHostRateResponse{
+  string response = 1;
+}
+message DeleteHostRateRequest{
+  string id = 1;
+}
+message GetAvgAccommodationRatingRequest{
+  string id = 1;
+}
+message GetAvgAccommodationRatingResponse{
+  float avg = 1;
+}
+message GetAvgHostRatingRequest{
+  string id = 1;
+}
+message GetAvgHostRatingResponse{
+  float avg = 1;
+}
+message CreateNewHostRatingRequest{
+  string guestId = 1;
+  string dateRating = 2;
+  float rating = 3;
+  string hostId = 4;
+}
+message CreateNewHostRatingResponse{
+  RateHost rating = 1;
+}
+message CreateNewAccommodationRatingRequest{
+  string guestId = 1;
+  string dateRating = 2;
+  float rating = 3;
+  string accommodationId = 4;
+}
+message CreateNewAccommodationRatingResponse{
+  RateAccommodation rating = 1;
+}
+message GetRateHostRequest {
+  string id = 1;
+}
+message GetRateAccommodationRequest {
+  string id = 1;
+}
+message GetRateHostResponse{
+  RateHost response = 1;
+}
+message GetRateAccommodationResponse{
+  RateAccommodation response = 1;
+}
+message GetRateHostByGuestRequest {
+  string id = 1;
+}
+message GetRateAccommodationByGuestRequest {
+  string id = 1;
+}
+message GetRateHostByGuestResponse{
+  repeated RateHost response = 1;
+}
+message GetRateAccommodationByGuestResponse{
+  repeated RateAccommodation response = 1;
+}
+message GetRateHostByHostRequest {
+  string id = 1;
+}
+message GetRateAccommodationByAccommodationRequest {
+  string id = 1;
+}
+message GetRateHostByHostResponse{
+  repeated RateHost response = 1;
+}
+message GetRateAccommodationByAccommodationResponse{
+  repeated RateAccommodation response = 1;
+}
+message UpdateAccommodationRatingRequest{
+  string id = 1;
+  RateAccommodation rating = 2;
+}
+message UpdateHostRatingRequest{
+  string id = 1;
+  RateHost rating = 2;
+}
+message UpdateHostRatingResponse{
+  RateHost response = 1;
+}
+message UpdateAccommodationRatingResponse{
+  RateAccommodation response = 1;
+}
+message RateHost{
+  string id = 1;
+  string guestId = 2;
+  string dateRating = 3;
+  float rating = 4;
+  string hostId = 5;
+}
+message RateAccommodation{
+  string id = 1;
+  string guestId = 2;
+  string dateRating = 3;
+  float rating = 4;
+  string accommodationId = 5;
+}

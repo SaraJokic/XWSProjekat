@@ -11,7 +11,7 @@ const url = 'http://localhost:8000/users/delete';
   providedIn: 'root'
 })
 export class UserService {
-
+  
   constructor(private http: HttpClient) { }
   getAll(): Observable<any>{
     return this.http.get<any>('http://localhost:8000/users'); 
@@ -21,5 +21,11 @@ export class UserService {
   }
   delete(id: any): Observable<any> {
     return this.http.delete(`${url}/${id}`);
+  }
+  getUserByUsername(username: any): Observable<any>{
+    return this.http.get<any>(`${baseUrl}/users/getusername/${username}`); 
+  }
+  getUserById(id: any): Observable<any>{
+    return this.http.get<any>(`${baseUrl}/users/get/${id}`); 
   }
 }

@@ -12,6 +12,12 @@ services:
       USER_DB_HOST: ${USER_DB_HOST}
       USER_DB_PORT: ${USER_DB_PORT}
       USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+      NATS_HOST: ${NATS_HOST}
+      NATS_PORT: ${NATS_PORT}
+      NATS_USER: ${NATS_USER}
+      NATS_PASS: ${NATS_PASS}
+      CANCEL_RESERVATION_COMMAND_SUBJECT: ${CANCEL_RESERVATION_COMMAND_SUBJECT}
+      CANCEL_RESERVATION_REPLY_SUBJECT: ${CANCEL_RESERVATION_REPLY_SUBJECT}
     depends_on:
       - user_db
     networks:
@@ -44,8 +50,36 @@ services:
       AVAILABILITY_DB_HOST: ${AVAILABILITY_DB_HOST}
       AVAILABILITY_DB_PORT: ${AVAILABILITY_DB_PORT}
       AVAILABILITY_SERVICE_PORT: ${AVAILABILITY_SERVICE_PORT}
+      NATS_HOST: ${NATS_HOST}
+      NATS_PORT: ${NATS_PORT}
+      NATS_USER: ${NATS_USER}
+      NATS_PASS: ${NATS_PASS}
+      CANCEL_RESERVATION_COMMAND_SUBJECT: ${CANCEL_RESERVATION_COMMAND_SUBJECT}
+      CANCEL_RESERVATION_REPLY_SUBJECT: ${CANCEL_RESERVATION_REPLY_SUBJECT}
     depends_on:
       - availability_db
+    networks:
+      - network
+
+  reservation_service:
+    image: reservation-service
+    container_name: reservation-service
+    build:
+      context: .
+      dockerfile: ./reservation-service/Dockerfile
+    restart: on-failure
+    environment:
+      RESERVATION_DB_HOST: ${RESERVATION_DB_HOST}
+      RESERVATION_DB_PORT: ${RESERVATION_DB_PORT}
+      RESERVATION_SERVICE_PORT: ${RESERVATION_SERVICE_PORT}
+      NATS_HOST: ${NATS_HOST}
+      NATS_PORT: ${NATS_PORT}
+      NATS_USER: ${NATS_USER}
+      NATS_PASS: ${NATS_PASS}
+      CANCEL_RESERVATION_COMMAND_SUBJECT: ${CANCEL_RESERVATION_COMMAND_SUBJECT}
+      CANCEL_RESERVATION_REPLY_SUBJECT: ${CANCEL_RESERVATION_REPLY_SUBJECT}
+    depends_on:
+      - reservation_db
     networks:
       - network
 
@@ -62,6 +96,22 @@ services:
       AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
     depends_on:
       - auth_db
+    networks:
+      - network
+
+  rating_service:
+    image: rating-service
+    container_name: rating-service
+    build:
+      context: .
+      dockerfile: ./rating-service/Dockerfile
+    restart: on-failure
+    environment:
+      RATING_DB_HOST: ${RATING_DB_HOST}
+      RATING_DB_PORT: ${RATING_DB_PORT}
+      RATING_SERVICE_PORT: ${RATING_SERVICE_PORT}
+    depends_on:
+      - rating_db
     networks:
       - network
 
@@ -88,6 +138,12 @@ services:
 
       AUTH_SERVICE_HOST: ${AUTH_SERVICE_HOST}
       AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
+
+      RESERVATION_SERVICE_HOST: ${RESERVATION_SERVICE_HOST}
+      RESERVATION_SERVICE_PORT: ${RESERVATION_SERVICE_PORT}
+
+      RATING_SERVICE_HOST: ${RATING_SERVICE_HOST}
+      RATING_SERVICE_PORT: ${RATING_SERVICE_PORT}
     networks:
       - network
 
@@ -118,6 +174,20 @@ services:
   auth_db:
     image: mongo
     container_name: auth_db
+    restart: on-failure
+    networks:
+      - network
+
+  reservation_db:
+    image: mongo
+    container_name: reservation_db
+    restart: on-failure
+    networks:
+      - network
+
+  rating_db:
+    image: mongo
+    container_name: rating_db
     restart: on-failure
     networks:
       - network

@@ -4,6 +4,8 @@ import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/services/user.service';
 import { UpdateUserReq } from 'src/app/model/update-user-req';
 import { Router } from '@angular/router';
+import { LoggedUserInfo } from 'src/app/model/logged-user-info';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,30 +13,35 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit{
-  constructor(private userService: UserService,  private router: Router){}
+  constructor(private userService: UserService,  private router: Router, private authService: AuthService){}
   user: User = {
-    Name: 'John',
-    LastName: 'Doe',
-    City: 'New York',
-    Country: 'USA',
-    Username: 'johndoe123',
-    Password: 'password123',
+    Name: '',
+    LastName: '',
+    City: '',
+    Country: '',
+    Username: '',
+    Password: '',
     Role: 0,
     Email: '',
-    id: ''
+    id: '',
+    timesCancelled: 0,
+    ProminentHost:true,
+  };
+  logedUser: LoggedUserInfo = {
+    id: "",
+    username: "",
+    role: "",
+    name: '',
+    email:'',
   };
   ngOnInit(): void {
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: "", email:""};
     this.getUser();
   }
   getUser(){
-    this.userService.getAll().subscribe(
+    this.userService.getUserByUsername(this.logedUser.username).subscribe(
       (data) => {
-        this.user = data.users[0]
-        console.log(this.user)
-        //this.router.navigate(["/login"]);
-      },
-      (error: HttpErrorResponse) => {
-        //alert("Username or email are already taken");
+        this.user = data.user
       }
     );
   }
@@ -48,7 +55,6 @@ export class UserProfileComponent implements OnInit{
     this.userService.updateUser(updateUser).subscribe(
       (data) => {
         console.log(data)
-        //this.router.navigate(["/login"]);
       },
       (error: HttpErrorResponse) => {
         alert("Error");
@@ -56,10 +62,11 @@ export class UserProfileComponent implements OnInit{
     );
   }
   deleteProfile(id: any){
-    this.userService.delete(id).subscribe(
+    console.log(this.user)
+    this.userService.delete(this.user.id).subscribe(
       (data) => {
         console.log(data)
-        //this.router.navigate(["/login"]);
+        this.authService.removeToken();
         this.router.navigate(["/register"]);
         
       },
@@ -68,4 +75,10 @@ export class UserProfileComponent implements OnInit{
       }
     );
   }
+
+  onlyTrue(ProminentHost: boolean): boolean {
+    return ProminentHost;
+  }
+
+
 }

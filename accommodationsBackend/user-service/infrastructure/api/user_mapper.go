@@ -9,15 +9,17 @@ import (
 
 func mapUser(user *domain.User) *user_service.User {
 	userMapped := &user_service.User{
-		Id:       user.Id.Hex(),
-		Username: user.Username,
-		Password: user.Password,
-		Email:    user.Email,
-		Name:     user.Name,
-		LastName: user.LastName,
-		City:     user.City,
-		Country:  user.Country,
-		Role:     user_service.UserType(user.Role),
+		Id:             user.Id.Hex(),
+		Username:       user.Username,
+		Password:       user.Password,
+		Email:          user.Email,
+		Name:           user.Name,
+		LastName:       user.LastName,
+		City:           user.City,
+		Country:        user.Country,
+		Role:           user_service.UserType(user.Role),
+		TimesCancelled: int64(user.TimesCancelled),
+		ProminentHost:  user.ProminentHost,
 	}
 	return userMapped
 }
@@ -32,14 +34,16 @@ func reverseMapUser(user *user_service.User) *domain.User {
 	}*/
 	userMapped := &domain.User{
 
-		Username: user.Username,
-		Password: user.Password,
-		Email:    user.Email,
-		Name:     user.Name,
-		LastName: user.LastName,
-		City:     user.City,
-		Country:  user.Country,
-		Role:     domain.UserType(user.Role),
+		Username:       user.Username,
+		Password:       user.Password,
+		Email:          user.Email,
+		Name:           user.Name,
+		LastName:       user.LastName,
+		City:           user.City,
+		Country:        user.Country,
+		Role:           domain.UserType(user.Role),
+		TimesCancelled: int(user.TimesCancelled),
+		ProminentHost:  user.ProminentHost,
 	}
 	fmt.Println("ovo je user u reversemapper-u", userMapped)
 	return userMapped
@@ -54,15 +58,17 @@ func reverseMapUserWithId(user *user_service.User) *domain.User {
 		return nil
 	}
 	userMapped := &domain.User{
-		Id:       id,
-		Username: user.Username,
-		Password: user.Password,
-		Email:    user.Email,
-		Name:     user.Name,
-		LastName: user.LastName,
-		City:     user.City,
-		Country:  user.Country,
-		Role:     domain.UserType(user.Role),
+		Id:             id,
+		Username:       user.Username,
+		Password:       user.Password,
+		Email:          user.Email,
+		Name:           user.Name,
+		LastName:       user.LastName,
+		City:           user.City,
+		Country:        user.Country,
+		Role:           domain.UserType(user.Role),
+		TimesCancelled: int(user.TimesCancelled),
+		ProminentHost:  user.ProminentHost,
 	}
 	fmt.Println("ovo je user u reversemapper-u", userMapped)
 	return userMapped

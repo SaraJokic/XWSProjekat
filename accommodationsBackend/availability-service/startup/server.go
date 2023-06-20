@@ -7,6 +7,8 @@ import (
 	"accommodationsBackend/availability-service/infrastructure/persistence"
 	"accommodationsBackend/availability-service/startup/config"
 	availability_service "accommodationsBackend/common/proto/availability-service"
+	saga "accommodationsBackend/common/saga/messaging"
+	"accommodationsBackend/common/saga/messaging/nats"
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
@@ -24,11 +26,19 @@ func NewServer(config *config.Config) *Server {
 	}
 }
 
+const (
+	QueueGroup = "availability_service"
+)
+
 func (server *Server) Start() {
 	mongoClient := server.initMongoClient()
 	availabilitiesStore := server.initAvailabilityStore(mongoClient)
 
 	availabilitiesService := server.initAvailabilityService(availabilitiesStore)
+
+	commandSubscriber := server.initSubscriber(server.config.CancelReservationCommandSubject, QueueGroup)
+	replyPublisher := server.initPublisher(server.config.CancelReservationReplySubject)
+	server.initCancelReservationHandler(availabilitiesService, replyPublisher, commandSubscriber)
 
 	availabilityHandler := server.initAvailabilityHandler(availabilitiesService)
 
@@ -57,6 +67,33 @@ func (server *Server) initAvailabilityStore(client *mongo.Client) domain.Availab
 
 func (server *Server) initAvailabilityService(store domain.AvailabilityStore) *application.AvailabilityService {
 	return application.NewAvailabilityService(store)
+}
+
+func (server *Server) initPublisher(subject string) saga.Publisher {
+	publisher, err := nats.NewNATSPublisher(
+		server.config.NatsHost, server.config.NatsPort,
+		server.config.NatsUser, server.config.NatsPass, subject)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return publisher
+}
+
+func (server *Server) initSubscriber(subject, queueGroup string) saga.Subscriber {
+	subscriber, err := nats.NewNATSSubscriber(
+		server.config.NatsHost, server.config.NatsPort,
+		server.config.NatsUser, server.config.NatsPass, subject, queueGroup)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return subscriber
+}
+
+func (server *Server) initCancelReservationHandler(service *application.AvailabilityService, publisher saga.Publisher, subscriber saga.Subscriber) {
+	_, err := api.NewCancelReservationCommandHandler(service, publisher, subscriber)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (server *Server) initAvailabilityHandler(service *application.AvailabilityService) *api.AvailabilityHandler {

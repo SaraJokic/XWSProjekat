@@ -55,6 +55,7 @@ func (handler *AvailabilityHandler) GetAll(ctx context.Context, request *availab
 	}
 	return response, nil
 }
+
 func (handler *AvailabilityHandler) CreatePriceChange(ctx context.Context, request *availability_service.CreatePriceChangeRequest) (*availability_service.CreatePriceChangeResponse, error) {
 	id, err := primitive.ObjectIDFromHex(request.AvailabilityID)
 	if err != nil {
@@ -101,7 +102,7 @@ func (handler *AvailabilityHandler) AddAvailableSlot(ctx context.Context, reques
 		log.Println("Failed to get availability object from the database:", err)
 		return nil, status.Errorf(codes.Internal, "Failed to get availability object from the database")
 	}
-	layout := "2006-01-02T15:04:05Z"
+	layout := "2006-01-02 15:04:05 -0700 MST"
 	//fmt.Println("Start datum price change", request.PriceChange.Startdate)
 	startdate, err := time.Parse(layout, request.AvailableSlot.StartDate)
 	if err != nil {
@@ -142,7 +143,6 @@ func (handler *AvailabilityHandler) GetByAccommodationId(ctx context.Context, re
 	return response, nil
 }
 func (handler *AvailabilityHandler) CreateNewAvailability(ctx context.Context, request *availability_service.CreateNewAvailabilityRequest) (*availability_service.CreateNewAvailabilityResponse, error) {
-	fmt.Println("Ovo je ceo availability request:", request)
 	availability := mapDomainAvailability(request)
 
 	err := handler.service.Insert(availability)
@@ -152,4 +152,76 @@ func (handler *AvailabilityHandler) CreateNewAvailability(ctx context.Context, r
 	}
 	a := availability_service.CreateNewAvailabilityResponse{Poruka: "Successfully created new availability object."}
 	return &a, nil
+}
+func (handler *AvailabilityHandler) UpdateAvailability(ctx context.Context, request *availability_service.UpdateAvailabilityRequest) (*availability_service.UpdateAvailabilityResponse, error) {
+	id := request.Id
+	objectId, err := primitive.ObjectIDFromHex(id)
+	fmt.Println("AVAILABILITY UPDATE: id ", request.Id)
+	a := request.Availability
+	fmt.Println("AVAILABILITY UPDATE: availability iz requesta ", request.Availability)
+	accMapped := mapUpdatevailability(a)
+	fmt.Println("AVAILABILITY UPDATE: mapiranooo ", accMapped)
+	err = handler.service.Update(objectId, accMapped)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Failed to update accommodation")
+	}
+
+	return &availability_service.UpdateAvailabilityResponse{Availability: a}, nil
+}
+func (handler *AvailabilityHandler) UpdateAfterReservation(ctx context.Context, request *availability_service.UpdateAfterReservationRequest) (*availability_service.UpdateAfterReservationResponse, error) {
+	objectId, err := primitive.ObjectIDFromHex(request.Id)
+	availability, _ := handler.service.GetByAccommodationId(objectId)
+	updatedSlots := make([]domain.AvailabilitySlot, 0)
+	slots := availability.AvailableSlots
+	layout := "2006-01-02 15:04:05 -0700 MST"
+	startdate, err := time.Parse(layout, request.SelectedStartDate)
+	if err != nil {
+		log.Println("Failed to parse the string of StartDate: ", err)
+		return nil, err
+	}
+	enddate, err := time.Parse(layout, request.SelectedEndDate)
+	if err != nil {
+		log.Println("Failed to parse the string of EndDate: ", err)
+		return nil, err
+	}
+	for _, slot := range slots {
+
+		// Check if the slot overlaps with the selected dates
+		if slot.StartDate.Before(startdate) && slot.EndDate.After(enddate) {
+			// Split the slot into two parts: before the selected start date and after the selected end date
+			// Add the first part to the updated slots
+			updatedSlots = append(updatedSlots, domain.AvailabilitySlot{SlotId: primitive.NewObjectID(), StartDate: slot.StartDate, EndDate: startdate})
+
+			// Add the second part to the updated slots
+			updatedSlots = append(updatedSlots, domain.AvailabilitySlot{SlotId: primitive.NewObjectID(), StartDate: enddate, EndDate: slot.EndDate})
+		} else if slot.StartDate.Before(startdate) && slot.EndDate.After(startdate) {
+			// Adjust the end date of the slot to be the selected start date
+			slot.EndDate = startdate
+			updatedSlots = append(updatedSlots, slot)
+		} else if slot.StartDate.Before(enddate) && slot.EndDate.After(enddate) {
+			// Adjust the start date of the slot to be the selected end date
+			slot.StartDate = enddate
+			updatedSlots = append(updatedSlots, slot)
+		} else if slot.StartDate.Equal(startdate) && slot.EndDate.After(enddate) {
+
+			updatedSlots = append(updatedSlots, domain.AvailabilitySlot{SlotId: primitive.NewObjectID(), StartDate: enddate, EndDate: slot.EndDate})
+
+		} else if slot.StartDate.Before(startdate) && slot.EndDate.Equal(enddate) {
+
+			updatedSlots = append(updatedSlots, domain.AvailabilitySlot{SlotId: primitive.NewObjectID(), StartDate: slot.StartDate, EndDate: startdate})
+
+		} else if slot.StartDate.Equal(startdate) && slot.EndDate.Equal(enddate) {
+			continue
+		} else {
+			// No overlap, keep the slot as it is
+			updatedSlots = append(updatedSlots, slot)
+		}
+	}
+	availability.AvailableSlots = updatedSlots
+	// Zameniti da su updatedSlots ustv availabilit.AvailabilitySlots
+	err = handler.service.Update(availability.Id, availability)
+	if err != nil {
+		return nil, err
+	}
+	return &availability_service.UpdateAfterReservationResponse{Message: "Seccessfully changed availability slots"}, nil
 }

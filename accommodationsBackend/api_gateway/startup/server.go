@@ -1,10 +1,13 @@
 package startup
 
 import (
+	"accommodationsBackend/api_gateway/middleware"
 	cfg "accommodationsBackend/api_gateway/startup/config"
 	"accommodationsBackend/common/proto/accommodation_service"
 	auth_service "accommodationsBackend/common/proto/auth-service"
 	availability_service "accommodationsBackend/common/proto/availability-service"
+	"accommodationsBackend/common/proto/rating_service"
+	"accommodationsBackend/common/proto/reservation_service"
 	userGw "accommodationsBackend/common/proto/user_service"
 	"context"
 	"fmt"
@@ -56,6 +59,18 @@ func (server *Server) initHandlers() {
 	if err != nil {
 		panic(err)
 	}
+
+	reservationEmdpoint := fmt.Sprintf("%s:%s", server.config.ReservationHost, server.config.ReservationPort)
+	err = reservation_service.RegisterReservationServiceHandlerFromEndpoint(context.TODO(), server.mux, reservationEmdpoint, opts)
+	if err != nil {
+		panic(err)
+	}
+
+	ratingEmdpoint := fmt.Sprintf("%s:%s", server.config.RatingHost, server.config.RatingPort)
+	err = rating_service.RegisterRatingServiceHandlerFromEndpoint(context.TODO(), server.mux, ratingEmdpoint, opts)
+	if err != nil {
+		panic(err)
+	}
 }
 
 /*func (server *Server) initCustomHandlers() {
@@ -70,6 +85,13 @@ func (server *Server) Start() {
 	mainHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "OPTIONS" {
 			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		if r.Method != "auth/login" || r.Method != "auth/insert" || r.Method != "/users/register" {
+			validateTokenHandler := middleware.ValidateToken(server.mux)
+			validateTokenHandler.ServeHTTP(w, r)
+			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
 		server.mux.ServeHTTP(w, r)

@@ -28,20 +28,21 @@ export class LoginFormComponent {
         username: this.ime,
         password: this.sifra
         }
+        console.log(loginUser)
       this.authService.login(loginUser)
         .subscribe(response => {
           this.authService.saveToken(response.token);
           alert("Welcome back! You have successfully logged in.")
-          this.router.navigate(["/new/accommodation"]); 
+          this.router.navigate([""]); 
         },
         (error: HttpErrorResponse) => {
-          alert("Incorect username or password");
+          alert(error.error.message);
         });
     }
    
     
     redirect(){
-      this.router.navigate(["/userRegister"]);
+      this.router.navigate(["/register"]);
     }
 
   }

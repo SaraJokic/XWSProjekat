@@ -23,8 +23,30 @@ service AuthService{
       body: "*"
     };
   }
+  rpc GetAuthByUsername(GetAuthRequest) returns(GetAuthResponse) {
+    option (google.api.http) = {
+      get: "/auth/getusername/{id}"
+    };
+  }
+  rpc DeleteAuthUser(DeleteAuthRequest) returns (DeleteAuthResponse) {
+    option (google.api.http) = {
+      delete: "/auth/delete/{id}"
+    };
+  }
 }
+message DeleteAuthRequest{
+  string id = 1;
+}
+message DeleteAuthResponse{
+  string message = 1;
+}
+message GetAuthRequest{
+  string id = 1;
 
+}
+message GetAuthResponse{
+    AuthUser user = 1;
+}
 message LoginRequest {
   string id = 1;
   string username = 2;

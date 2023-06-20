@@ -1,0 +1,48 @@
+<mat-table [dataSource]="pending" class="mat-elevation-z8">
+    <!-- Name of Guest Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Guest Name </mat-header-cell>
+      <mat-cell *matCellDef="let reservation"> {{ reservation.u.Name + " " + reservation.u.LastName}} </mat-cell>
+    </ng-container>
+  
+    <!-- Start Date Column -->
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef> Start Date </mat-header-cell>
+      <mat-cell *matCellDef="let reservation"> {{ reservation.r.startDate | date }} </mat-cell>
+    </ng-container>
+  
+    <!-- End Date Column -->
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef> End Date </mat-header-cell>
+      <mat-cell *matCellDef="let reservation"> {{ reservation.r.endDate | date }} </mat-cell>
+    </ng-container>
+  
+    <!-- Number of Guests Column -->
+    <ng-container matColumnDef="numOfGuests">
+      <mat-header-cell *matHeaderCellDef> Number of Guests </mat-header-cell>
+      <mat-cell *matCellDef="let reservation"> {{ reservation.r.numOfGuests }} </mat-cell>
+    </ng-container>
+
+    <!-- Times guest cancelled reservation Column -->
+    <ng-container matColumnDef="timesCancelled">
+      <mat-header-cell *matHeaderCellDef> Times Cancelled </mat-header-cell>
+      <mat-cell *matCellDef="let reservation"> {{reservation.u.timesCancelled}} </mat-cell>
+    </ng-container>
+  
+    <!-- Action Buttons Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let reservation">
+        <button mat-icon-button color="primary" (click)="approveReservation(reservation.r)">
+          <mat-icon>done</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="denyReservation(reservation.r)">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+  
+    <!-- Define the table columns -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>

@@ -25,3 +25,9 @@ func (service *AuthService) GetAll() ([]*domain.User, error) {
 func (service *AuthService) ValidateUsernameAndPassword(username string, password string) (*domain.User, error) {
 	return service.store.ValidateUsernameAndPassword(username, password)
 }
+func (service *AuthService) Delete(id string) error {
+	return service.store.Delete(id)
+}
+func (service *AuthService) GetByUsername(username string) (*domain.User, error) {
+	return service.store.GetByUsername(username)
+}

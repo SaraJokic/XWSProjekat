@@ -1,6 +1,9 @@
 package domain
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
+)
 
 type AvailabilityStore interface {
 	Get(id primitive.ObjectID) (*Availability, error)
@@ -9,4 +12,5 @@ type AvailabilityStore interface {
 	DeleteAll()
 	Update(id primitive.ObjectID, availability *Availability) error
 	GetByAccommodationId(id primitive.ObjectID) (*Availability, error)
+	FindAvailabilitySlotsByDateRange(startDate time.Time, endDate time.Time) ([]AvailabilitySlot, error)
 }

@@ -45,7 +45,7 @@ func (server *Server) initMongoClient() *mongo.Client {
 
 func (server *Server) initAuthStore(client *mongo.Client) domain.AuthStore {
 	store := persistence.NewAuthMongoDBStore(client)
-	store.DeleteAll()
+	//store.DeleteAll()
 	/*for _, user := range users {
 		err := store.Insert(user)
 		if err != nil {

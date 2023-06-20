@@ -35,6 +35,10 @@ func (store *UserMongoDBStore) GetAll() ([]*domain.User, error) {
 	filter := bson.D{{}}
 	return store.filter(filter)
 }
+func (store *UserMongoDBStore) GetAllProminentHosts() ([]*domain.User, error) {
+	filter := bson.D{{}}
+	return store.filter(filter)
+}
 
 func (store *UserMongoDBStore) Register(user *domain.User) error {
 	user.Id = primitive.NewObjectID()
@@ -58,14 +62,16 @@ func (store *UserMongoDBStore) UpdateUser(id string, user *domain.User) error {
 	objID, _ := primitive.ObjectIDFromHex(id)
 	filter := bson.M{"_id": objID}
 	update := bson.M{"$set": bson.M{
-		"Username": user.Username,
-		"Password": user.Password,
-		"Email":    user.Email,
-		"Name":     user.Name,
-		"LastName": user.LastName,
-		"City":     user.City,
-		"Country":  user.Country,
-		"Role":     user.Role,
+		"Username":       user.Username,
+		"Password":       user.Password,
+		"Email":          user.Email,
+		"Name":           user.Name,
+		"LastName":       user.LastName,
+		"City":           user.City,
+		"Country":        user.Country,
+		"Role":           user.Role,
+		"timescancelled": user.TimesCancelled,
+		"prominentHost":  user.ProminentHost,
 	}}
 	_, err := store.users.UpdateOne(ctx, filter, update)
 
@@ -153,4 +159,8 @@ func decode(cursor *mongo.Cursor) (users []*domain.User, err error) {
 	}
 	err = cursor.Err()
 	return
+}
+func (store *UserMongoDBStore) GetByUsername(username string) (*domain.User, error) {
+	filter := bson.M{"username": username}
+	return store.filterOne(filter)
 }
