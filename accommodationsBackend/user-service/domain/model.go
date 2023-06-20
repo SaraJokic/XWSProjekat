@@ -13,6 +13,7 @@ type User struct {
 	Country        string             `bson:"country"  json:"country"`
 	Role           UserType           `bson:"role" json:"role"`
 	TimesCancelled int                `bson:"timescancelled" json:"timescancelled"`
+	ProminentHost  bool               `bson:"prominentHost"   json:"prominentHost"`
 }
 
 type UserType int32

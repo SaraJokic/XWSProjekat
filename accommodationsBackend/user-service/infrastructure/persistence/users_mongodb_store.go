@@ -35,6 +35,10 @@ func (store *UserMongoDBStore) GetAll() ([]*domain.User, error) {
 	filter := bson.D{{}}
 	return store.filter(filter)
 }
+func (store *UserMongoDBStore) GetAllProminentHosts() ([]*domain.User, error) {
+	filter := bson.D{{}}
+	return store.filter(filter)
+}
 
 func (store *UserMongoDBStore) Register(user *domain.User) error {
 	user.Id = primitive.NewObjectID()
@@ -67,6 +71,7 @@ func (store *UserMongoDBStore) UpdateUser(id string, user *domain.User) error {
 		"Country":        user.Country,
 		"Role":           user.Role,
 		"timescancelled": user.TimesCancelled,
+		"prominentHost":  user.ProminentHost,
 	}}
 	_, err := store.users.UpdateOne(ctx, filter, update)
 

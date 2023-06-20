@@ -15,6 +15,12 @@ service UserService{
       get: "/users"
     };
   }
+
+  rpc GetAllProminentHosts(GetAllRequest) returns(GetAllResponse) {
+    option (google.api.http) = {
+      get: "/GetAllProminentHosts"
+    };
+  }
   rpc Register(RegisterRequest) returns(RegisterResponse) {
     option (google.api.http) = {
       post: "/users/register"
@@ -91,6 +97,7 @@ message User {
   string Country = 8;
   UserType Role = 9;
   int64 timesCancelled = 10;
+  bool ProminentHost =11;
 }
 
 enum UserType {

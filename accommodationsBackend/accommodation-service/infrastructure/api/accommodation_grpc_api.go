@@ -4,6 +4,7 @@ import (
 	"accommodationsBackend/accommodations-service/application"
 	"accommodationsBackend/common/proto/accommodation_service"
 	availability_service "accommodationsBackend/common/proto/availability-service"
+	"accommodationsBackend/common/proto/user_service"
 	"context"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"google.golang.org/grpc"
@@ -56,6 +57,33 @@ func (handler *AccommodationHandler) GetAll(ctx context.Context, request *accomm
 	}
 	return response, nil
 }
+
+func (handler *AccommodationHandler) GetAllProminentAccommodation(ctx context.Context, request *accommodation_service.AccGetAllRequest) (*accommodation_service.AccGetAllResponse, error) {
+	accommodations, err := handler.service.GetAllProminentAccommodation()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &accommodation_service.AccGetAllResponse{
+		Acc: []*accommodation_service.Accommodation{},
+	}
+	client := NewUserClient()
+	for _, accommodation := range accommodations {
+		host, err := client.Get(ctx, &user_service.GetRequest{Id: accommodation.HostId.Hex()})
+		if err != nil {
+
+			continue
+		}
+
+		if host.User.ProminentHost {
+			current := mapAccommodation(accommodation)
+			response.Acc = append(response.Acc, current)
+		}
+	}
+
+	return response, nil
+}
+
 func (handler *AccommodationHandler) CreateNewAccommodation(ctx context.Context, request *accommodation_service.AccCreateRequest) (*accommodation_service.AccCreateResponse, error) {
 	acc := mapNewAccommodation(request.Acc)
 	err := handler.service.Create(acc)
@@ -141,10 +169,18 @@ func (handler *AccommodationHandler) Search(ctx context.Context, request *accomm
 	}
 	return response, nil
 }
+
 func parseISO8601(dateString string) (time.Time, error) {
 	dateTime, err := time.Parse(time.RFC3339, dateString)
 	if err != nil {
 		return time.Time{}, err
 	}
 	return dateTime, nil
+}
+func NewUserClient() user_service.UserServiceClient {
+	conn, err := grpc.Dial("user-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection to Accommodation service: %v", err)
+	}
+	return user_service.NewUserServiceClient(conn)
 }

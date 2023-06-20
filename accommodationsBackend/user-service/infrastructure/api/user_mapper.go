@@ -19,6 +19,7 @@ func mapUser(user *domain.User) *user_service.User {
 		Country:        user.Country,
 		Role:           user_service.UserType(user.Role),
 		TimesCancelled: int64(user.TimesCancelled),
+		ProminentHost:  user.ProminentHost,
 	}
 	return userMapped
 }
@@ -42,6 +43,7 @@ func reverseMapUser(user *user_service.User) *domain.User {
 		Country:        user.Country,
 		Role:           domain.UserType(user.Role),
 		TimesCancelled: int(user.TimesCancelled),
+		ProminentHost:  user.ProminentHost,
 	}
 	fmt.Println("ovo je user u reversemapper-u", userMapped)
 	return userMapped
@@ -66,6 +68,7 @@ func reverseMapUserWithId(user *user_service.User) *domain.User {
 		Country:        user.Country,
 		Role:           domain.UserType(user.Role),
 		TimesCancelled: int(user.TimesCancelled),
+		ProminentHost:  user.ProminentHost,
 	}
 	fmt.Println("ovo je user u reversemapper-u", userMapped)
 	return userMapped

@@ -19,8 +19,15 @@
 
   <label>Password:</label>
   <input type="password" [(ngModel)]="user.Password" name="password">
-  
+
+ <!---
+  <p *ngIf="user.ProminentHost && onlyTrue(user.ProminentHost)"> ProminentHost: {{ user.ProminentHost }} </p>
+-->
+<p> ProminentHost: {{ user.ProminentHost }} </p>
+
   <button type="button" (click)="deleteProfile(user.id)">Delete Account</button>
+
+
 
   <button type="submit">Save Changes</button>
 </form>
