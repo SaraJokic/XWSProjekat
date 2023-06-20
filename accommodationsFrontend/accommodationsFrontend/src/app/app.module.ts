@@ -27,6 +27,7 @@ import { MaterialModule } from './material/material.module';
 import { RatingDialogComponent } from './pages/rating-dialog/rating-dialog.component';
 import { RatingComponent } from './pages/rating/rating.component';
 import { RateAcoomodationComponent } from './pages/rate-acoomodation/rate-acoomodation.component';
+import { UserRatingsComponent } from './pages/user-ratings/user-ratings.component';
 
 
 
@@ -47,7 +48,8 @@ import { RateAcoomodationComponent } from './pages/rate-acoomodation/rate-acoomo
     ReservationRequestsGuestComponent,
     RatingDialogComponent,
     RatingComponent,
-    RateAcoomodationComponent
+    RateAcoomodationComponent,
+    UserRatingsComponent
   ],
   imports: [
     BrowserModule,
