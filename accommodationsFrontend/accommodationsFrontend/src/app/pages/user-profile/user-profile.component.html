@@ -1,4 +1,11 @@
 <form (ngSubmit)="onSubmit()">
+
+  <div class="prominent">
+    <h2>
+    <p *ngIf="user.ProminentHost && onlyTrue(user.ProminentHost)"> You are Prominent Host  </p>
+  </h2>
+  </div>
+
   <label>First Name:</label>
   <input type="text" [(ngModel)]="user.Name" name="firstName">
 
@@ -19,8 +26,10 @@
 
   <label>Password:</label>
   <input type="password" [(ngModel)]="user.Password" name="password">
-  
+
+
   <button type="button" (click)="deleteProfile(user.id)">Delete Account</button>
 
+ 
   <button type="submit">Save Changes</button>
 </form>

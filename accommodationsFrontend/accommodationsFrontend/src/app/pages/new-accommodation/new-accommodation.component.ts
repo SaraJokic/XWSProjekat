@@ -40,7 +40,8 @@ export class NewAccommodationComponent implements OnInit {
     id: "",
     username: "",
     role: "",
-    name: ''
+    name: '',
+    email:""
   };
   
   constructor(private accommodationService: AccommodationServiceService, private fb: FormBuilder
@@ -69,7 +70,7 @@ export class NewAccommodationComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: "", email:""};
 
     this.getUser();
   }

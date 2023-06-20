@@ -9,6 +9,7 @@
         <a mat-button  class="NavBarButton" routerLink="/new/accommodation" *ngIf="userRole === 'Admin' || userRole === 'admin'">List your Accommodation</a>
         <a mat-button  class="NavBarButton" routerLink="/myprofile" *ngIf="userRole != 'ROLE_NOTAUTH'" >My profile</a>
         <a mat-button  class="NavBarButton" routerLink="/myaccommodations" *ngIf="userRole === 'Admin' || userRole === 'admin'">My accommodations</a>
+        <a mat-button  class="NavBarButton" routerLink="/userRatings" *ngIf="userRole === 'Customer' || userRole === 'customer'">My ratings</a>
         <a mat-button  class="NavBarButton" routerLink="/myreservationrequests" *ngIf="userRole === 'Customer' || userRole === 'customer'">My reservations</a>
         <a mat-button  class="NavBarButton" routerLink="userLogin" class="nav-link" *ngIf="userRole != 'ROLE_NOTAUTH'" (click)="logout()">Logout</a>
           

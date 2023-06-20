@@ -24,6 +24,10 @@ func (service *AccommodationService) GetAll() ([]*domain.Accommodation, error) {
 	return service.store.GetAll()
 }
 
+func (service *AccommodationService) GetAllProminentAccommodation() ([]*domain.Accommodation, error) {
+	return service.store.GetAllProminentAccommodation()
+}
+
 func (service *AccommodationService) Create(acc *domain.Accommodation) error {
 	if acc.Id.IsZero() {
 		acc.Id = primitive.NewObjectID()
@@ -36,6 +40,7 @@ func (service *AccommodationService) DeleteAll() {
 func (service *AccommodationService) GetAccommodationByUserId(id primitive.ObjectID) ([]*domain.Accommodation, error) {
 	return service.store.GetAccommodationByUserId(id)
 }
+
 func (service *AccommodationService) UpdateAccommodation(id string, accommodation *domain.Accommodation) error {
 	return service.store.UpdateAccommodation(id, accommodation)
 }

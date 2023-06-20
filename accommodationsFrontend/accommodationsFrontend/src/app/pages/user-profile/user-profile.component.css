@@ -29,3 +29,8 @@ button {
 button:hover {
   background-color: #0062cc;
 }
+
+.prominent {
+  color: black; /* Replace 'red' with your desired color */
+  background-color: #FFD700;
+}

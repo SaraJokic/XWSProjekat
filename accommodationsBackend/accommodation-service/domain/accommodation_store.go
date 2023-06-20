@@ -8,6 +8,7 @@ import (
 type AccommodationStore interface {
 	Get(id primitive.ObjectID) (*Accommodation, error)
 	GetAll() ([]*Accommodation, error)
+	GetAllProminentAccommodation() ([]*Accommodation, error)
 	Insert(accommodation *Accommodation) error
 	DeleteAll()
 	UpdateAccommodation(id string, user *Accommodation) error

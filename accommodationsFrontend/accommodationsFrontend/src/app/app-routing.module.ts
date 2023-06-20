@@ -9,6 +9,7 @@ import { AccommodationViewComponent } from './pages/accommodation-view/accommoda
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ReservationRequestsHostComponent } from './pages/reservation-requests-host/reservation-requests-host.component';
 import { ReservationRequestsGuestComponent } from './pages/reservation-requests-guest/reservation-requests-guest.component';
+import { UserRatingsComponent } from './pages/user-ratings/user-ratings.component';
 
 const routes: Routes = [
   {path: 'new/accommodation', component: NewAccommodationComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: '', component: HomePageComponent },
   {path: 'accommodationrequests/:id', component: ReservationRequestsHostComponent },
   {path: 'myreservationrequests', component: ReservationRequestsGuestComponent },
+  {path:'userRatings',component:UserRatingsComponent}
 ];
 
 @NgModule({

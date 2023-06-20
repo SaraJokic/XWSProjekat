@@ -17,9 +17,16 @@ service AccommodationService{
       get: "/accommodations/getbyhostid/{id}"
     };
   }
+
   rpc GetAll(AccGetAllRequest) returns(AccGetAllResponse) {
     option (google.api.http) = {
       get: "/accommodations"
+    };
+  }
+
+  rpc GetAllProminentAccommodation(AccGetAllRequest) returns(AccGetAllResponse) {
+    option (google.api.http) = {
+      get: "/GetAllProminentAccommodation"
     };
   }
   rpc CreateNewAccommodation(AccCreateRequest) returns(AccCreateResponse) {

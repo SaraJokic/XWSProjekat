@@ -25,6 +25,9 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MaterialModule } from './material/material.module';
 import { RatingDialogComponent } from './pages/rating-dialog/rating-dialog.component';
+import { RatingComponent } from './pages/rating/rating.component';
+import { RateAcoomodationComponent } from './pages/rate-acoomodation/rate-acoomodation.component';
+import { UserRatingsComponent } from './pages/user-ratings/user-ratings.component';
 
 
 
@@ -43,7 +46,10 @@ import { RatingDialogComponent } from './pages/rating-dialog/rating-dialog.compo
     MakeReservationDialogComponent,
     ReservationRequestsHostComponent,
     ReservationRequestsGuestComponent,
-    RatingDialogComponent
+    RatingDialogComponent,
+    RatingComponent,
+    RateAcoomodationComponent,
+    UserRatingsComponent
   ],
   imports: [
     BrowserModule,

@@ -137,3 +137,7 @@ h2{
   flex-direction: column;
   gap: 15px; /* Adjust the desired spacing */
 }
+
+.prominent-card-color {
+  background-color: #FFD700;
+}

@@ -24,16 +24,18 @@ export class UserProfileComponent implements OnInit{
     Role: 0,
     Email: '',
     id: '',
-    timesCancelled: 0
+    timesCancelled: 0,
+    ProminentHost:true,
   };
   logedUser: LoggedUserInfo = {
     id: "",
     username: "",
     role: "",
-    name: ''
+    name: '',
+    email:'',
   };
   ngOnInit(): void {
-    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: ""};
+    this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: "", email:""};
     this.getUser();
   }
   getUser(){
@@ -73,4 +75,10 @@ export class UserProfileComponent implements OnInit{
       }
     );
   }
+
+  onlyTrue(ProminentHost: boolean): boolean {
+    return ProminentHost;
+  }
+
+
 }
