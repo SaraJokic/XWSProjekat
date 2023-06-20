@@ -83,7 +83,12 @@ export class HomePageComponent implements OnInit {
   openDialog(accommodation: Accommodation): void {
     this.dialogService.openDialogReservation(accommodation);
   }
-
+  openHostDialog(accommodation: Accommodation): void {
+    this.dialogService.openHostDialog(accommodation);
+  }
+  openAccDialog(accommodation: Accommodation): void {
+    this.dialogService.openAccDialog(accommodation);
+  }
   onlyTrue(benefits: any): boolean {
     if (!benefits) {
       return false;
