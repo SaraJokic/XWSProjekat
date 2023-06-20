@@ -6,6 +6,8 @@ import { SearchAccommodation } from 'src/app/model/search-accomodation';
 import { AccommodationServiceService } from 'src/app/services/accommodation-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { UserService } from 'src/app/services/user.service';
+import { MaterialModule } from 'src/app/material/material.module';
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
