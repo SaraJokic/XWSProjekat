@@ -6,12 +6,14 @@ import (
 )
 
 type ReservationService struct {
-	store domain.ReservationStore
+	store        domain.ReservationStore
+	orchestrator *CancelReservationOrchestrator
 }
 
-func NewreservationService(store domain.ReservationStore) *ReservationService {
+func NewreservationService(store domain.ReservationStore, orchestrator *CancelReservationOrchestrator) *ReservationService {
 	return &ReservationService{
-		store: store,
+		store:        store,
+		orchestrator: orchestrator,
 	}
 }
 func (service *ReservationService) Get(id primitive.ObjectID) (*domain.Reservation, error) {
@@ -39,5 +41,17 @@ func (service *ReservationService) GetByUserId(id primitive.ObjectID) ([]*domain
 
 }
 func (service *ReservationService) Delete(id string) error {
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return err
+	}
+	r, _ := service.Get(objectId)
+	err = service.orchestrator.Start(r)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func (service *ReservationService) Cancel(id string) error {
 	return service.store.Delete(id)
 }

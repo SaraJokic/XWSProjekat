@@ -2,6 +2,8 @@ package startup
 
 import (
 	"accommodationsBackend/common/proto/reservation_service"
+	saga "accommodationsBackend/common/saga/messaging"
+	"accommodationsBackend/common/saga/messaging/nats"
 	"accommodationsBackend/reservation-service/application"
 	"accommodationsBackend/reservation-service/domain"
 	"accommodationsBackend/reservation-service/infrastructure/api"
@@ -24,11 +26,23 @@ func NewServer(config *config.Config) *Server {
 	}
 }
 
+const (
+	QueueGroup = "reservation_service"
+)
+
 func (server *Server) Start() {
 	mongoClient := server.initMongoClient()
 	reservationsStore := server.initReservationStore(mongoClient)
 
-	reservationsService := server.initReservationService(reservationsStore)
+	commandPublisher := server.initPublisher(server.config.CancelReservationCommandSubject)
+	replySubscriber := server.initSubscriber(server.config.CancelReservationReplySubject, QueueGroup)
+	cancelReservationOrchestrator := server.initCancelReservationOrchestrator(commandPublisher, replySubscriber)
+
+	reservationsService := server.initReservationService(reservationsStore, cancelReservationOrchestrator)
+
+	commandSubscriber := server.initSubscriber(server.config.CancelReservationCommandSubject, QueueGroup)
+	replyPublisher := server.initPublisher(server.config.CancelReservationReplySubject)
+	server.initCancelReservationHandler(reservationsService, replyPublisher, commandSubscriber)
 
 	reservationsHandler := server.initReservationHandler(reservationsService)
 
@@ -55,12 +69,44 @@ func (server *Server) initReservationStore(client *mongo.Client) domain.Reservat
 	return store
 }
 
-func (server *Server) initReservationService(store domain.ReservationStore) *application.ReservationService {
-	return application.NewreservationService(store)
+func (server *Server) initReservationService(store domain.ReservationStore, orchestrator *application.CancelReservationOrchestrator) *application.ReservationService {
+	return application.NewreservationService(store, orchestrator)
 }
 
 func (server *Server) initReservationHandler(service *application.ReservationService) *api.ReservationHandler {
 	return api.NewReservationHandler(service)
+}
+func (server *Server) initPublisher(subject string) saga.Publisher {
+	publisher, err := nats.NewNATSPublisher(
+		server.config.NatsHost, server.config.NatsPort,
+		server.config.NatsUser, server.config.NatsPass, subject)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return publisher
+}
+
+func (server *Server) initSubscriber(subject, queueGroup string) saga.Subscriber {
+	subscriber, err := nats.NewNATSSubscriber(
+		server.config.NatsHost, server.config.NatsPort,
+		server.config.NatsUser, server.config.NatsPass, subject, queueGroup)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return subscriber
+}
+func (server *Server) initCancelReservationOrchestrator(publisher saga.Publisher, subscriber saga.Subscriber) *application.CancelReservationOrchestrator {
+	orchestrator, err := application.NewCancelReservationOrchestrator(publisher, subscriber)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return orchestrator
+}
+func (server *Server) initCancelReservationHandler(service *application.ReservationService, publisher saga.Publisher, subscriber saga.Subscriber) {
+	_, err := api.NewCancelReservationCommandHandler(service, publisher, subscriber)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (server *Server) startGrpcServer(reservationHandler *api.ReservationHandler) {

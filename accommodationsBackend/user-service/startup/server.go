@@ -2,6 +2,8 @@ package startup
 
 import (
 	"accommodationsBackend/common/proto/user_service"
+	saga "accommodationsBackend/common/saga/messaging"
+	"accommodationsBackend/common/saga/messaging/nats"
 	"accommodationsBackend/user-service/application"
 	"accommodationsBackend/user-service/domain"
 	"accommodationsBackend/user-service/infrastructure/api"
@@ -24,11 +26,19 @@ func NewServer(config *config.Config) *Server {
 	}
 }
 
+const (
+	QueueGroup = "user_service"
+)
+
 func (server *Server) Start() {
 	mongoClient := server.initMongoClient()
 	usersStore := server.initUsersStore(mongoClient)
 
 	userService := server.initUserService(usersStore)
+
+	commandSubscriber := server.initSubscriber(server.config.CancelReservationCommandSubject, QueueGroup)
+	replyPublisher := server.initPublisher(server.config.CancelReservationReplySubject)
+	server.initCancelReservationHandler(userService, replyPublisher, commandSubscriber)
 
 	userHandler := server.initUserHandler(userService)
 
@@ -51,6 +61,33 @@ func (server *Server) initUsersStore(client *mongo.Client) domain.UserStore {
 
 func (server *Server) initUserService(store domain.UserStore) *application.UserService {
 	return application.NewUserService(store)
+}
+
+func (server *Server) initPublisher(subject string) saga.Publisher {
+	publisher, err := nats.NewNATSPublisher(
+		server.config.NatsHost, server.config.NatsPort,
+		server.config.NatsUser, server.config.NatsPass, subject)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return publisher
+}
+
+func (server *Server) initSubscriber(subject, queueGroup string) saga.Subscriber {
+	subscriber, err := nats.NewNATSSubscriber(
+		server.config.NatsHost, server.config.NatsPort,
+		server.config.NatsUser, server.config.NatsPass, subject, queueGroup)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return subscriber
+}
+
+func (server *Server) initCancelReservationHandler(service *application.UserService, publisher saga.Publisher, subscriber saga.Subscriber) {
+	_, err := api.NewCancelReservationCommandHandler(service, publisher, subscriber)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (server *Server) initUserHandler(service *application.UserService) *api.UserHandler {

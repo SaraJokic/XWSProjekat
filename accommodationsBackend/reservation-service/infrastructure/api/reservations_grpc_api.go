@@ -143,7 +143,7 @@ func (handler *ReservationHandler) ChangeStatusReservation(ctx context.Context, 
 }
 func (handler *ReservationHandler) DeleteReservation(ctx context.Context, request *reservation_service.DeleteReservationRequest) (*reservation_service.DeleteReservationResponse, error) {
 	id := request.Id
-	reservation, _ := handler.Get(context.Background(), &reservation_service.GetReservationRequest{Id: request.Id})
+	/*reservation, _ := handler.Get(context.Background(), &reservation_service.GetReservationRequest{Id: request.Id})
 	client := NewAvailabilityClient()
 	availability, _ := client.GetByAccommodationId(context.Background(), &availability_service.GetByAccIdRequest{
 		Id: reservation.Reservation.AccommodationId,
@@ -154,6 +154,8 @@ func (handler *ReservationHandler) DeleteReservation(ctx context.Context, reques
 		EndDate:   reservation.Reservation.EndDate,
 	}
 	client.AddAvailableSlot(context.Background(), &availability_service.AddAvailableSlotRequest{AvailableSlot: newSlot, Id: availability.Availability.Id})
+
+	err := handler.service.Delete(id)*/
 	err := handler.service.Delete(id)
 	if err != nil {
 		return &reservation_service.DeleteReservationResponse{Message: "Reservation delete failed"}, nil
