@@ -53,3 +53,87 @@ h2{
     
   }
   
+
+
+.filtriraj mat-form-field{
+  margin-right:1% ;
+}
+
+.filtriraj {
+  flex: 1;
+  width: 80%;
+  margin-left: 26%;
+  margin-top: 2%;
+}
+
+
+
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 15px;
+}
+
+.toggle input {
+  display: none;
+}
+
+.slider-checkbox {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 17px;
+}
+
+.checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-checkbox{
+  margin-right: 1%;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+}
+
+.checkbox:checked + .slider {
+  background-color: #2196F3;
+}
+
+.checkbox:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.checkbox:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adjust the desired spacing */
+}
