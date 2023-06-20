@@ -76,11 +76,8 @@ export class UserProfileComponent implements OnInit{
     );
   }
 
-  onlyTrue(ProminentHost: any): boolean {
-    if (!ProminentHost) {
-      return false;
-    }
-    return Object.values(ProminentHost).includes(true);
+  onlyTrue(ProminentHost: boolean): boolean {
+    return ProminentHost;
   }
 
 
