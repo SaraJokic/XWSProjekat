@@ -28,8 +28,10 @@ export class MakeReservationDialogComponent implements OnInit{
   endDate: Date | undefined;
   datePipe: DatePipe = new DatePipe('en-US');
   constructor(@Inject(MAT_DIALOG_DATA) public data: Accommodation, 
-  private router: Router, private dialog:MatDialog, private availabilityService: AvailabilityServiceService,
-  private userService: UserService, private reservationService: ReservationService, private authService: AuthService){}
+  private router: Router, private dialog:MatDialog,
+   private availabilityService: AvailabilityServiceService,
+  private userService: UserService,
+   private reservationService: ReservationService, private authService: AuthService){}
   user: User = {
     Name: '',
     LastName: '',
