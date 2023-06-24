@@ -33,6 +33,12 @@ service UserService{
       body: "*"
     };
   }
+  rpc CheckIfProminent(GetRequest) returns (UpdateResponse) {
+    option (google.api.http) = {
+      put: "/users/setprominent"
+      body: "*"
+    };
+  }
   rpc DeleteUser(DeleteRequest) returns (DeleteResponse) {
     option (google.api.http) = {
       delete: "/users/delete/{id}"
