@@ -221,3 +221,19 @@ func convertDateTime(dateTimeStr string) (string, error) {
 
 	return formattedDateTime, nil
 }
+func (handler *ReservationHandler) GetReservationByHostId(ctx context.Context, request *reservation_service.GetReservationByUserIdRequest) (*reservation_service.GetAllReservationsResponse, error) {
+	id := request.Id
+	objectId, err := primitive.ObjectIDFromHex(id)
+	reservations, err := handler.service.GetByHostId(objectId)
+	if err != nil {
+		return nil, err
+	}
+	response := &reservation_service.GetAllReservationsResponse{
+		Reservations: []*reservation_service.Reservation{},
+	}
+	for _, r := range reservations {
+		current := mapReservation(r)
+		response.Reservations = append(response.Reservations, current)
+	}
+	return response, nil
+}
