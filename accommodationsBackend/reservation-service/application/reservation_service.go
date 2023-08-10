@@ -55,3 +55,6 @@ func (service *ReservationService) Delete(id string) error {
 func (service *ReservationService) Cancel(id string) error {
 	return service.store.Delete(id)
 }
+func (service *ReservationService) GetByHostId(id primitive.ObjectID) ([]*domain.Reservation, error) {
+	return service.store.GetByHostId(id)
+}

@@ -10,5 +10,6 @@ type ReservationStore interface {
 	Update(id primitive.ObjectID, reservation *Reservation) error
 	GetByAccommodationId(id primitive.ObjectID) ([]*Reservation, error)
 	GetByUserId(id primitive.ObjectID) ([]*Reservation, error)
+	GetByHostId(id primitive.ObjectID) ([]*Reservation, error)
 	Delete(id string) error
 }

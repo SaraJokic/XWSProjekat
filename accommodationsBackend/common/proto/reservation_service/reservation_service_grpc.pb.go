@@ -25,6 +25,7 @@ const (
 	ReservationService_UpdateReservation_FullMethodName       = "/ReservationService/UpdateReservation"
 	ReservationService_DeleteReservation_FullMethodName       = "/ReservationService/DeleteReservation"
 	ReservationService_GetReservationByUserId_FullMethodName  = "/ReservationService/GetReservationByUserId"
+	ReservationService_GetReservationByHostId_FullMethodName  = "/ReservationService/GetReservationByHostId"
 	ReservationService_GetByAccommodationId_FullMethodName    = "/ReservationService/GetByAccommodationId"
 	ReservationService_ChangeStatusReservation_FullMethodName = "/ReservationService/ChangeStatusReservation"
 )
@@ -39,6 +40,7 @@ type ReservationServiceClient interface {
 	UpdateReservation(ctx context.Context, in *UpdateReservationRequest, opts ...grpc.CallOption) (*UpdateReservationResponse, error)
 	DeleteReservation(ctx context.Context, in *DeleteReservationRequest, opts ...grpc.CallOption) (*DeleteReservationResponse, error)
 	GetReservationByUserId(ctx context.Context, in *GetReservationByUserIdRequest, opts ...grpc.CallOption) (*GetAllReservationsResponse, error)
+	GetReservationByHostId(ctx context.Context, in *GetReservationByUserIdRequest, opts ...grpc.CallOption) (*GetAllReservationsResponse, error)
 	GetByAccommodationId(ctx context.Context, in *GetReservationByAccIdRequest, opts ...grpc.CallOption) (*GetAllReservationsResponse, error)
 	ChangeStatusReservation(ctx context.Context, in *ChangeStatusReservationRequest, opts ...grpc.CallOption) (*ChangeStatusReservationResponse, error)
 }
@@ -105,6 +107,15 @@ func (c *reservationServiceClient) GetReservationByUserId(ctx context.Context, i
 	return out, nil
 }
 
+func (c *reservationServiceClient) GetReservationByHostId(ctx context.Context, in *GetReservationByUserIdRequest, opts ...grpc.CallOption) (*GetAllReservationsResponse, error) {
+	out := new(GetAllReservationsResponse)
+	err := c.cc.Invoke(ctx, ReservationService_GetReservationByHostId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *reservationServiceClient) GetByAccommodationId(ctx context.Context, in *GetReservationByAccIdRequest, opts ...grpc.CallOption) (*GetAllReservationsResponse, error) {
 	out := new(GetAllReservationsResponse)
 	err := c.cc.Invoke(ctx, ReservationService_GetByAccommodationId_FullMethodName, in, out, opts...)
@@ -133,6 +144,7 @@ type ReservationServiceServer interface {
 	UpdateReservation(context.Context, *UpdateReservationRequest) (*UpdateReservationResponse, error)
 	DeleteReservation(context.Context, *DeleteReservationRequest) (*DeleteReservationResponse, error)
 	GetReservationByUserId(context.Context, *GetReservationByUserIdRequest) (*GetAllReservationsResponse, error)
+	GetReservationByHostId(context.Context, *GetReservationByUserIdRequest) (*GetAllReservationsResponse, error)
 	GetByAccommodationId(context.Context, *GetReservationByAccIdRequest) (*GetAllReservationsResponse, error)
 	ChangeStatusReservation(context.Context, *ChangeStatusReservationRequest) (*ChangeStatusReservationResponse, error)
 	mustEmbedUnimplementedReservationServiceServer()
@@ -159,6 +171,9 @@ func (UnimplementedReservationServiceServer) DeleteReservation(context.Context, 
 }
 func (UnimplementedReservationServiceServer) GetReservationByUserId(context.Context, *GetReservationByUserIdRequest) (*GetAllReservationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReservationByUserId not implemented")
+}
+func (UnimplementedReservationServiceServer) GetReservationByHostId(context.Context, *GetReservationByUserIdRequest) (*GetAllReservationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetReservationByHostId not implemented")
 }
 func (UnimplementedReservationServiceServer) GetByAccommodationId(context.Context, *GetReservationByAccIdRequest) (*GetAllReservationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetByAccommodationId not implemented")
@@ -287,6 +302,24 @@ func _ReservationService_GetReservationByUserId_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ReservationService_GetReservationByHostId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetReservationByUserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReservationServiceServer).GetReservationByHostId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ReservationService_GetReservationByHostId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReservationServiceServer).GetReservationByHostId(ctx, req.(*GetReservationByUserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ReservationService_GetByAccommodationId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetReservationByAccIdRequest)
 	if err := dec(in); err != nil {
@@ -353,6 +386,10 @@ var ReservationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetReservationByUserId",
 			Handler:    _ReservationService_GetReservationByUserId_Handler,
+		},
+		{
+			MethodName: "GetReservationByHostId",
+			Handler:    _ReservationService_GetReservationByHostId_Handler,
 		},
 		{
 			MethodName: "GetByAccommodationId",

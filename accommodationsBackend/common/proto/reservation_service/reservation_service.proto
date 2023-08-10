@@ -37,6 +37,11 @@ service ReservationService{
       get: "/reservations/get/userid/{id}"
     };
   }
+  rpc GetReservationByHostId(GetReservationByUserIdRequest) returns(GetAllReservationsResponse) {
+    option (google.api.http) = {
+      get: "/reservations/get/hostid/{id}"
+    };
+  }
   rpc GetByAccommodationId(GetReservationByAccIdRequest) returns(GetAllReservationsResponse) {
     option (google.api.http) = {
       get: "/reservations/get/accommodationid/{id}"

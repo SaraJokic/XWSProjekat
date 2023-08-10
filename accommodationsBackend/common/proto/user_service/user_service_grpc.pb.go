@@ -24,6 +24,7 @@ const (
 	UserService_GetAllProminentHosts_FullMethodName = "/UserService/GetAllProminentHosts"
 	UserService_Register_FullMethodName             = "/UserService/Register"
 	UserService_UpdateUser_FullMethodName           = "/UserService/UpdateUser"
+	UserService_CheckIfProminent_FullMethodName     = "/UserService/CheckIfProminent"
 	UserService_DeleteUser_FullMethodName           = "/UserService/DeleteUser"
 	UserService_GetByUsername_FullMethodName        = "/UserService/GetByUsername"
 )
@@ -37,6 +38,7 @@ type UserServiceClient interface {
 	GetAllProminentHosts(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
+	CheckIfProminent(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	GetByUsername(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 }
@@ -94,6 +96,15 @@ func (c *userServiceClient) UpdateUser(ctx context.Context, in *UpdateRequest, o
 	return out, nil
 }
 
+func (c *userServiceClient) CheckIfProminent(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+	out := new(UpdateResponse)
+	err := c.cc.Invoke(ctx, UserService_CheckIfProminent_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) DeleteUser(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	out := new(DeleteResponse)
 	err := c.cc.Invoke(ctx, UserService_DeleteUser_FullMethodName, in, out, opts...)
@@ -121,6 +132,7 @@ type UserServiceServer interface {
 	GetAllProminentHosts(context.Context, *GetAllRequest) (*GetAllResponse, error)
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	UpdateUser(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	CheckIfProminent(context.Context, *GetRequest) (*UpdateResponse, error)
 	DeleteUser(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	GetByUsername(context.Context, *GetRequest) (*GetResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
@@ -144,6 +156,9 @@ func (UnimplementedUserServiceServer) Register(context.Context, *RegisterRequest
 }
 func (UnimplementedUserServiceServer) UpdateUser(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedUserServiceServer) CheckIfProminent(context.Context, *GetRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckIfProminent not implemented")
 }
 func (UnimplementedUserServiceServer) DeleteUser(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
@@ -254,6 +269,24 @@ func _UserService_UpdateUser_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_CheckIfProminent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).CheckIfProminent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_CheckIfProminent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).CheckIfProminent(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
@@ -316,6 +349,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateUser",
 			Handler:    _UserService_UpdateUser_Handler,
+		},
+		{
+			MethodName: "CheckIfProminent",
+			Handler:    _UserService_CheckIfProminent_Handler,
 		},
 		{
 			MethodName: "DeleteUser",

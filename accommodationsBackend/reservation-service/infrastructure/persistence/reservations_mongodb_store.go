@@ -122,3 +122,7 @@ func (store *ReservationMongoDBStore) Delete(id string) error {
 
 	return nil
 }
+func (store *ReservationMongoDBStore) GetByHostId(id primitive.ObjectID) ([]*domain.Reservation, error) {
+	filter := bson.M{"hostId": id}
+	return store.filter(filter)
+}
