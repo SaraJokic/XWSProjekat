@@ -2,6 +2,7 @@ package api
 
 import (
 	auth_service "accommodationsBackend/common/proto/auth-service"
+	"accommodationsBackend/common/proto/rating_service"
 	"accommodationsBackend/common/proto/reservation_service"
 	"accommodationsBackend/common/proto/user_service"
 	"accommodationsBackend/user-service/application"
@@ -60,6 +61,44 @@ func (handler *UserHandler) GetAllProminentHosts(ctx context.Context, request *u
 		}
 	}
 	return response, nil
+}
+
+func (handler *UserHandler) CheckIfProminent(ctx context.Context, request *user_service.GetRequest) (*user_service.UpdateResponse, error) {
+	hasGrade := false
+	hasReservations := true
+	hasCancellationRate := true
+	id := request.Id
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return nil, err
+	}
+	user, err := handler.service.Get(objectId)
+	if err != nil {
+		return nil, err
+	}
+	clientRating := NewRatingClient()
+	avgRating, _ := clientRating.GetAvgRatingHost(ctx, &rating_service.GetAvgHostRatingRequest{Id: id})
+	fmt.Println("AVG GRADE: ", avgRating)
+	if avgRating.Avg > 4.7 {
+		hasGrade = true
+	}
+	clientReservations := NewReservationClient()
+	reservations, _ := clientReservations.GetReservationByHostId(ctx, &reservation_service.GetReservationByUserIdRequest{Id: id})
+	if len(reservations.Reservations) > 5 {
+
+		hasReservations = true
+	}
+	if hasGrade && hasReservations && hasCancellationRate {
+		fmt.Println("----------------PROMINENT: Jeste true hasGrade i hasReservations")
+		user.ProminentHost = true
+		handler.UpdateUser(ctx, &user_service.UpdateRequest{UserId: user.Id.Hex(), Id: user.Id.Hex(), User: mapUser(user)})
+		return &user_service.UpdateResponse{Message: "You're our promeinent host now! Congratulations!"}, nil
+	}
+	user.ProminentHost = false
+	handler.UpdateUser(ctx, &user_service.UpdateRequest{UserId: user.Id.Hex(), Id: user.Id.Hex(), User: mapUser(user)})
+
+	return &user_service.UpdateResponse{Message: "False"}, nil
+
 }
 
 func (handler *UserHandler) Register(ctx context.Context, request *user_service.RegisterRequest) (*user_service.RegisterResponse, error) {
@@ -196,4 +235,11 @@ func NewReservationClient() reservation_service.ReservationServiceClient {
 		log.Fatalf("Failed to start gRPC connection to Accommodation service: %v", err)
 	}
 	return reservation_service.NewReservationServiceClient(conn)
+}
+func NewRatingClient() rating_service.RatingServiceClient {
+	conn, err := grpc.Dial("rating-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection to Rating service: %v", err)
+	}
+	return rating_service.NewRatingServiceClient(conn)
 }
