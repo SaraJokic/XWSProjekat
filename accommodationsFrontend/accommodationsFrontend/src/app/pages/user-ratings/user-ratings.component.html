@@ -1,1 +1,18 @@
-<p>user-ratings works!</p>
+<h1>user ratings
+</h1>
+<table>
+    <thead>
+      <tr>
+        <th>rating</th>
+        <th>guestid</th>
+        <th>hostid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of ratings">
+        <td>{{ item.rating }}</td>
+        <td>{{ item.guestId }}</td>
+        <td>{{ item.hostId }}</td>
+      </tr>
+    </tbody>
+  </table>

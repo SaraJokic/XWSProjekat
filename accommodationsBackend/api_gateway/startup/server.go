@@ -91,7 +91,7 @@ func (server *Server) Start() {
 		if r.Method != "auth/login" || r.Method != "auth/insert" || r.Method != "/users/register" {
 			validateTokenHandler := middleware.ValidateToken(server.mux)
 			validateTokenHandler.ServeHTTP(w, r)
-			w.WriteHeader(http.StatusUnauthorized)
+			//w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
 		server.mux.ServeHTTP(w, r)

@@ -28,4 +28,8 @@ export class UserService {
   getUserById(id: any): Observable<any>{
     return this.http.get<any>(`${baseUrl}/users/get/${id}`); 
   }
+  getRatingsUserById(id: any): Observable<any[]>{
+    console.log("ovo je id",id)
+    return this.http.get<any[]>(`${baseUrl}/ratings/getbyguest/host/${id}`); 
+  }
 }
