@@ -33,15 +33,16 @@ const (
 func (server *Server) Start() {
 	mongoClient := server.initMongoClient()
 	reservationsStore := server.initReservationStore(mongoClient)
-
-	commandPublisher := server.initPublisher(server.config.CancelReservationCommandSubject)
-	replySubscriber := server.initSubscriber(server.config.CancelReservationReplySubject, QueueGroup)
+	natsComp := nats.NewNATSComponent("eventstore-service")
+	natsComp.ConnectToServer("nats://ruser:T0pS3cr3t@nats:4222")
+	commandPublisher := server.initPublisher(natsComp, server.config.CancelReservationCommandSubject)
+	replySubscriber := server.initSubscriber(natsComp, server.config.CancelReservationReplySubject, QueueGroup)
 	cancelReservationOrchestrator := server.initCancelReservationOrchestrator(commandPublisher, replySubscriber)
 
 	reservationsService := server.initReservationService(reservationsStore, cancelReservationOrchestrator)
 
-	commandSubscriber := server.initSubscriber(server.config.CancelReservationCommandSubject, QueueGroup)
-	replyPublisher := server.initPublisher(server.config.CancelReservationReplySubject)
+	commandSubscriber := server.initSubscriber(natsComp, server.config.CancelReservationCommandSubject, QueueGroup)
+	replyPublisher := server.initPublisher(natsComp, server.config.CancelReservationReplySubject)
 	server.initCancelReservationHandler(reservationsService, replyPublisher, commandSubscriber)
 
 	reservationsHandler := server.initReservationHandler(reservationsService)
@@ -76,20 +77,18 @@ func (server *Server) initReservationService(store domain.ReservationStore, orch
 func (server *Server) initReservationHandler(service *application.ReservationService) *api.ReservationHandler {
 	return api.NewReservationHandler(service)
 }
-func (server *Server) initPublisher(subject string) saga.Publisher {
+func (server *Server) initPublisher(natsComp *nats.NATSComponent, subject string) saga.Publisher {
 	publisher, err := nats.NewNATSPublisher(
-		server.config.NatsHost, server.config.NatsPort,
-		server.config.NatsUser, server.config.NatsPass, subject)
+		natsComp, subject)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return publisher
 }
 
-func (server *Server) initSubscriber(subject, queueGroup string) saga.Subscriber {
+func (server *Server) initSubscriber(natsComp *nats.NATSComponent, subject, queueGroup string) saga.Subscriber {
 	subscriber, err := nats.NewNATSSubscriber(
-		server.config.NatsHost, server.config.NatsPort,
-		server.config.NatsUser, server.config.NatsPass, subject, queueGroup)
+		natsComp, subject, queueGroup)
 	if err != nil {
 		log.Fatal(err)
 	}

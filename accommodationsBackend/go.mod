@@ -15,3 +15,5 @@ replace accommodationsBackend/common/proto/reservation-service => ./common/proto
 replace accommodationsBackend/common/proto/rating_service => ./common/proto/rating_service
 
 replace accommodationBackend/api_gateway/infrastructure/servces => ./api_gateway/infrastructure/servces
+
+replace accommodationsBackend/common/proto/eventstore => ./common/proto/eventstore

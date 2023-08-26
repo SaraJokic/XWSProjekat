@@ -6,6 +6,7 @@ import (
 	availability_service "accommodationsBackend/common/proto/availability-service"
 	"accommodationsBackend/common/proto/user_service"
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -18,11 +19,13 @@ import (
 type AccommodationHandler struct {
 	accommodation_service.UnimplementedAccommodationServiceServer
 	service *application.AccommodationService
+	rpc     AccommodationEventClient
 }
 
 func NewAccommodationHandler(service *application.AccommodationService) *AccommodationHandler {
 	return &AccommodationHandler{
 		service: service,
+		rpc:     grpcClient{},
 	}
 }
 
@@ -90,9 +93,14 @@ func (handler *AccommodationHandler) CreateNewAccommodation(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Println("------------ACCOMMODATION SERVER-------------------")
+	fmt.Println("ovaj acc je stigao: %v", acc)
 	accommodation := accommodation_service.AccCreateResponse{Id: acc.Id.Hex()}
-
+	err = handler.rpc.createAccommodation(*acc)
+	if err != nil {
+		fmt.Println("----GRESKA")
+		return nil, err
+	}
 	return &accommodation, nil
 }
 func (handler *AccommodationHandler) GetByUserId(ctx context.Context, request *accommodation_service.AccGetByUserIdRequest) (*accommodation_service.AccGetByUserIdResponse, error) {

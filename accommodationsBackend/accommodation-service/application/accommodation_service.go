@@ -2,6 +2,7 @@ package application
 
 import (
 	"accommodationsBackend/accommodations-service/domain"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 )
@@ -32,6 +33,7 @@ func (service *AccommodationService) Create(acc *domain.Accommodation) error {
 	if acc.Id.IsZero() {
 		acc.Id = primitive.NewObjectID()
 	}
+	fmt.Println("U SERVISU SAM")
 	return service.store.Insert(acc)
 }
 func (service *AccommodationService) DeleteAll() {

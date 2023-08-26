@@ -6,19 +6,21 @@ import (
 )
 
 type Publisher struct {
-	conn    *nats.EncodedConn
-	subject string
+	component *NATSComponent
+	conn      *nats.EncodedConn
+	subject   string
 }
 
-func NewNATSPublisher(host, port, user, password, subject string) (saga.Publisher, error) {
-	conn, err := getConnection(host, port, user, password)
+func NewNATSPublisher(component *NATSComponent, subject string) (saga.Publisher, error) {
+	conn := component.NATS()
 	encConn, err := nats.NewEncodedConn(conn, nats.JSON_ENCODER)
 	if err != nil {
 		return nil, err
 	}
 	return &Publisher{
-		conn:    encConn,
-		subject: subject,
+		component: component,
+		conn:      encConn,
+		subject:   subject,
 	}, nil
 }
 

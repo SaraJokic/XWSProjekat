@@ -115,6 +115,21 @@ services:
     networks:
       - network
 
+  eventstore_service:
+    image: event-store
+    container_name: event-store
+    build:
+      context: .
+      dockerfile: ./event-store/Dockerfile
+    restart: on-failure
+    environment:
+      EVENTS_DB_HOST: ${EVENTS_DB_HOST}
+      EVENTS_DB_PORT: ${EVENTS_DB_PORT}
+      EVENT_STORE_PORT: ${EVENT_STORE_PORT}
+    depends_on:
+      - eventstore_db
+    networks:
+      - network
 
   api_gateway:
     image: api_gateway
@@ -144,6 +159,9 @@ services:
 
       RATING_SERVICE_HOST: ${RATING_SERVICE_HOST}
       RATING_SERVICE_PORT: ${RATING_SERVICE_PORT}
+
+      EVENT_STORE_HOST: ${EVENT_STORE_HOST}
+      EVENT_STORE_PORT: ${EVENT_STORE_PORT}
     networks:
       - network
 
@@ -192,6 +210,28 @@ services:
     networks:
       - network
 
+  eventstore_db:
+    image: mongo
+    container_name: eventstore_db
+    restart: on-failure
+    networks:
+      - network
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=eventstore_db
+      - ME_CONFIG_MONGODB_PORT=27017  # MongoDB default port
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+    depends_on:
+      - eventstore_db
+    ports:
+      - "8081:8081"
+    networks:
+      - network
+
   nats:
     image: nats
     container_name: nats
@@ -202,3 +242,6 @@ services:
 networks:
   network:
     driver: bridge
+
+volumes:
+  mongo_express_data:

@@ -6,21 +6,20 @@ import (
 )
 
 type Subscriber struct {
+	component  *NATSComponent
 	conn       *nats.EncodedConn
 	subject    string
 	queueGroup string
 }
 
-func NewNATSSubscriber(host, port, user, password, subject, queueGroup string) (saga.Subscriber, error) {
-	conn, err := getConnection(host, port, user, password)
-	if err != nil {
-		return nil, err
-	}
+func NewNATSSubscriber(component *NATSComponent, subject, queueGroup string) (saga.Subscriber, error) {
+	conn := component.NATS()
 	encConn, err := nats.NewEncodedConn(conn, nats.JSON_ENCODER)
 	if err != nil {
 		return nil, err
 	}
 	return &Subscriber{
+		component:  component,
 		conn:       encConn,
 		subject:    subject,
 		queueGroup: queueGroup,

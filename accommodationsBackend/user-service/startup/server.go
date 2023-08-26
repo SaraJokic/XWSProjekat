@@ -35,9 +35,10 @@ func (server *Server) Start() {
 	usersStore := server.initUsersStore(mongoClient)
 
 	userService := server.initUserService(usersStore)
-
-	commandSubscriber := server.initSubscriber(server.config.CancelReservationCommandSubject, QueueGroup)
-	replyPublisher := server.initPublisher(server.config.CancelReservationReplySubject)
+	natsComp := nats.NewNATSComponent("eventstore-service")
+	natsComp.ConnectToServer("nats://ruser:T0pS3cr3t@nats:4222")
+	commandSubscriber := server.initSubscriber(natsComp, server.config.CancelReservationCommandSubject, QueueGroup)
+	replyPublisher := server.initPublisher(natsComp, server.config.CancelReservationReplySubject)
 	server.initCancelReservationHandler(userService, replyPublisher, commandSubscriber)
 
 	userHandler := server.initUserHandler(userService)
@@ -63,20 +64,18 @@ func (server *Server) initUserService(store domain.UserStore) *application.UserS
 	return application.NewUserService(store)
 }
 
-func (server *Server) initPublisher(subject string) saga.Publisher {
+func (server *Server) initPublisher(natsComp *nats.NATSComponent, subject string) saga.Publisher {
 	publisher, err := nats.NewNATSPublisher(
-		server.config.NatsHost, server.config.NatsPort,
-		server.config.NatsUser, server.config.NatsPass, subject)
+		natsComp, subject)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return publisher
 }
 
-func (server *Server) initSubscriber(subject, queueGroup string) saga.Subscriber {
+func (server *Server) initSubscriber(natsComp *nats.NATSComponent, subject, queueGroup string) saga.Subscriber {
 	subscriber, err := nats.NewNATSSubscriber(
-		server.config.NatsHost, server.config.NatsPort,
-		server.config.NatsUser, server.config.NatsPass, subject, queueGroup)
+		natsComp, subject, queueGroup)
 	if err != nil {
 		log.Fatal(err)
 	}

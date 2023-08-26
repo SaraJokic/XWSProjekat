@@ -4,6 +4,7 @@ import (
 	"accommodationsBackend/common/proto/accommodation_service"
 	auth_service "accommodationsBackend/common/proto/auth-service"
 	availability_service "accommodationsBackend/common/proto/availability-service"
+	"accommodationsBackend/common/proto/eventstore"
 	"accommodationsBackend/common/proto/rating_service"
 	"accommodationsBackend/common/proto/reservation_service"
 	"accommodationsBackend/common/proto/user_service"
@@ -54,6 +55,13 @@ func NewRatingClient(address string) rating_service.RatingServiceClient {
 		log.Fatalf("Failed to start gRPC connection to Rating service: %v", err)
 	}
 	return rating_service.NewRatingServiceClient(conn)
+}
+func NewEventStoreClient(address string) eventstore.EventStoreClient {
+	conn, err := getConnection(address)
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection to Rating service: %v", err)
+	}
+	return eventstore.NewEventStoreClient(conn)
 }
 func getConnection(address string) (*grpc.ClientConn, error) {
 	return grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()))

@@ -216,6 +216,7 @@ func (handler *UserHandler) GetAll(ctx context.Context, request *user_service.Ge
 		current := mapUser(user)
 		response.Users = append(response.Users, current)
 	}
+
 	return response, nil
 }
 func (handler *UserHandler) GetByUsername(ctx context.Context, request *user_service.GetRequest) (*user_service.GetResponse, error) {
