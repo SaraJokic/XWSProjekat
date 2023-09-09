@@ -6,7 +6,6 @@ import (
 	availability_service "accommodationsBackend/common/proto/availability-service"
 	"accommodationsBackend/common/proto/user_service"
 	"context"
-	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -93,12 +92,9 @@ func (handler *AccommodationHandler) CreateNewAccommodation(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("------------ACCOMMODATION SERVER-------------------")
-	fmt.Println("ovaj acc je stigao: %v", acc)
 	accommodation := accommodation_service.AccCreateResponse{Id: acc.Id.Hex()}
 	err = handler.rpc.createAccommodation(*acc)
 	if err != nil {
-		fmt.Println("----GRESKA")
 		return nil, err
 	}
 	return &accommodation, nil

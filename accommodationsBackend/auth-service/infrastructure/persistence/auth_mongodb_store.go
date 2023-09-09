@@ -42,8 +42,6 @@ func (store *AuthMongoDBStore) Insert(user *domain.User) error {
 
 	result, err := store.users.InsertOne(context.TODO(), user)
 
-	fmt.Println("usao sam u inser funjciju")
-	fmt.Println("ovo je user kog upisujem u bazu ", user)
 	if err != nil {
 		return err
 	}

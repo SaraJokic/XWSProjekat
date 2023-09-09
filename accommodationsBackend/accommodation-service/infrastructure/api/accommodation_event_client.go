@@ -31,11 +31,11 @@ func (gc grpcClient) createAccommodation(acc domain.Accommodation) error {
 	accommodationJSON, _ := json.Marshal(acc)
 	event := &eventstore.Event{
 		EventId:       eventid.String(),
-		EventType:     "Accommodation.Created",
+		EventType:     "Accommodations.Created",
 		AggregateId:   acc.Id.Hex(),
 		AggregateType: "Accommodation",
 		EventData:     string(accommodationJSON),
-		Stream:        "ACCOMMODATIONS",
+		Stream:        "Accommodations",
 	}
 	createEventRequest := &eventstore.CreateEventRequest{Event: event}
 	response, err := client.CreateEvent(context.Background(), createEventRequest)

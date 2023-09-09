@@ -45,8 +45,6 @@ func (store *UserMongoDBStore) Register(user *domain.User) error {
 
 	result, err := store.users.InsertOne(context.TODO(), user)
 
-	fmt.Println("usao sam u registermongoDB funjciju")
-	fmt.Println("ovo je user kog upisujem u bazu ", user)
 	if err != nil {
 		return err
 	}
@@ -58,7 +56,6 @@ func (store *UserMongoDBStore) Register(user *domain.User) error {
 func (store *UserMongoDBStore) UpdateUser(id string, user *domain.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	fmt.Println("ovo je user koji je stigao u repo", user)
 	objID, _ := primitive.ObjectIDFromHex(id)
 	filter := bson.M{"_id": objID}
 	update := bson.M{"$set": bson.M{
@@ -104,12 +101,9 @@ func (store *UserMongoDBStore) DeleteAll() {
 func (store *UserMongoDBStore) CheckIfEmailAndUsernameExist(email string, username string) (bool, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	fmt.Println("ovo je username i email ", username, email)
-	fmt.Println("kontekst ", ctx)
 	//usersCollection := store.getCollection()
 	var userEmail domain.User
 	err := store.users.FindOne(ctx, bson.M{"email": email}).Decode(&userEmail)
-	fmt.Println("ovo je userEmail", userEmail)
 	if err == nil {
 		// email exists in database
 		return true, nil
@@ -119,7 +113,6 @@ func (store *UserMongoDBStore) CheckIfEmailAndUsernameExist(email string, userna
 
 	var userUsername domain.User
 	err = store.users.FindOne(ctx, bson.M{"username": username}).Decode(&userUsername)
-	fmt.Println("ovo je userUsername", userUsername)
 	if err == nil {
 		// username exists in database
 

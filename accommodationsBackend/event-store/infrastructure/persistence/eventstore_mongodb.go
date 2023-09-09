@@ -27,9 +27,6 @@ func (e EventsMongoDBStore) CreateEvent(ctx context.Context, event *eventstore.E
 		"eventdata":     event.EventData,
 		"stream":        event.Stream,
 	}
-	fmt.Println("-------------ZA EVENTSTORE--------------")
-	fmt.Println("sada upisujem ovaj: ")
-	fmt.Println(eventData)
 	_, err := e.events.InsertOne(ctx, eventData)
 	if err != nil {
 		return fmt.Errorf("error on insert into events: %w", err)

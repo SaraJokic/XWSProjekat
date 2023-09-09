@@ -13,11 +13,21 @@ import (
 // publishEvent publishes an event via NATS JetStream server
 func publishEvent(component *nats.NATSComponent, event *eventstore.Event) {
 	// Creates JetStreamContext to publish messages into JetStream Stream
-	jetStreamContext, _ := component.JetStreamContext()
+	jetStreamContext, err := component.JetStreamContext()
+	if err != nil {
+		log.Printf("Error with jetstream context: %v", err)
+	} else {
+		log.Printf("Sucessfully retrieved jetstream context: %v  za komponentu %v", jetStreamContext, component)
+	}
 	subject := event.EventType
 	eventMsg := []byte(event.EventData)
 	// Publish message on subject (channel)
-	jetStreamContext.Publish(subject, eventMsg)
+	o, err := jetStreamContext.Publish(subject, eventMsg)
+	if err != nil {
+		log.Printf("Error publishing message: %v", err)
+	} else {
+		log.Printf("Message published with Acknowledgement: %v", o)
+	}
 	log.Println("Published message on subject: " + subject)
 }
 

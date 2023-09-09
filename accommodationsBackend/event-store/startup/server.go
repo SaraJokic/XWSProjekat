@@ -24,10 +24,13 @@ func NewServer(config *config.Config) *Server {
 	}
 }
 func (server *Server) Start() {
+	natsComp := nats.GetNATSComponent()
+	fmt.Printf("Nats komponenta u Event Store Serveru: %v\n", natsComp)
+	nats.CreateJStream(natsComp, "Accommodations", "Accommodations.*")
 	mongoClient := server.initMongoClient()
 	eventStore := server.initEventStore(mongoClient)
-	natsComp := nats.NewNATSComponent("eventstore-service")
-	natsComp.ConnectToServer("nats://ruser:T0pS3cr3t@nats:4222")
+	//natsComp := nats.NewNATSComponent("eventstore-service")
+	//natsComp.ConnectToServer("nats://nats:4222")
 	handler := initEventHandler(eventStore, natsComp)
 
 	server.startGrpcServer(handler)

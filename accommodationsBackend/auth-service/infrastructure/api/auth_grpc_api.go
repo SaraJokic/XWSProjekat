@@ -29,7 +29,6 @@ func (handler *AuthHandler) Insert(ctx context.Context, request *auth_service.In
 		Password: request.Password,
 		Role:     request.Role,
 	}
-	fmt.Println("ovo je newuseer u insert handleru", newUser.Username, newUser.Password)
 	newUser.Id = primitive.NewObjectID()
 
 	err := handler.service.Insert(newUser)

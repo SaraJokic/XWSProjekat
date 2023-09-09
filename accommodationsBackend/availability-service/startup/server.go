@@ -35,12 +35,20 @@ func (server *Server) Start() {
 	availabilitiesStore := server.initAvailabilityStore(mongoClient)
 
 	availabilitiesService := server.initAvailabilityService(availabilitiesStore)
-	natsComp := nats.NewNATSComponent("eventstore-service")
-	natsComp.ConnectToServer("nats://ruser:T0pS3cr3t@nats:4222")
-	commandSubscriber := server.initSubscriber(natsComp, server.config.CancelReservationCommandSubject, QueueGroup)
-	replyPublisher := server.initPublisher(natsComp, server.config.CancelReservationReplySubject)
-	server.initCancelReservationHandler(availabilitiesService, replyPublisher, commandSubscriber)
+	natsComp := nats.GetNATSComponent()
+	fmt.Printf("Nats komponenta u Availability Serveru: %v\n", natsComp)
+	/*natsComp := nats.NewNATSComponent("availability-service")
+	err := natsComp.ConnectToServer("nats://nats:4222")
+	if err != nil {
+		log.Println("Greska pri konektovanju na server.")
+	} else {
+		log.Println("Uspesno konektovan na server")
+	}*/
 
+	//commandSubscriber := server.initSubscriber(natsComp, server.config.CancelReservationCommandSubject, QueueGroup)
+	//replyPublisher := server.initPublisher(natsComp, server.config.CancelReservationReplySubject)
+	//server.initCancelReservationHandler(availabilitiesService, replyPublisher, commandSubscriber)
+	server.initEventHandler(natsComp)
 	availabilityHandler := server.initAvailabilityHandler(availabilitiesService)
 
 	server.startGrpcServer(availabilityHandler)
@@ -90,6 +98,13 @@ func (server *Server) initSubscriber(natsComp *nats.NATSComponent, subject, queu
 
 func (server *Server) initCancelReservationHandler(service *application.AvailabilityService, publisher saga.Publisher, subscriber saga.Subscriber) {
 	_, err := api.NewCancelReservationCommandHandler(service, publisher, subscriber)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func (server *Server) initEventHandler(nc *nats.NATSComponent) {
+	_, err := api.NewEventHandler(nc)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -6,6 +6,7 @@ replace accommodationsBackend/common => ../common
 
 require (
 	accommodationsBackend/common v0.0.0-00010101000000-000000000000
+	github.com/nats-io/nats.go v1.25.0
 	go.mongodb.org/mongo-driver v1.11.6
 	google.golang.org/grpc v1.54.0
 )
@@ -18,7 +19,6 @@ require (
 	github.com/minio/highwayhash v1.0.2 // indirect
 	github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect
 	github.com/nats-io/jwt/v2 v2.4.1 // indirect
-	github.com/nats-io/nats.go v1.25.0 // indirect
 	github.com/nats-io/nkeys v0.4.4 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

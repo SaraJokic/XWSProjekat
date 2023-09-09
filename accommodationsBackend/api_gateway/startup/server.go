@@ -73,14 +73,6 @@ func (server *Server) initHandlers() {
 	}
 }
 
-/*func (server *Server) initCustomHandlers() {
-	catalogueEmdpoint := fmt.Sprintf("%s:%s", server.config.CatalogueHost, server.config.CataloguePort)
-	orderingEmdpoint := fmt.Sprintf("%s:%s", server.config.OrderingHost, server.config.OrderingPort)
-	shippingEmdpoint := fmt.Sprintf("%s:%s", server.config.ShippingHost, server.config.ShippingPort)
-	orderingHandler := api.NewOrderingHandler(orderingEmdpoint, catalogueEmdpoint, shippingEmdpoint)
-	orderingHandler.Init(server.mux)
-}*/
-
 func (server *Server) Start() {
 	mainHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "OPTIONS" {

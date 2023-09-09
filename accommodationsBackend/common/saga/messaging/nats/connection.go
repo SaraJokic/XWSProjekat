@@ -2,7 +2,13 @@ package nats
 
 import (
 	"github.com/nats-io/nats.go"
+	"log"
 	"sync"
+)
+
+var (
+	natsComp *NATSComponent
+	once     sync.Once
 )
 
 // NATSComponent contains reusable logic related to handling NATS connections.
@@ -17,7 +23,20 @@ func NewNATSComponent(name string) *NATSComponent {
 		name: name,
 	}
 }
-
+func GetNATSComponent() *NATSComponent {
+	once.Do(func() {
+		log.Println("Pravi se nova prvi put!")
+		natsComp = NewNATSComponent("accommodation-booking")
+		err := natsComp.ConnectToServer("nats://nats:4222")
+		if err != nil {
+			log.Println("Greska pri konektovanju na server (GetNatsComp).")
+			log.Fatal(err)
+		} else {
+			log.Println("Uspesno konektovan na server (GetNatsComp)")
+		}
+	})
+	return natsComp
+}
 func (c *NATSComponent) ConnectToServer(url string, options ...nats.Option) error {
 	c.cmu.Lock()
 	defer c.cmu.Unlock()
