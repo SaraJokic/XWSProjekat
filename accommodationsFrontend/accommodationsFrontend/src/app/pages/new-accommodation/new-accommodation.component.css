@@ -1,60 +1,79 @@
-form {
-    display: flex;
-    flex-direction: column;
-    max-width: 50%;
-    margin: 0 auto;
-  }
-  
-  label {
-    margin-bottom: 10px;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  input[type="date"],
-  input[type="checkbox"] {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: #4d3df4;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #4fbaf4;
-  }
-  
-  h2,
-  h3 {
-    margin-top: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input[type="checkbox"] {
-    margin-right: 5px;
-  }
-  
-  .form-array {
-    margin-top: 10px;
-  }
-  
-  .form-array button {
-    margin-top: 5px;
-  }
+.accommodation-form {
+  display: flex;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  gap: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.form-section {
+  flex: 1;
+  margin-right: 20px; /* Add spacing between the sections */
+}
+
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+label {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="checkbox"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #4d3df4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #4fbaf4;
+}
+.checkbox-group {
+  display: flex;
+  flex-direction: row; /* Arrange checkboxes horizontally */
+  align-items: center; /* Align checkboxes vertically in the middle with labels */
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center; /* Align checkboxes with labels vertically */
+  margin-right: 20px; /* Add some spacing between checkboxes and labels */
+}
+
+/* Style checkboxes (optional) */
+.checkbox-label input[type="checkbox"] {
+  margin-right: 5px; /* Add spacing between checkbox and label text */
+}
