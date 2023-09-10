@@ -73,14 +73,15 @@ func (server *Server) initHandlers() {
 	}
 }
 
-/*func (server *Server) initCustomHandlers() {
-	catalogueEmdpoint := fmt.Sprintf("%s:%s", server.config.CatalogueHost, server.config.CataloguePort)
-	orderingEmdpoint := fmt.Sprintf("%s:%s", server.config.OrderingHost, server.config.OrderingPort)
-	shippingEmdpoint := fmt.Sprintf("%s:%s", server.config.ShippingHost, server.config.ShippingPort)
-	orderingHandler := api.NewOrderingHandler(orderingEmdpoint, catalogueEmdpoint, shippingEmdpoint)
-	orderingHandler.Init(server.mux)
-}*/
-
+/*
+	func (server *Server) initCustomHandlers() {
+		catalogueEmdpoint := fmt.Sprintf("%s:%s", server.config.CatalogueHost, server.config.CataloguePort)
+		orderingEmdpoint := fmt.Sprintf("%s:%s", server.config.OrderingHost, server.config.OrderingPort)
+		shippingEmdpoint := fmt.Sprintf("%s:%s", server.config.ShippingHost, server.config.ShippingPort)
+		orderingHandler := api.NewOrderingHandler(orderingEmdpoint, catalogueEmdpoint, shippingEmdpoint)
+		orderingHandler.Init(server.mux)
+	}
+*/
 func (server *Server) Start() {
 	mainHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "OPTIONS" {
@@ -89,11 +90,14 @@ func (server *Server) Start() {
 		}
 
 		if r.Method != "auth/login" || r.Method != "auth/insert" || r.Method != "/users/register" {
-			validateTokenHandler := middleware.ValidateToken(server.mux)
+			validateTokenHandler := middleware.AuthorizeAndAuthenticate(server.mux)
+
 			validateTokenHandler.ServeHTTP(w, r)
 			//w.WriteHeader(http.StatusUnauthorized)
 			return
+
 		}
+
 		server.mux.ServeHTTP(w, r)
 	})
 

@@ -4,8 +4,11 @@ go 1.20
 
 replace accommodationsBackend/common => ../common
 
+replace accommodationsBackend/api_gateway => ../api_gateway
+
 require (
 	accommodationsBackend/common v0.0.0-00010101000000-000000000000
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	go.mongodb.org/mongo-driver v1.11.6
 	golang.org/x/crypto v0.8.0
 	google.golang.org/grpc v1.54.0

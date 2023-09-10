@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	jWTPrivateToken = "SecrteTokenSecrteToken"// privatni kljuc 
+	tokenSecretKey = "SecrteTokenSecrteToken" // privatni kljuc
 )
 
 func GenerateToken(claims *JwtClaims, expirationTime time.Time) (string, error) {
@@ -18,13 +18,14 @@ func GenerateToken(claims *JwtClaims, expirationTime time.Time) (string, error) 
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	tokenString, err := token.SignedString([]byte(jWTPrivateToken))
+	tokenString, err := token.SignedString([]byte(tokenSecretKey))
 	if err != nil {
 		return "", err
 	}
 	return tokenString, nil
 }
 
+/*
 func VerifyToken(tokenString string) (bool, *JwtClaims) {
 	claims := &JwtClaims{}
 	token, _ := getTokenFromString(tokenString, claims)
@@ -47,4 +48,20 @@ func getTokenFromString(tokenString string, claims *JwtClaims) (*jwt.Token, erro
 		}
 		return []byte(jWTPrivateToken), nil
 	})
+}*/
+
+func VerifyToken(tokenString string) (bool, *JwtClaims) {
+	claims := &JwtClaims{}
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok || token.Header["alg"] != "HS256" {
+			return nil, fmt.Errorf("Unexpected signing method or algorithm: %v", token.Header["alg"])
+		}
+		return []byte(tokenSecretKey), nil
+	})
+
+	if err != nil || !token.Valid || claims.Valid() != nil {
+		return false, claims
+	}
+
+	return true, claims
 }

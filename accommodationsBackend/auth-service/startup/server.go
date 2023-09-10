@@ -5,8 +5,10 @@ import (
 	"accommodationsBackend/auth-service/domain"
 	"accommodationsBackend/auth-service/infrastructure/api"
 	"accommodationsBackend/auth-service/infrastructure/persistence"
+	"accommodationsBackend/auth-service/middleware"
 	"accommodationsBackend/auth-service/startup/config"
 	auth_service "accommodationsBackend/common/proto/auth-service"
+
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"google.golang.org/grpc"
@@ -68,7 +70,10 @@ func (server *Server) startGrpcServer(authHandler *api.AuthHandler) {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	grpcServer := grpc.NewServer()
+
+	grpcServer := grpc.NewServer(grpc.UnaryInterceptor(middleware.AuthInterceptor))
+
+	//grpcServer := grpc.NewServer()
 	auth_service.RegisterAuthServiceServer(grpcServer, authHandler)
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %s", err)

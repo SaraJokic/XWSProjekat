@@ -63,7 +63,39 @@ export class HomePageComponent implements OnInit {
     );
   }
 
-  search(searchArg: any) {
+search(formData: any): void {
+  this.filteredAccommodations = this.accommodations.filter(accommodation => {
+    let odgovaraLokacija = true;
+    let odgovaraBrojGostiju = true;
+    let odgovaraDatum = true;
+
+    // Provera lokacije
+    if (formData.location) {
+      odgovaraLokacija = accommodation.location.toLowerCase() === formData.location.toLowerCase();
+    }
+
+    // Provera broja gostiju
+    if (formData.guests) {
+      odgovaraBrojGostiju = accommodation.maxGuests >= formData.guests;
+    }
+
+    // Provera datuma (samo ako su oba datuma uneta)
+   // if (formData.sdate && formData.edate) {
+     // const dostupnoOd = new Date(accommodation.start_date);
+      //const dostupnoDo = new Date(accommodation.end_date);
+
+      //const trazeniPocetniDatum = new Date(formData.sdate);
+      //const trazeniKrajnjiDatum = new Date(formData.edate);
+
+      //odgovaraDatum = trazeniPocetniDatum >= dostupnoOd && trazeniKrajnjiDatum <= dostupnoDo;
+    //}
+
+   // return odgovaraLokacija && odgovaraBrojGostiju && odgovaraDatum;
+    return odgovaraLokacija && odgovaraBrojGostiju;
+  });
+}
+
+  /*search(searchArg: any) {
     const searchQuery: SearchAccommodation = {
       location: searchArg.location,
       guests: searchArg.guests,
@@ -80,7 +112,7 @@ export class HomePageComponent implements OnInit {
         console.error(error);
       }
     );
-  }
+  }*/
 
   openDialog(accommodation: Accommodation): void {
     this.dialogService.openDialogReservation(accommodation);

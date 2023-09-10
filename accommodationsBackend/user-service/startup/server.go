@@ -8,6 +8,7 @@ import (
 	"accommodationsBackend/user-service/domain"
 	"accommodationsBackend/user-service/infrastructure/api"
 	"accommodationsBackend/user-service/infrastructure/persistence"
+	"accommodationsBackend/user-service/middleware"
 	"accommodationsBackend/user-service/startup/config"
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -91,7 +92,9 @@ func (server *Server) initCancelReservationHandler(service *application.UserServ
 }
 
 func (server *Server) initUserHandler(service *application.UserService) *api.UserHandler {
-	return api.NewUserHandler(service)
+	interceptor := middleware.NewAuthInterceptor()
+
+	return api.NewUserHandler(service, interceptor)
 }
 
 func (server *Server) startGrpcServer(userHandler *api.UserHandler) {
@@ -99,9 +102,11 @@ func (server *Server) startGrpcServer(userHandler *api.UserHandler) {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	grpcServer := grpc.NewServer()
+	interceptor := middleware.NewAuthInterceptor()
+	grpcServer := grpc.NewServer(grpc.UnaryInterceptor(interceptor.Unary()))
 	user_service.RegisterUserServiceServer(grpcServer, userHandler)
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %s", err)
 	}
+
 }

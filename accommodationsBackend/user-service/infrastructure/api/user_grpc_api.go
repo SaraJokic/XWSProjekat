@@ -7,8 +7,10 @@ import (
 	"accommodationsBackend/common/proto/user_service"
 	"accommodationsBackend/user-service/application"
 	"accommodationsBackend/user-service/domain"
+	"accommodationsBackend/user-service/middleware"
 	"context"
 	"fmt"
+	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/grpc"
@@ -20,12 +22,14 @@ import (
 
 type UserHandler struct {
 	user_service.UnimplementedUserServiceServer
-	service *application.UserService
+	service     *application.UserService
+	Interceptor *middleware.AuthInterceptor
 }
 
-func NewUserHandler(service *application.UserService) *UserHandler {
+func NewUserHandler(service *application.UserService, interceptor *middleware.AuthInterceptor) *UserHandler {
 	return &UserHandler{
-		service: service,
+		service:     service,
+		Interceptor: interceptor,
 	}
 }
 
@@ -118,21 +122,37 @@ func (handler *UserHandler) Register(ctx context.Context, request *user_service.
 		return response, nil
 	}
 	newUser.Password = hashedPassword
-
 	userMapped := reverseMapUser(newUser)
 	userMapped.Id = primitive.NewObjectID()
+
 	err = handler.service.Register(userMapped)
 	if err != nil {
+		fmt.Println("Error during registration:", err)
 		return nil, err
 	}
+
+	if handler.Interceptor == nil {
+		fmt.Println("iz register funkcije interceptor iz stukture je ovo :", handler.Interceptor)
+		return nil, errors.New("Interceptor is not initialized")
+	}
+
 	client := NewAuthClient()
+	ctxWithToken := handler.Interceptor.AddTokenToMetadata(ctx)
+	fmt.Printf("Context before Insert call: %+v\n", ctxWithToken)
 
-	client.Insert(context.Background(), &auth_service.InsertRequest{Username: userMapped.Username, Password: userMapped.Password, Role: handler.MapRole(userMapped.Role)})
-
+	client.Insert(ctxWithToken, &auth_service.InsertRequest{
+		Username: userMapped.Username,
+		Password: userMapped.Password,
+		Role:     handler.MapRole(userMapped.Role),
+	})
+	if err != nil {
+		fmt.Println("Error during Insert call:", err)
+		return nil, err
+	}
 	response := &user_service.RegisterResponse{Message: "Registration successful!"}
 	return response, nil
-
 }
+
 func (handler *UserHandler) MapRole(role domain.UserType) string {
 	if role == domain.Customer {
 		return "Customer"

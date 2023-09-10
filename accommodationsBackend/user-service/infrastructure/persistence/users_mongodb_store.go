@@ -45,7 +45,7 @@ func (store *UserMongoDBStore) Register(user *domain.User) error {
 
 	result, err := store.users.InsertOne(context.TODO(), user)
 
-	fmt.Println("usao sam u registermongoDB funjciju")
+	fmt.Println("usao sam u registermongoDB funjciju, a ovo mi je user", user)
 	fmt.Println("ovo je user kog upisujem u bazu ", user)
 	if err != nil {
 		return err
