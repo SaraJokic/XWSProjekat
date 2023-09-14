@@ -28,6 +28,8 @@ import { RatingDialogComponent } from './pages/rating-dialog/rating-dialog.compo
 import { RatingComponent } from './pages/rating/rating.component';
 import { RateAcoomodationComponent } from './pages/rate-acoomodation/rate-acoomodation.component';
 import { UserRatingsComponent } from './pages/user-ratings/user-ratings.component';
+import { ViewAccomodationDialogComponent } from './pages/view-accomodation-dialog/view-accomodation-dialog.component';
+
 
 
 
@@ -49,7 +51,8 @@ import { UserRatingsComponent } from './pages/user-ratings/user-ratings.componen
     RatingDialogComponent,
     RatingComponent,
     RateAcoomodationComponent,
-    UserRatingsComponent
+    UserRatingsComponent,
+    ViewAccomodationDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,11 @@
+.owl-carousel-o, .owl-carousel, .owl-stage, .owl-stage-outer {
+    width: 90% !important;
+    height: 60% !important;
+}
+
+.carouselPicture {
+    width: 80% !important;
+    height: 60% !important;
+    margin-left: 8%;
+    
+}

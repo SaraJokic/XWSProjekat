@@ -48,15 +48,16 @@ const (
 	}
 */
 func AuthInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
-	// Преузимање токена из заглавља
-	token, err := extractTokenFromContext(ctx)
-	if err != nil {
-		return nil, status.Errorf(codes.Unauthenticated, "no authorization metadata: %v", err)
-	}
-
-	// Верификација токена и провера issuer-а ако је метода "/auth_service.AuthHandler/Insert"
-	fmt.Println("metoda koja je", info.FullMethod)
+	// Ako je zahtev za specifičnu putanju, proverava se token
 	if info.FullMethod == "/AuthService/Insert" {
+		// Преузимање токена из заглавља
+		token, err := extractTokenFromContext(ctx)
+		if err != nil {
+			return nil, status.Errorf(codes.Unauthenticated, "no authorization metadata: %v", err)
+		}
+
+		// Верификација токена и провера issuer-а
+		fmt.Println("metoda koja je", info.FullMethod)
 		fmt.Println("usao sam u proveru ZA INSERT U INTERCEPTORY", token)
 		isValid, _ := VerifyToken(token, "user-service")
 		if !isValid {
@@ -67,6 +68,7 @@ func AuthInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServe
 	// Наставите са редовном обрадом
 	return handler(ctx, req)
 }
+
 func extractTokenFromContext(ctx context.Context) (string, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {

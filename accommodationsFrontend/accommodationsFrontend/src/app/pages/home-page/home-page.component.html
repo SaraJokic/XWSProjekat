@@ -1,5 +1,7 @@
-<h1>Accommodations</h1>
-<div class="search-filtriraj">
+<h1 class="title">Find your next stay</h1>
+<h2 class="subtitle"> Search low prices on hotels, apartments and much more...</h2>
+
+
   <div class="search">
     <form #userForm="ngForm" (ngSubmit)="search(userForm.value)">
       <mat-form-field appearance="fill">
@@ -30,10 +32,13 @@
     </form>
   </div>
 
+
+<div class="prikaz">
   <div class="filtriraj">
-    <b>Benefits:</b>
-    <div class="container">
+    <h3 class="filerBy">Filter by:</h3>
       <div class="benefits">
+        <h4>Benefits:</h4>
+
         <label>Wifi:</label>
         <label class="slider-checkbox">
           <input type="checkbox" class="checkbox" [(ngModel)]="WIFI">
@@ -52,13 +57,13 @@
           <span class="slider"></span>
         </label>
 
-        <div>
+        
         <b>ProminentHost:</b>
           <label class="slider-checkbox">
             <input type="checkbox" class="checkbox" [(ngModel)]="PROMINENT">
             <span class="slider"></span>
           </label>
-        </div>
+       
       </div>
 
       <div class="price-range">
@@ -76,38 +81,50 @@
 
         <button mat-raised-button (click)="applyFilters()">Filter</button>
       </div>
-    </div>
   </div>
-</div>
 
 
 
-<div class="cards">
-  <div *ngFor="let accommodation of filteredAccommodations">
-    <div class="accommodation-card"> 
-      <div>
-      <div class="info">
-      <h2>Name : {{ accommodation.name }}</h2>
-      <p>Location : {{ accommodation.location }}</p>
-      <p>Min Guests: {{ accommodation.minGuests }}</p>
-      <p>Max Guests: {{ accommodation.maxGuests }}</p>
-      <p>Price: {{ accommodation.id ? accommodationPrices[accommodation.id] : 'N/A' }}</p>
-      <p>Benefits:
-        <span *ngIf="accommodation.benefits?.freeParking && onlyTrue(accommodation.benefits)">FreeParking, </span>
-        <span *ngIf="accommodation.benefits?.wifi && onlyTrue(accommodation.benefits)">Wifi, </span>
-        <span *ngIf="accommodation.benefits?.kitchen && onlyTrue(accommodation.benefits)">Kitchen</span>
-      </p>
-      <p> Description: {{ accommodation.description }}</p>
-      <div class="pictures">
-        <div *ngFor="let picture of accommodation.pictures">
-          <img [src]="picture"   alt="Accommodation Picture">
+
+  <div class="cardscontainer">
+    <div *ngFor="let accommodation of filteredAccommodations">
+      <div class="accommodation-card"> 
+        <div class="pictures">
+          <owl-carousel-o [options]="customOptions">
+            <ng-template carouselSlide *ngFor="let picture of accommodation.pictures">
+                <div class="carouselImageContainer" (mouseenter)="showHint = true" (mouseleave)="showHint = false">
+                    <img class="carouselPicture" [src]="picture" (click)="openViewAccDialog(accommodation)" alt="Accommodation Picture">
+                    <div *ngIf="showHint" class="imageHint">Click to see full view </div>
+                </div>
+            </ng-template>
+        </owl-carousel-o>
         </div>
+          <div class="info">
+            <h2>Name : {{ accommodation.name }}</h2>
+            <p>Location : {{ accommodation.location }}</p>
+            <p>Min Guests: {{ accommodation.minGuests }}</p>
+            <p>Max Guests: {{ accommodation.maxGuests }}</p>
+            <p>Price: {{ accommodation.id ? accommodationPrices[accommodation.id] : 'N/A' }}</p>
+            <p>Benefits:
+              <span *ngIf="accommodation.benefits?.freeParking && onlyTrue(accommodation.benefits)">FreeParking, </span>
+              <span *ngIf="accommodation.benefits?.wifi && onlyTrue(accommodation.benefits)">Wifi, </span>
+              <span *ngIf="accommodation.benefits?.kitchen && onlyTrue(accommodation.benefits)">Kitchen</span>
+            </p>
+            <p> Description: {{ accommodation.description }}</p>
+          </div>
+
+          
+            <!-- <div *ngFor="let picture of accommodation.pictures">
+                <img [src]="picture"   alt="Accommodation Picture">
+              </div>-->
+          
+
+          <button mat-button class="reservation-button" (click)="openDialog(accommodation)">Make a reservation</button>
+          <button mat-button class="reservation-button"  (click)="openAccDialog(accommodation)" >Rate accomodationn </button>
+          <button mat-button class="reservation-button" (click)="openHostDialog(accommodation)" >Rate host  </button>
+          <button mat-button class="reservation-button" (click)="openViewAccDialog(accommodation)" >View details  </button>
+      
       </div>
-      <button mat-button class="reservation-button" (click)="openDialog(accommodation)">Make a reservation</button>
-      <button mat-button class="reservation-button"  (click)="openAccDialog(accommodation)" >Rate accomodationn </button>
-      <button mat-button class="reservation-button" (click)="openHostDialog(accommodation)" >Rate host  </button>
     </div>
-  </div>
-  </div>
   </div>
 </div>

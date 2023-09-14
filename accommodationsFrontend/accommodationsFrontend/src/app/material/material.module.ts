@@ -9,6 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 
 
@@ -24,7 +28,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatIconModule,
     MatToolbarModule,
-    MatSelectModule
+    MatSelectModule,
+    CarouselModule,
+    MatDialogModule,
+    MatMenuModule
   ],
   
   exports: [
@@ -37,7 +44,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatIconModule,
     MatToolbarModule,
-    MatSelectModule
+    MatSelectModule,
+    CarouselModule,
+    MatDialogModule,
+    MatMenuModule
   ],
 })
 export class MaterialModule { }

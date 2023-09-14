@@ -1,0 +1,9 @@
+<p>view-accomodation-dialog works!</p>
+
+<owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide *ngFor="let picture of data.pictures">
+        <div class="carouselImageContainer" (mouseenter)="showHint = true" (mouseleave)="showHint = false">
+            <img class="carouselPicture" [src]="picture"  alt="Accommodation Picture">
+        </div>
+    </ng-template>
+</owl-carousel-o>

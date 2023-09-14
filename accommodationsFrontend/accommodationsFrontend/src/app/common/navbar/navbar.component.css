@@ -1,20 +1,64 @@
 .spacer {
     flex: 1 1 auto;
   }
-.Homebutton{
-  height: 100%;
-  font-size: 2.4rem;
-  margin: 15%;
-  
+
+  .Homebutton {
+    max-height: 120px;
+    max-width: 200px; 
+    width: auto;     
+    display: block;
+    margin-left: 1rem;
+    
+   
+}
+.logoname
+{
+  margin-left: 1em;
 }
 .NavBarButton{
-    height: 100%;
-    font-size: 1.2rem;
-    margin: 1rem;
+    height:auto;
+    font-family: 'Caveat', cursive;
+  font-family: 'Libre Franklin', sans-serif;
+  font-family: 'Raleway', sans-serif;
+  font-family: 'Urbanist', sans-serif;
+  letter-spacing: 0.1rem;
+    font-size: 1.4rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.2em;
 }
-.mat-toolbar{
-   background-color: #a5a2a2;
-   height: 12%;
-   color: white;
+
+.NavBarButton:hover {
+    transform: scale(1.2);
+    letter-spacing: 0.35rem;
+    border-bottom:0.2px solid #f500a35b;
+ }
+ .Homebutton:hover {
+  transform: scale(1.2);
+  letter-spacing: 0.35rem;
 }
+ 
+ a {
+  text-decoration: none; 
+  color:rgb(3, 3, 3);
+  letter-spacing: 0.15rem;
+}
+.mat-toolbar {
+   /*background: linear-gradient(to bottom, rgb(250, 250, 250),rgba(247, 235, 238, 0.954));*/
+   background-color: white;
+
+   box-shadow: 5px 10px 50px rgb(236, 234, 234);
+   /*background-color:rgb(241, 101, 152);*/
+   height: 9%;
+   color:rgb(255, 255, 255);
+   position: sticky;
+   position: -webkit-sticky;
+   top: 0; 
+   z-index: 1000; 
+   /*border-bottom: 1px dashed #F500A2;*/
+   /*border-bottom: 1px solid #ccc;*/
+}
+
 
