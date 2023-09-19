@@ -13,6 +13,8 @@ import { ReservationService } from 'src/app/services/reservation.service';
 import { DatePipe } from '@angular/common';
 import { LoggedUserInfo } from 'src/app/model/logged-user-info';
 import { AuthService } from 'src/app/services/auth.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { DialogService } from 'src/app/services/dialog.service';
 
 
 @Component({
@@ -31,7 +33,20 @@ export class MakeReservationDialogComponent implements OnInit{
   private router: Router, private dialog:MatDialog,
    private availabilityService: AvailabilityServiceService,
   private userService: UserService,
-   private reservationService: ReservationService, private authService: AuthService){}
+   private reservationService: ReservationService, private dialogService: DialogService,private authService: AuthService){}
+   accommodationPrices: { [id: string]: number } = {};
+   showHint = false;
+  customOptions: OwlOptions = {
+    loop: true,  
+    mouseDrag: true,  
+     dots: true,  
+    navSpeed: 700,  
+     items:1,
+     nav: true,
+     navText: ['<', '>']
+    
+  }
+
   user: User = {
     Name: '',
     LastName: '',
@@ -55,6 +70,13 @@ export class MakeReservationDialogComponent implements OnInit{
     this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: "", email:""};
     this.getAvailabilityByAccId()
     this.getUser();
+  }
+
+  openHostDialog(accommodation: Accommodation): void {
+    this.dialogService.openHostDialog(accommodation);
+  }
+  openAccDialog(accommodation: Accommodation): void {
+    this.dialogService.openAccDialog(accommodation);
   }
   getUser(){
     this.userService.getUserByUsername(this.logedUser.username).subscribe(

@@ -1,45 +1,68 @@
-.spacer {
-    flex: 1 1 auto;
-  }
-
-  .Homebutton {
-    max-height: 120px;
-    max-width: 200px; 
-    width: auto;     
-    display: block;
-    margin-left: 1rem;
-    
-   
+.navbarelements{
+  width: 90%;
+  margin-left: 25%;
 }
 .logoname
 {
   margin-left: 1em;
 }
-.NavBarButton{
-    height:auto;
-    font-family: 'Caveat', cursive;
+
+.Homebutton {
+  max-height: 120px;
+  max-width: 200px; 
+  width: auto;     
+  display: block;
+  margin-left: 1rem; 
+}
+
+.special{
+  font-family: 'Caveat', cursive;
   font-family: 'Libre Franklin', sans-serif;
   font-family: 'Raleway', sans-serif;
   font-family: 'Urbanist', sans-serif;
   letter-spacing: 0.1rem;
+  font-size: 1.4rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 0.2em;
+  float: right;
+}
+
+.NavBarButton{
+    height:auto;
+    font-family: 'Caveat', cursive;
+    font-family: 'Libre Franklin', sans-serif;
+    font-family: 'Raleway', sans-serif;
+    font-family: 'Urbanist', sans-serif;
+    letter-spacing: 0.1rem;
     font-size: 1.4rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 0.2em;
+    float:left;
 }
 
-.NavBarButton:hover {
+.special:hover {
     transform: scale(1.2);
     letter-spacing: 0.35rem;
-    border-bottom:0.2px solid #f500a35b;
+    /* border-bottom:0.2px solid #f500a35b; */
  }
  .Homebutton:hover {
   transform: scale(1.2);
   letter-spacing: 0.35rem;
 }
- 
+.NavBarButton:hover {
+  transform: scale(1.2);
+  letter-spacing: 0.35rem;
+  /* border-bottom:0.2px solid #f500a35b; */
+}
+ .active{
+  border-bottom:0.2px solid #f500a35b;
+ }
  a {
   text-decoration: none; 
   color:rgb(3, 3, 3);

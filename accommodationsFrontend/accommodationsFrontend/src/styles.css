@@ -6,9 +6,33 @@
 
 
 
-
-html, body { height: 100%; }
-body { margin: 0;
-     font-family: Roboto, "Helvetica Neue", sans-serif; 
+html, body { 
+     height: 100%; 
+ }
+ 
+ body { 
+     margin: 0;
+     font-family: 'Urbanist', sans-serif;
+     /* background-color: #41364e0c; */
+     /* background-color: rgba(1, 36, 33, 0.363); */
+ }
+ 
+ *, *::before, *::after {
+     font-family: 'Urbanist', sans-serif;
+ }
+ 
+ 
+ .mat-h2, .mat-headline-6, .mat-typography .mat-h2, .mat-typography .mat-headline-6, .mat-typography h2,.mat-h3, .mat-subtitle-1, .mat-typography .mat-h3, .mat-typography .mat-subtitle-1, .mat-typography h3, .mat-h4, .mat-body-1, .mat-typography .mat-h4, .mat-typography .mat-body-1, .mat-typography h4{
+     font-family: 'Urbanist', sans-serif;
+     font-size: 1.5em;
+     font-weight:500;
+ }
+ .mat-mdc-card-subtitle~.mat-mdc-card-title, .mat-mdc-card-title~.mat-mdc-card-subtitle, .mat-mdc-card-header .mat-mdc-card-header-text .mat-mdc-card-title, .mat-mdc-card-header .mat-mdc-card-header-text .mat-mdc-card-subtitle, .mat-mdc-card-title-group .mat-mdc-card-title, .mat-mdc-card-title-group .mat-mdc-card-subtitle{
+     font-family: 'Urbanist', sans-serif;
+     font-size: 1.5em;
+     font-weight:500;
+ }
+ .mat-body, .mat-body-2, .mat-typography .mat-body, .mat-typography .mat-body-2, .mat-typography{
+     font-family: 'Urbanist', sans-serif;
     
-    }
+ }

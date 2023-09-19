@@ -1,60 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column; /* Stavljamo sve elemente jedan ispod drugog */
+  align-items: stretch; /* Proširuje sve elemente da popune dostupnu širinu */
+  width: 80%;
+  margin-left: 12%;
+  margin-top: 5%;
+  height: 700px;
+}
+
 form {
-    display: flex;
-    flex-direction: column;
-    max-width: 50%;
-    margin: 0 auto;
-  }
-  
-  label {
-    margin-bottom: 10px;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  input[type="date"],
-  input[type="checkbox"] {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: #4d3df4;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #4fbaf4;
-  }
-  
-  h2,
-  h3 {
-    margin-top: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input[type="checkbox"] {
-    margin-right: 5px;
-  }
-  
-  .form-array {
-    margin-top: 10px;
-  }
-  
-  .form-array button {
-    margin-top: 5px;
-  }
+  display: flex; /* Flex postavka za formu da bi div-ovi bili jedan pored drugog */
+  flex-wrap: wrap; /* Dozvoljava elementima da pređu u sledeći red ako nema dovoljno prostora */
+}
+.info{
+  border-right: 2px solid #ccc;
+  margin-right: 50px;
+}
+
+.availability{
+  border-right: 2px solid #ccc;
+  margin-right: 50px;
+}
+
+.info, .availability, .last {
+  flex: 1; /* Oba div-a će imati istu širinu */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.info mat-form-field{
+  margin-right: 2%;
+}
+.last mat-form-field{
+  margin-right: 2%;
+}
+
+
+.availability mat-form-field{
+  margin-right: 2%;
+}
+.desc{
+  width: 450px;
+  height: 200px;
+}
+
+.submit{
+  margin-left: 400px;
+  width: 200px;
+  background-color: #cccccc65;
+}
+/* button[mat-raised-button] {
+  margin-top:650px; 
+  margin-right: 40px;
+  width: 200px; 
+  background-color: #cccccc65;
+} */

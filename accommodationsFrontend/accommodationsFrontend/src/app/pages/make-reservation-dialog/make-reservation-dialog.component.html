@@ -1,31 +1,58 @@
 
-    <table>
-        <tr>
-          <td>
+    <div class="accommodation-dialog-container">
             <div class="accommodation-details">
               <h2>{{ data.name }}</h2>
-              <p>{{ data.location }}</p>
-              <p>Number of Guests:</p>
-              <input type="number" [(ngModel)]="numberOfGuests" placeholder="Enter the number of guests">
+                <owl-carousel-o [options]="customOptions">
+                  <ng-template carouselSlide *ngFor="let picture of data.pictures">
+                      <div class="carouselImageContainer" (mouseenter)="showHint = true" (mouseleave)="showHint = false">
+                          <img class="carouselPicture" [src]="picture"  alt="Accommodation Picture">
+                      </div>
+                  </ng-template>
+                </owl-carousel-o>
+                <p>Located in {{ data.location }} </p>
+                <p> {{data.name}}  is {{ data.description }}</p>
+                <p>Our room is designed to comfortably host between {{ data.minGuests }} to  {{ data.maxGuests }} guests</p>
+                <p>Price for person is: 100$</p>
+                <br>
             </div>
-          </td>
-          <td>
-            <div class="date-range-picker">
-              <mat-form-field>
-                <input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" [(ngModel)]="startDate">
-                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #startDatePicker></mat-datepicker>
-              </mat-form-field>
-      
-              <mat-form-field>
-                <input matInput [matDatepicker]="endDatePicker" placeholder="End Date" [(ngModel)]="endDate">
-                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #endDatePicker></mat-datepicker>
-              </mat-form-field>
-            </div>
-          </td>
-        </tr>
-      </table>
-      
-      <button mat-raised-button color="primary" (click)="makeReservation()">Make Reservation</button>
 
+            <div class="date-range-picker">
+              <h2>Make a reservation at {{ data.name }}</h2>
+              <br> <br>
+              <div class="reservation">
+              <p>Enter the number of guests:</p>
+              
+              <mat-form-field appearance="outline">
+              <input matInput type="number" [(ngModel)]="numberOfGuests" placeholder="Enter the number of guests">
+            </mat-form-field>
+              <mat-form-field appearance="outline">
+                  <input matInput [matDatepicker]="startDatePicker" placeholder="Check in date" [(ngModel)]="startDate">
+                  <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline">
+                  <input matInput [matDatepicker]="endDatePicker" placeholder="Check out date" [(ngModel)]="endDate">
+                  <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+                <div class="button-container">
+                    <button mat-raised-button (click)="makeReservation()">Make a reservation</button>
+                </div>
+              <br>
+              </div>
+              <div class="OldGuest">
+                <p>Have you stayed with us before?</p>
+                <p >We'd greatly appreciate it if you could spare a moment to share your
+                  experience by rating the host or the accommodation. 
+                  
+                  Your feedback helps us ensure the best stay for all our guests.</p>
+                  <div class="downButtons">
+                  <button mat-button class="reservation-button"  (click)="openAccDialog(data)" >Rate accomodationn </button>
+                  <button mat-button class="reservation-button" (click)="openHostDialog(data)" >Rate host  </button>
+                  </div>
+              </div>
+          </div>
+          
+        
+</div>

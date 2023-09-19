@@ -1,3 +1,9 @@
-.tooltip-on-disabled {
+/* .tooltip-on-disabled {
     pointer-events: auto !important;
-  }
+  } */
+
+  .prikaz{
+    width:800px;
+    margin-top: 5%;
+    margin-left: 10%;
+}

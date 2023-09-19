@@ -1,34 +1,63 @@
 
 .subtitle{
-  font-family: 'Caveat', cursive;
-  font-family: 'Libre Franklin', sans-serif;
-  font-family: 'Raleway', sans-serif;
-  font-family: 'Urbanist', sans-serif;
+ /* font-family: 'Urbanist', sans-serif;*/
   font-size: 2.5em;
   width: 50%;
   margin-left:10%;
   margin-bottom: 6em;
+  z-index: 20;
+  position: relative;
+  color: white;
   
 }
 .title{
-  font-family: 'Caveat', cursive;
-  font-family: 'Libre Franklin', sans-serif;
-  font-family: 'Raleway', sans-serif;
   font-family: 'Urbanist', sans-serif;
   font-size: 5.5em;
   width: 28%;
   margin-left: 10%;
   margin-top: 2em;
   margin-bottom: 0.7em;
+  z-index: 20;
+  position: relative;
+  color: white;
  
 }
+.background-image {
+  position: relative;
+  height: 850px;
+  padding: 100px 0; 
+}
+.background-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(2, 2, 2, 0.043);
+  z-index: 1;
+}
+.background-image {
+  background-image: url('src\assets\homeimage.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: relative;
+  height: 550px;
+  padding: 100px 0;
+}
+
+
+
 
 .cardscontainer {
   display: flex;
+  flex-wrap: wrap;
   margin-left: 3%;
   margin-right: 10%;
   width: 70%;
-  background-color: #FFD700;
+  
+ 
  
 }
 .carouselImageContainer {
@@ -77,9 +106,7 @@
     
   }
 
-  .search {
-    margin-left: 26%;
-     }
+  
     
 
   .owl-carousel-o, .owl-carousel, .owl-stage, .owl-stage-outer {
@@ -88,16 +115,45 @@
   }
   
   .carouselPicture {
-      width: 100% !important;
+      /* width: 100% !important;
       height: 100% !important;
-      
+      object-fit: cover; */
+      width: 400px;  /* Adjust to your desired width */
+      height: 300px; /* Adjust to your desired height */
       object-fit: cover;
+      display: block; /* To remove any unwanted margins */
+      margin: 0 auto;
       
   }
   
-
+  .search{
+    margin-top: 5%;
+    width: 55%;
+    margin-left: 26%;
+    position: relative;
+    z-index: 20;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.973);
+    padding-top: 1%;
+    padding-left: 1%;
+    width: 1070px;
+    border-radius: 10px;
+  }
   .search mat-form-field{
-    margin: 4 auto;
+    margin: 0.4%;
+    font-size: 1.25em;
+    color: #000;
+  }
+
+  .search mat-label{
+    font-size: 1.25em;
+  }
+  .search button{
+    width: 8%;
+    margin-left: 0.3%;
+    margin-bottom: 0.4%;
+    height: 55px;
+    
   }
   
   /*.pictures img {
@@ -107,21 +163,26 @@
     object-fit: cover;
     
   }*/
+.reservation-button{
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 2%;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+  background-color: #eaeae984;
+}
   
-
-
-
 .filtriraj {
   flex: 1;
-  width: 35%;
+  width: 15%;
   margin-left: 10%;
- 
+  /* max-height: 920px; */
   border-radius: 10px;
   border: 2px solid #ccc;
-
+  padding: 1%;
   display: flex;
   flex-direction: column;
   gap: 15px; 
+  margin-bottom: 5%;
 }
 .filerBy{
   border-bottom: 1px solid #ccc;
@@ -134,16 +195,44 @@
 
 .benefits h4{
   font-size: 1.5em ; 
-  font-style: bold;
+  /*font-style: bold;*/
 }
 
 .benefits{
   padding-bottom: 0.1em;
   padding-left: 5%;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1em;
+}
+.benefits label{
+  font-size: 1.25em;
+}
+
+
+.price-range h4{
+  font-size: 1.5em ; 
+  font-style: bold;
+  padding-left: 5%;
+}
+
+
+.price-range mat-form-field{
+  padding-bottom: 0.1em;
+  padding-left: 5%;
+  max-width: 85%;
+}
+
+.price-range button{
+  float: right;
+  margin-right: 10%;
+  width: 85%;
+  margin-bottom: 5%;
+  background-color: #eaeae984;
 }
 
 .prikaz{
   display: flex;
+  margin-top: 3.5%;
 }
 
 .toggle {
@@ -156,9 +245,6 @@
 .toggle input {
   display: none;
 }
-
-
-
 
 .prominent-card-color {
   background-color: #FFD700;

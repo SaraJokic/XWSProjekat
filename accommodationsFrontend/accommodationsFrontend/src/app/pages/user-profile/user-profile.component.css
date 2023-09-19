@@ -1,36 +1,105 @@
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.wellcome{
+  margin-left: 40%;
+  margin-top: 5%;
+  font-size: 2em;
+  width: 20%;
+  align-self: center;
 }
 
-label {
-  margin-top: 10px;
-  margin-bottom: 5px;
+.prikazslike{
+  width: 40%;
+  height: 75%;
+  margin-top: 5%;
 }
-
-input {
-  padding: 5px;
-  margin-bottom: 10px;
+.prikazslike img{
+width: 70%;
+height: 90%;
+float: right;
+margin-right: 2%;
+position: relative;
+}
+.imageHint {
+  position: absolute;
+  top: 20%;
+  left: 8%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(254, 254, 254, 0.872);
+  color: black;
+  padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  z-index: 200;
 }
-
-button {
-  padding: 10px 20px;
-  margin-top: 20px;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
+.prikazslike input{
+  position: absolute;
+  margin-top: 9%;
+  margin-left: 12%;
+  font-size: 1.25em;
+  width: auto;
   border: none;
-  cursor: pointer;
+
+
+}
+.ceoPrikaz{
+  display: flex;
 }
 
-button:hover {
-  background-color: #0062cc;
+.prikaz{
+  width: 70%;
+  float: right;
+  margin-top: 2%;
+  margin-right: 10%;
+}
+input{
+  font-family: 'Urbanist', sans-serif;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+}
+mat-card{
+  margin: 5%;
+}
+mat-card-header{
+  background-color: #ccc;
+  margin-bottom: 2%;
 }
 
-.prominent {
-  color: black; /* Replace 'red' with your desired color */
-  background-color: #FFD700;
+.personalInfo mat-card-content{
+  display: inline-block;
+  font-size: 1.25em;
+}
+.personalInfo input{
+  font-size: 1.1em;
+}
+.accountInfo mat-card-content{
+  display: inline-block;
+  font-size: 1.25em;
+}
+.accountInfo input{
+  font-size: 1.1em;
+}
+
+.element{
+  margin-right: 15%;
+}
+
+.element input{
+float: right;
+}
+
+.table{
+  width: 100%;
+  margin-bottom: 2%;
+}
+.table2{
+  width: 70%;
+  margin-bottom: 2%;
+}
+.buttons button{
+  float:right;
+  margin-left: 2%;
+  font-size: 1.1em;
+}
+.buttons{
+  width: 40%;
+  float: right;
+  margin-right: 5%;
 }

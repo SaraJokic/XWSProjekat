@@ -1,35 +1,99 @@
-<form (ngSubmit)="onSubmit()">
-
-  <div class="prominent">
-    <h2>
-    <p *ngIf="user.ProminentHost && onlyTrue(user.ProminentHost)"> You are Prominent Host  </p>
-  </h2>
+<div class="wellcome">
+  <h2>Wellcome, {{user.Name}}</h2>
+</div>
+<div class="ceoPrikaz">
+  <div class="prikazslike" (mouseleave)="showHint = false">
+    <input  type="file" (change)="onFileSelected($event)">
+    <img [src]="imageSrc" *ngIf="imageSrc" (mouseenter)="showHint=true"   >
+    <input type="file" *ngIf="showHint" class="imageHint" (change)="onFileSelected($event)">
   </div>
+  <div class="prikaz">    
+    <form (ngSubmit)="onSubmit()">
+      <div class="prominent">
+        <h2><p *ngIf="user.ProminentHost && onlyTrue(user.ProminentHost)"> You are Prominent Host  </p></h2>
+      </div>
+      <div class="personalInfo">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+            Personal informations
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <table class="table">
+              
+                  <tr> 
+                    <td>
+                      <div class="element">
+                      <mat-label>First Name:</mat-label>
+                      <input matInput type="text" [(ngModel)]="user.Name" name="firstName">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="element">
+                      <mat-label>Last Name:</mat-label>
+                      <input matInput type="text" [(ngModel)]="user.LastName" name="lastName">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="element">
+                      <mat-label>Email:</mat-label>
+                      <input matInput type="text" [(ngModel)]="user.Email" name="email">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="element">
+                      <mat-label>City:</mat-label>
+                      <input matInput type="text" [(ngModel)]="user.City" name="city">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="element">
+                      <mat-label>Country:</mat-label>
+                      <input matInput type="text" [(ngModel)]="user.Country" name="country">
+                      </div>
+                    </td>
+                  </tr>
+            
+            </table>
+          
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-  <label>First Name:</label>
-  <input type="text" [(ngModel)]="user.Name" name="firstName">
-
-  <label>Last Name:</label>
-  <input type="text" [(ngModel)]="user.LastName" name="lastName">
-
-  <label>Email:</label>
-  <input type="text" [(ngModel)]="user.Email" name="email">
-
-  <label>City:</label>
-  <input type="text" [(ngModel)]="user.City" name="city">
-
-  <label>Country:</label>
-  <input type="text" [(ngModel)]="user.Country" name="country">
-
-  <label>Username:</label>
-  <input type="text" [(ngModel)]="user.Username" name="username">
-
-  <label>Password:</label>
-  <input type="password" [(ngModel)]="user.Password" name="password">
-
-
-  <button type="button" (click)="deleteProfile(user.id)">Delete Account</button>
-
- 
-  <button type="submit">Save Changes</button>
-</form>
+      <div class="accountInfo">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              Account Information
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <table class="table2">
+              <tr>
+                <td>
+                  <div class="element">
+                  <mat-label>Username:</mat-label>
+                  <input matInput type="text" [(ngModel)]="user.Username" name="username">
+                  </div>
+                </td>
+                <td>
+                  <div class="element">
+                  <mat-label>Password:</mat-label>
+                  <input  matInput type="password" [(ngModel)]="user.Password" name="password">
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="buttons">
+        <button mat-raised-button type="button" (click)="deleteProfile(user.id)">Delete Account</button>
+        <button mat-raised-button type="submit">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>

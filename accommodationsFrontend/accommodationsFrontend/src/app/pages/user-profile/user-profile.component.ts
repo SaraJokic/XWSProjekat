@@ -13,7 +13,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit{
-  constructor(private userService: UserService,  private router: Router, private authService: AuthService){}
+  constructor(private userService: UserService,  private router: Router, private authService: AuthService){
+    const savedImage = sessionStorage.getItem('savedImage');
+    if (savedImage) {
+        this.imageSrc = savedImage;
+    }
+  }
   user: User = {
     Name: '',
     LastName: '',
@@ -34,9 +39,25 @@ export class UserProfileComponent implements OnInit{
     name: '',
     email:'',
   };
+  
+  showHint = false;
   ngOnInit(): void {
     this.logedUser = this.authService.getLogedUserInfo() ?? {username: "", role: "", id: "", name: "", email:""};
     this.getUser();
+  }
+
+  imageSrc: string = ""; 
+
+  onFileSelected(event: any) { 
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => { 
+        this.imageSrc = e.target.result as string; 
+        sessionStorage.setItem('savedImage', this.imageSrc);
+      };
+      reader.readAsDataURL(file);
+    }
   }
   getUser(){
     this.userService.getUserByUsername(this.logedUser.username).subscribe(

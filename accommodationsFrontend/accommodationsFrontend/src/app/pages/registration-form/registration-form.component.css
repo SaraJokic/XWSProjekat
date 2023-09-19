@@ -8,8 +8,10 @@ body{
     
 }
 .login-box{
+    margin-top: 4%;
+    margin-bottom: 16%;
     width: 420px;
-    height: 800px;
+    height: 830px;
     background:#374D67;
     color:#fff;
     top: 50%;

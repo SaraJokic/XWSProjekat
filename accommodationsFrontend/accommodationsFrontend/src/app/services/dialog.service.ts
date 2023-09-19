@@ -16,8 +16,8 @@ export class DialogService {
 
   openDialogReservation(details: Accommodation): void {
     const dialogRef = this.dialog.open(MakeReservationDialogComponent, {
-      width: '600px',
-      height: '550px',
+      width: '1900px',
+      height: '1000px',
       data: details
     });
 
@@ -29,7 +29,7 @@ export class DialogService {
 openHostDialog(details: Accommodation): void {
   const dialogRef = this.dialog.open(RatingComponent, {
     width: '600px',
-      height: '550px',
+      height: '450px',
       data: details
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -49,7 +49,7 @@ openHostDialog(details: Accommodation): void {
 openAccDialog(details: Accommodation): void {
   const dialogRef = this.dialog.open(RateAcoomodationComponent, {
     width: '600px',
-      height: '550px',
+      height: '450px',
       data: details
     });
     dialogRef.afterClosed().subscribe((result) => {

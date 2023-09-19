@@ -12,7 +12,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -31,7 +33,10 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSelectModule,
     CarouselModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule,
+    MatCardModule,
+    BrowserAnimationsModule
   ],
   
   exports: [
@@ -47,7 +52,10 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSelectModule,
     CarouselModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule,
+    MatCardModule,
+    BrowserAnimationsModule
   ],
 })
 export class MaterialModule { }

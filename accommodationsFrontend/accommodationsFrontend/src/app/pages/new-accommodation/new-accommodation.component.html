@@ -1,103 +1,357 @@
-<form [formGroup]="accommodationForm" (ngSubmit)="onSubmit()">
-  <label>
-    Name:
-    <input type="text" formControlName="name">
-  </label>
+  <!-- <div class="container">
+  <form [formGroup]="accommodationForm" (ngSubmit)="onSubmit()">
+      <div class="info">
+        <h1>Informations</h1>
+        <label>Name:</label>
+          <input type="text" formControlName="name">
 
-  <label>
-    Location:
-    <input type="text" formControlName="location">
-  </label>
+        <label> Location:</label>
+          <input type="text" formControlName="location">
 
-  <div formGroupName="benefits">
-    <label>
-      <input type="checkbox" formControlName="wifi">
-      Wifi
-    </label>
-    <label>
-      <input type="checkbox" formControlName="freeParking">
-      Free Parking
-    </label>
-    <label>
-      <input type="checkbox" formControlName="kitchen">
-      Kitchen
-    </label>
-  </div>
+        <div formGroupName="benefits">
+          <h2>Include some benefits</h2>
+          <label>Wifi</label>
+          <input type="checkbox" formControlName="wifi">
 
-  <label>
-    Minimum Guests:
-    <input type="number" formControlName="minguests">
-  </label>
+          <label> Free Parking</label>
+          <input type="checkbox" formControlName="freeParking">
 
-  <label>
-    Maximum Guests:
-    <input type="number" formControlName="maxguests">
-  </label>
-  <div>
-    <label for="imageUpload">Add Images:</label>
-    <input id="imageUpload" type="file" (change)="handleImageUpload($event)" multiple>
+          <label> Kitchen </label>
+          <input type="checkbox" formControlName="kitchen">
+        </div>
+        <label> Minimum Guests:</label>
+          <input type="number" formControlName="minguests">
+        
+        <label>Maximum Guests:</label>
+          <input type="number" formControlName="maxguests">
+
+        <div>
+          <label for="imageUpload">Add Images:</label>
+          <input id="imageUpload" type="file" (change)="handleImageUpload($event)" multiple>
+        </div>
+
+        <label> Description:</label>
+        <input type="text" formControlName="description">
+
+        <label>Approve requests automatically</label>
+        <input type="checkbox" formControlName="automaticApprove">
+       </div>
+       
+       <h2>Availability</h2>
+       
+ 
+    <div formGroupName="availability">
+
+      <div formArrayName="availableSlots">
+        <h3>Available Slots</h3>
+        <div *ngFor="let slot of availabilitySlots.controls; let i = index" [formGroupName]="i">
+          <label>
+            Start Date:
+            <input type="date" formControlName="startDate">
+          </label>
+          <label>
+            End Date:
+            <input type="date" formControlName="endDate">
+          </label>
+          <button mat-raised-button type="button" (click)="removeAvailabilitySlot(i)">Remove Slot</button>
+        </div>
+        <button mat-raised-button type="button" (click)="addAvailabilitySlot()">Add Slot</button>
+      </div>
+
+      <label>
+        Price:
+        <input type="number" formControlName="price">
+      </label>
+
+      <label>
+        <input type="checkbox" formControlName="isPricePerGuest">
+        Price per Guest
+      </label>
+
+      <div formArrayName="changePrice">
+        <h3>Price Change</h3>
+        <div *ngFor="let change of changePrice.controls; let i = index" [formGroupName]="i">
+          <label>
+            Start Date:
+            <input type="date" formControlName="startDate">
+          </label>
+          <label>
+            End Date:
+            <input type="date" formControlName="endDate">
+          </label>
+          <label>
+            Change:
+            <input type="number" formControlName="change">
+          </label>
+          <button mat-raised-button type="button" (click)="removePriceChange(i)">Remove Change</button>
+        </div>
+        <button mat-raised-button type="button" (click)="addPriceChange()">Add Change</button>
+      </div>
+    </div>
+
+    <button mat-raised-button type="submit">Submit</button>
+  </form> 
+</div> -->
+
+
+<!-- 
+
+
+<div class="container">
+  <form [formGroup]="accommodationForm" (ngSubmit)="onSubmit()">
+    <div class="info">
+      <h2>Enter name and location of the accomodation</h2>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Location</mat-label>
+          <input matInput type="text" formControlName="location">
+      </mat-form-field>
+
+      <div formGroupName="benefits">
+          <h2>Include some benefits</h2>
+
+          <mat-checkbox formControlName="wifi"></mat-checkbox><label>Wifi</label>
+          <br>
+          <mat-checkbox formControlName="freeParking"></mat-checkbox><label>Free parking</label>
+          <br>
+          <mat-checkbox formControlName="kitchen"></mat-checkbox><label>Kitchen</label>
+          <br>
+          <mat-checkbox></mat-checkbox><label >Swimming pool </label><br>
+         <mat-checkbox></mat-checkbox><label >Twin beds </label><br>
+         <mat-checkbox></mat-checkbox><label >Breakfast included </label><br>
+        <mat-checkbox></mat-checkbox><label >Pets allowed </label><br>
+        <mat-checkbox></mat-checkbox><label >Fitness centre </label><br>
+        <mat-checkbox></mat-checkbox><label >Spa and wellnes </label><br>
+      </div>
+
+    </div>
+    
+    <div class="availability">
+      <h2>Enter number of guests allowed</h2>
   
-  </div>
-  <label>
-    Description:
-    <input type="text" formControlName="description">
-  </label>
-  <label>
-    <input type="checkbox" formControlName="automaticApprove">
-    Approve requests automatically
-  </label>
-
-
-  <h2>Availability</h2>
-
-  <div formGroupName="availability">
-
-    <div formArrayName="availableSlots">
-      <h3>Available Slots</h3>
-      <div *ngFor="let slot of availabilitySlots.controls; let i = index" [formGroupName]="i">
-        <label>
-          Start Date:
-          <input type="date" formControlName="startDate">
-        </label>
-        <label>
-          End Date:
-          <input type="date" formControlName="endDate">
-        </label>
-        <button mat-raised-button type="button" (click)="removeAvailabilitySlot(i)">Remove Slot</button>
+      <mat-form-field appearance="outline">
+          <mat-label>Minimum Guests</mat-label>
+          <input matInput type="number" formControlName="minguests">
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+          <mat-label>Maximum Guests</mat-label>
+          <input matInput type="number" formControlName="maxguests">
+      </mat-form-field>
+  
+      <h2>Include some description</h2>
+  
+      <mat-form-field appearance="outline" class="desc">
+          <mat-label>Description</mat-label>
+          <input matInput type="text" formControlName="description">
+      </mat-form-field>
+      <br>
+      <h2>Add images of accomodation</h2>
+      <div>
+          <mat-label>Add Images:</mat-label>
+          <input id="imageUpload" type="file" (change)="handleImageUpload($event)" multiple>
       </div>
-      <button mat-raised-button type="button" (click)="addAvailabilitySlot()">Add Slot</button>
+      <br> <br>
+      <h2>Do you want to approve reservations automatically</h2>
+      <mat-checkbox formControlName="automaticApprove">Yes</mat-checkbox>
+
+      
+    </div>
+    <div class="last">
+      <div formGroupName="availability">
+
+        <div formArrayName="availableSlots">
+          <h2>Available Slots</h2>
+
+          <div *ngFor="let slot of availabilitySlots.controls; let i = index" [formGroupName]="i">
+            <mat-form-field appearance="outline">
+                <mat-label>Start Date</mat-label>
+                <input matInput type="date" formControlName="startDate">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>End Date</mat-label>
+                <input matInput type="date" formControlName="endDate">
+            </mat-form-field>
+
+            <button mat-raised-button type="button" (click)="removeAvailabilitySlot(i)">Remove Slot</button>
+            <button mat-raised-button type="button" (click)="addAvailabilitySlot()">Add Slot</button>
+          </div>
+        </div>
+
+        <br><br>
+        <h2>Price</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price">
+        </mat-form-field>
+        <mat-checkbox formControlName="isPricePerGuest">Is price per guest?</mat-checkbox>
+
+        <div formArrayName="changePrice">
+          <br><br>
+          <h2>Price Change</h2>
+          <div *ngFor="let change of changePrice.controls; let i = index" [formGroupName]="i">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Start Date</mat-label>
+              <input matInput type="date" formControlName="startDate">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>End Date</mat-label>
+              <input matInput type="date" formControlName="endDate">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Change</mat-label>
+              <input matInput type="number" formControlName="change">
+            </mat-form-field>
+
+            <button mat-raised-button type="button" (click)="removePriceChange(i)">Remove Change</button>
+            <button mat-raised-button type="button" (click)="addPriceChange()">Add Change</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <label>
-      Price:
-      <input type="number" formControlName="price">
-    </label>
+    <button mat-raised-button type="submit">Submit</button>
+  </form>
+</div> -->
 
-    <label>
-      <input type="checkbox" formControlName="isPricePerGuest">
-      Price per Guest
-    </label>
 
-    <div formArrayName="changePrice">
-      <h3>Price Change</h3>
-      <div *ngFor="let change of changePrice.controls; let i = index" [formGroupName]="i">
-        <label>
-          Start Date:
-          <input type="date" formControlName="startDate">
-        </label>
-        <label>
-          End Date:
-          <input type="date" formControlName="endDate">
-        </label>
-        <label>
-          Change:
-          <input type="number" formControlName="change">
-        </label>
-        <button mat-raised-button type="button" (click)="removePriceChange(i)">Remove Change</button>
+
+
+<div class="container">
+  <form [formGroup]="accommodationForm" (ngSubmit)="onSubmit()">
+    <div class="info">
+      <h2>Enter name and location of the accommodation</h2>
+
+      <!-- Ovde koristimo matInput sa Angular Material komponentom -->
+      <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Location</mat-label>
+          <input matInput type="text" formControlName="location">
+      </mat-form-field>
+
+      <div formGroupName="benefits">
+          <h2>Include some benefits</h2>
+          <!-- Dodao formControlName atribut za svaki checkbox -->
+          <mat-checkbox formControlName="wifi">Wifi</mat-checkbox><br>
+          <mat-checkbox formControlName="freeParking">Free parking</mat-checkbox><br>
+          <mat-checkbox formControlName="kitchen">Kitchen</mat-checkbox><br>
+          <!-- Pretpostavio sam da ćeš imati kontrolne nazive za ove checkboxove. Ako ih nemaš, dodaj ih u formu ili ukloni formControlName -->
+          <mat-checkbox>Swimming pool </mat-checkbox><br>
+          <mat-checkbox >Twin beds </mat-checkbox><br>
+          <mat-checkbox >Breakfast included </mat-checkbox><br>
+          <mat-checkbox >Pets allowed </mat-checkbox><br>
+          <mat-checkbox >Fitness centre </mat-checkbox><br>
+          <mat-checkbox>Spa and wellness </mat-checkbox><br>
       </div>
-      <button mat-raised-button type="button" (click)="addPriceChange()">Add Change</button>
     </div>
-  </div>
 
-  <button mat-raised-button type="submit">Submit</button>
-</form>
+    <div class="availability">
+      <h2>Enter number of guests allowed</h2>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Minimum Guests</mat-label>
+          <input matInput type="number" formControlName="minguests">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Maximum Guests</mat-label>
+          <input matInput type="number" formControlName="maxguests">
+      </mat-form-field>
+
+      <h2>Include some description</h2>
+
+      <mat-form-field appearance="outline" class="desc">
+          <mat-label>Description</mat-label>
+          <input matInput type="text" formControlName="description">
+      </mat-form-field>
+      <br>
+      <br>
+      <h2>Add images of accommodation</h2>
+      <div>
+          <mat-label>Add Images:</mat-label>
+          <input id="imageUpload" type="file" (change)="handleImageUpload($event)" multiple>
+      </div>
+      <br><br>
+      <h2>Do you want to approve reservations automatically?</h2>
+      <mat-checkbox formControlName="automaticApprove">Yes</mat-checkbox>
+    </div>
+
+    <div class="last">
+      <div formGroupName="availability">
+        <div formArrayName="availableSlots">
+          <h2>Available Slots</h2>
+          <!-- Nastavio s praćenjem istog obrasca koji koristiš sa Angular Material komponentama -->
+          <div *ngFor="let slot of availabilitySlots.controls; let i = index" [formGroupName]="i">
+            <mat-form-field appearance="outline">
+                <mat-label>Start Date</mat-label>
+                <input matInput type="date" formControlName="startDate">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>End Date</mat-label>
+                <input matInput type="date" formControlName="endDate">
+            </mat-form-field>
+
+            <button mat-raised-button type="button" (click)="removeAvailabilitySlot(i)">Remove Slot</button>
+          </div>
+          <br>
+          <button mat-raised-button type="button" (click)="addAvailabilitySlot()">Add Slot</button>
+          <br>
+        </div>
+        <br><br>
+        <h2>Price</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price">
+        </mat-form-field>
+
+        <mat-checkbox formControlName="isPricePerGuest">Is price per guest?</mat-checkbox>
+
+        <div formArrayName="changePrice">
+          <h2>Price Change</h2>
+          <div *ngFor="let change of changePrice.controls; let i = index" [formGroupName]="i">
+            <mat-form-field appearance="outline">
+              <mat-label>Start Date</mat-label>
+              <input matInput type="date" formControlName="startDate">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>End Date</mat-label>
+              <input matInput type="date" formControlName="endDate">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Change</mat-label>
+              <input matInput type="number" formControlName="change">
+            </mat-form-field>
+
+            <button mat-raised-button type="button" (click)="removePriceChange(i)">Remove Change</button>
+          </div>
+          <br>
+          <button mat-raised-button type="button" (click)="addPriceChange()">Add Change</button>
+          <br>
+        </div>
+      </div>
+      <br>
+      <br>
+      <button class="submit" mat-raised-button type="submit">Submit</button>
+      <br>
+    </div>
+
+    
+  </form>
+</div>
+
