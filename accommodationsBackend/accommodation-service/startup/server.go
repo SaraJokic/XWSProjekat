@@ -45,13 +45,13 @@ func (server *Server) initMongoClient() *mongo.Client {
 
 func (server *Server) initAccommodationsStore(client *mongo.Client) domain.AccommodationStore {
 	store := persistence.NewAccommodationMongoDBStore(client)
-	store.DeleteAll()
-	for _, accommodation := range accommodations {
+	//store.DeleteAll()
+	/*for _, accommodation := range accommodations {
 		err := store.Insert(accommodation)
 		if err != nil {
 			log.Fatal(err)
 		}
-	}
+	}*/
 	return store
 }
 

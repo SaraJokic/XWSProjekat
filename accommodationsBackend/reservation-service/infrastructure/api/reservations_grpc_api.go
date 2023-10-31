@@ -20,11 +20,13 @@ import (
 type ReservationHandler struct {
 	reservation_service.UnimplementedReservationServiceServer
 	service *application.ReservationService
+	rpc     ReservationEventClient
 }
 
 func NewReservationHandler(service *application.ReservationService) *ReservationHandler {
 	return &ReservationHandler{
 		service: service,
+		rpc:     grpcClient{},
 	}
 }
 func (handler *ReservationHandler) Get(ctx context.Context, request *reservation_service.GetReservationRequest) (*reservation_service.GetReservationResponse, error) {
@@ -76,8 +78,9 @@ func (handler *ReservationHandler) UpdateReservation(ctx context.Context, reques
 	id := request.Id
 	objectId, err := primitive.ObjectIDFromHex(id)
 	r := request.Reservation
-	accMapped := mapUpdateReservation(r)
-	err = handler.service.Update(objectId, accMapped)
+	reservationMapped := mapUpdateReservation(r)
+	err = handler.service.Update(objectId, reservationMapped) //menja se polje isCancelled na true
+	err = handler.rpc.cancelReservation(*reservationMapped)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Failed to update reservation")
 	}
@@ -143,24 +146,14 @@ func (handler *ReservationHandler) ChangeStatusReservation(ctx context.Context, 
 }
 func (handler *ReservationHandler) DeleteReservation(ctx context.Context, request *reservation_service.DeleteReservationRequest) (*reservation_service.DeleteReservationResponse, error) {
 	id := request.Id
-	/*reservation, _ := handler.Get(context.Background(), &reservation_service.GetReservationRequest{Id: request.Id})
-	client := NewAvailabilityClient()
-	availability, _ := client.GetByAccommodationId(context.Background(), &availability_service.GetByAccIdRequest{
-		Id: reservation.Reservation.AccommodationId,
-	})
-	newSlot := &availability_service.AvailableSlots{
-		SlotId:    "",
-		StartDate: reservation.Reservation.StartDate,
-		EndDate:   reservation.Reservation.EndDate,
-	}
-	client.AddAvailableSlot(context.Background(), &availability_service.AddAvailableSlotRequest{AvailableSlot: newSlot, Id: availability.Availability.Id})
-
-	err := handler.service.Delete(id)*/
-	err := handler.service.Delete(id)
+	objectId, err := primitive.ObjectIDFromHex(id)
+	err = handler.service.Cancel(id)
 	if err != nil {
-		return &reservation_service.DeleteReservationResponse{Message: "Reservation delete failed"}, nil
+		return &reservation_service.DeleteReservationResponse{Message: "Reservation cancel failed"}, nil
 	}
-	return &reservation_service.DeleteReservationResponse{Message: "Reservation deleted"}, nil
+	reservation, _ := handler.service.Get(objectId)
+	handler.rpc.cancelReservation(*reservation)
+	return &reservation_service.DeleteReservationResponse{Message: "Reservation canceled"}, nil
 }
 func NewAvailabilityClient() availability_service.AvailabilityServiceClient {
 	conn, err := grpc.Dial("availability-service:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))

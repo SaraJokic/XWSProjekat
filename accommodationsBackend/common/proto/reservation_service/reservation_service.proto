@@ -106,6 +106,7 @@ message CreateReservationRequest {
   string endDate = 5;
   int64 numOfGuests = 6;
   Status status = 7;
+  bool iscanceled = 8;
 }
 message CreateReservationResponse {
   string id = 1;
@@ -119,6 +120,7 @@ message Reservation {
   string endDate = 5;
   int64 numOfGuests = 6;
   Status status = 7;
+  bool isCanceled = 8;
 }
 
 enum Status {

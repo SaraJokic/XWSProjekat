@@ -28,10 +28,10 @@ func CreateJStream(natsComponent *NATSComponent, streamName string, streamSubjec
 		})
 		fmt.Println("Stream Info: %v", si)
 		if err != nil {
-			fmt.Println("Nije napravljen stream")
+			fmt.Println("Nije napravljen stream %v", streamName)
 			return err
 		} else {
-			fmt.Println("Napravljen je stream")
+			fmt.Println("Napravljen je stream %v", streamName)
 		}
 	} else {
 		log.Println("Stream vec postoji")

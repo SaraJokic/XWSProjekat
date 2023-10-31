@@ -80,7 +80,7 @@ func (server *Server) Start() {
 			return
 		}
 
-		if r.Method != "auth/login" || r.Method != "auth/insert" || r.Method != "/users/register" {
+		if r.Method != "auth/login" || r.Method != "auth/insert" || r.Method != "/users/register" || r.URL.Path != "/accommodations" {
 			validateTokenHandler := middleware.ValidateToken(server.mux)
 			validateTokenHandler.ServeHTTP(w, r)
 			w.WriteHeader(http.StatusUnauthorized)
@@ -97,8 +97,4 @@ func (server *Server) Start() {
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", server.config.Port), corsHandler))
 
-	//mux := http.NewServeMux()
-	//mux.Handle("/", corsHandler)
-
-	//handler := middleware.ValidateToken(mux)
 }

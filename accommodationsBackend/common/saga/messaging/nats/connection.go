@@ -11,7 +11,6 @@ var (
 	once     sync.Once
 )
 
-// NATSComponent contains reusable logic related to handling NATS connections.
 type NATSComponent struct {
 	cmu  sync.Mutex
 	nc   *nats.Conn

@@ -1,7 +1,7 @@
 package api
 
 import (
-	"accommodationsBackend/accommodations-service/domain"
+	"accommodationsBackend/availability-service/domain"
 	"accommodationsBackend/common/proto/eventstore"
 	"context"
 	"encoding/json"
@@ -15,13 +15,13 @@ import (
 	"time"
 )
 
-type AccommodationEventClient interface {
-	createAccommodation(acc domain.Accommodation) error
+type AvailabilityEventClient interface {
+	newAvailableSlot(acc domain.Availability) error
 }
 type grpcClient struct {
 }
 
-func (gc grpcClient) createAccommodation(acc domain.Accommodation) error {
+func (gc grpcClient) newAvailableSlot(availability domain.Availability) error {
 	conn, err := grpc.Dial("event-store:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Unable to connect: %v", err)
@@ -29,15 +29,15 @@ func (gc grpcClient) createAccommodation(acc domain.Accommodation) error {
 	defer conn.Close()
 	client := eventstore.NewEventStoreClient(conn)
 	eventid, _ := uuid.NewUUID()
-	accommodationJSON, _ := json.Marshal(acc)
+	availabilityJSON, _ := json.Marshal(availability)
 	event := &eventstore.Event{
 		EventId:       eventid.String(),
-		EventType:     "Accommodations.Created",
-		AggregateId:   acc.Id.Hex(),
-		AggregateType: "Accommodation",
-		EventData:     string(accommodationJSON),
-		Stream:        "Accommodations",
+		EventType:     "Availability.SlotAdded",
 		EventTime:     time.Now().Format("2006-01-02 15:04:05"),
+		AggregateId:   availability.Id.Hex(),
+		AggregateType: "Availability",
+		EventData:     string(availabilityJSON),
+		Stream:        "Availabilities",
 	}
 	createEventRequest := &eventstore.CreateEventRequest{Event: event}
 	response, err := client.CreateEvent(context.Background(), createEventRequest)

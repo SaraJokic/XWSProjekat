@@ -3,6 +3,7 @@ package application
 import (
 	domain "accommodationsBackend/availability-service/domain"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"log"
 	"time"
 )
 
@@ -83,4 +84,23 @@ func (service *AvailabilityService) updateAvailableSlots(id primitive.ObjectID, 
 		return err
 	}
 	return nil
+}
+func (service *AvailabilityService) MakeSlotAvailable(id string, startDate string, endDate string) (domain.Availability, error) {
+	layout := "2006-01-02T15:04:05Z"
+	startdate, err := time.Parse(layout, startDate)
+	if err != nil {
+		log.Println("Failed to parse the string of StartDate: ", err)
+		return domain.Availability{}, err
+	}
+	enddate, err := time.Parse(layout, endDate)
+	if err != nil {
+		log.Println("Failed to parse the string of EndDate: ", err)
+		return domain.Availability{}, err
+	}
+	accId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return domain.Availability{}, err
+	}
+	newAvailability, _ := service.store.MakeSlotAvailable(accId, startdate, enddate)
+	return *newAvailability, nil
 }

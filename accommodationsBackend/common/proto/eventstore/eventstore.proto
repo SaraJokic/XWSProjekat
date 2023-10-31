@@ -15,10 +15,11 @@ service EventStore {
 message Event {
   string event_id = 1;
   string event_type = 2;
-  string aggregate_id = 3;
-  string aggregate_type = 4;
-  string event_data = 5;
-  string stream = 6;
+  string event_time = 3;
+  string aggregate_id = 4;
+  string aggregate_type = 5;
+  string event_data = 6;
+  string stream = 7;
 }
 message CreateEventRequest {
   Event event =1;

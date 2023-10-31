@@ -21,4 +21,5 @@ type Reservation struct {
 	EndDate         time.Time          `bson:"enddate"`
 	NumOfGuests     int                `bson:"numofguests"`
 	Status          Status             `bson:"status"`
+	IsCanceled      bool               `bson:"isCanceled"`
 }

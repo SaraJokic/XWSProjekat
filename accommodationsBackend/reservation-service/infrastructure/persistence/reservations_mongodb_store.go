@@ -99,6 +99,7 @@ func (store *ReservationMongoDBStore) Update(id primitive.ObjectID, r *domain.Re
 		"enddate":         r.EndDate,
 		"numofguests":     r.NumOfGuests,
 		"status":          r.Status,
+		"isCanceled":      r.IsCanceled,
 	}}
 	_, err := store.reservations.UpdateOne(ctx, filter, update)
 

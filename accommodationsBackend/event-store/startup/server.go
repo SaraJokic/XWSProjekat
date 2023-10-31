@@ -27,6 +27,8 @@ func (server *Server) Start() {
 	natsComp := nats.GetNATSComponent()
 	fmt.Printf("Nats komponenta u Event Store Serveru: %v\n", natsComp)
 	nats.CreateJStream(natsComp, "Accommodations", "Accommodations.*")
+	nats.CreateJStream(natsComp, "Reservations", "Reservations.*")
+	nats.CreateJStream(natsComp, "Availabilities", "Availabilities.*")
 	mongoClient := server.initMongoClient()
 	eventStore := server.initEventStore(mongoClient)
 	//natsComp := nats.NewNATSComponent("eventstore-service")

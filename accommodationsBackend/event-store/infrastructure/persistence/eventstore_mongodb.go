@@ -26,6 +26,7 @@ func (e EventsMongoDBStore) CreateEvent(ctx context.Context, event *eventstore.E
 		"aggregatetype": event.AggregateType,
 		"eventdata":     event.EventData,
 		"stream":        event.Stream,
+		"eventTime":     event.EventTime,
 	}
 	_, err := e.events.InsertOne(ctx, eventData)
 	if err != nil {

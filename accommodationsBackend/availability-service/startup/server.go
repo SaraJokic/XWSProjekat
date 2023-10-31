@@ -48,7 +48,7 @@ func (server *Server) Start() {
 	//commandSubscriber := server.initSubscriber(natsComp, server.config.CancelReservationCommandSubject, QueueGroup)
 	//replyPublisher := server.initPublisher(natsComp, server.config.CancelReservationReplySubject)
 	//server.initCancelReservationHandler(availabilitiesService, replyPublisher, commandSubscriber)
-	server.initEventHandler(natsComp)
+	server.initEventHandler(natsComp, availabilitiesService)
 	availabilityHandler := server.initAvailabilityHandler(availabilitiesService)
 
 	server.startGrpcServer(availabilityHandler)
@@ -103,8 +103,8 @@ func (server *Server) initCancelReservationHandler(service *application.Availabi
 	}
 }
 
-func (server *Server) initEventHandler(nc *nats.NATSComponent) {
-	_, err := api.NewEventHandler(nc)
+func (server *Server) initEventHandler(nc *nats.NATSComponent, availabilityService *application.AvailabilityService) {
+	_, err := api.NewEventHandler(nc, availabilityService)
 	if err != nil {
 		log.Fatal(err)
 	}

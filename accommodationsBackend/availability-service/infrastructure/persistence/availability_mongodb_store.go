@@ -25,7 +25,12 @@ func NewAvailabilityMongoDBStore(client *mongo.Client) domain.AvailabilityStore 
 		availabilities: availabilities,
 	}
 }
-
+func (store *AvailabilityMongoDBStore) MakeSlotAvailable(id primitive.ObjectID, startDate time.Time, endDate time.Time) (*domain.Availability, error) {
+	availability, _ := store.GetByAccommodationId(id)
+	availability.AvailableSlots = append(availability.AvailableSlots, domain.AvailabilitySlot{SlotId: primitive.NewObjectID(), StartDate: startDate, EndDate: endDate})
+	err := store.Update(availability.Id, availability)
+	return availability, err
+}
 func (store *AvailabilityMongoDBStore) Get(id primitive.ObjectID) (*domain.Availability, error) {
 	filter := bson.M{"_id": id}
 	return store.filterOne(filter)

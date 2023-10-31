@@ -1,4 +1,4 @@
-package application
+package api
 
 import (
 	"accommodationsBackend/common/proto/eventstore"
@@ -12,16 +12,18 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
 	"log"
+	"time"
 )
 
 type ReservationEventClient interface {
-	createAccommodation(r domain.Reservation) error
 	cancelReservation(reservation domain.Reservation) error
+	createReservation(reservation domain.Reservation) error
 }
 type grpcClient struct {
 }
 
 func (gc grpcClient) cancelReservation(reservation domain.Reservation) error {
+	fmt.Println("Usao u cancle reservation event client za upisivanje eventa")
 	conn, err := grpc.Dial("event-store:8000", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Unable to connect: %v", err)
@@ -32,7 +34,8 @@ func (gc grpcClient) cancelReservation(reservation domain.Reservation) error {
 	reservationJSON, _ := json.Marshal(reservation)
 	event := &eventstore.Event{
 		EventId:       eventid.String(),
-		EventType:     "Reservations.Cancelled",
+		EventType:     "Reservations.Canceled",
+		EventTime:     time.Now().Format("2006-01-02 15:04:05"),
 		AggregateId:   reservation.Id.Hex(),
 		AggregateType: "Reservation",
 		EventData:     string(reservationJSON),

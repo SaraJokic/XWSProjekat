@@ -17,6 +17,7 @@ func mapReservation(r *domain.Reservation) *reservation_service.Reservation {
 		EndDate:         r.EndDate.String(),
 		NumOfGuests:     int64(r.NumOfGuests),
 		Status:          reservation_service.Status(r.Status),
+		IsCanceled:      r.IsCanceled,
 	}
 	return reservationMapped
 }
@@ -48,6 +49,7 @@ func mapDomainReservation(r *reservation_service.CreateReservationRequest) *doma
 		EndDate:         enddate,
 		NumOfGuests:     int(r.NumOfGuests),
 		Status:          domain.Status(r.Status),
+		IsCanceled:      r.Iscanceled,
 	}
 	return reservationMapped
 }
@@ -84,6 +86,7 @@ func mapUpdateReservation(r *reservation_service.Reservation) *domain.Reservatio
 		EndDate:         enddate,
 		NumOfGuests:     int(r.NumOfGuests),
 		Status:          domain.Status(r.Status),
+		IsCanceled:      r.IsCanceled,
 	}
 	return reservationMapped
 }

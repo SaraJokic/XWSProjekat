@@ -13,4 +13,5 @@ type AvailabilityStore interface {
 	Update(id primitive.ObjectID, availability *Availability) error
 	GetByAccommodationId(id primitive.ObjectID) (*Availability, error)
 	FindAvailabilitySlotsByDateRange(startDate time.Time, endDate time.Time) ([]AvailabilitySlot, error)
+	MakeSlotAvailable(id primitive.ObjectID, startDate time.Time, endDate time.Time) (*Availability, error)
 }

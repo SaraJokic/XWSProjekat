@@ -239,15 +239,6 @@ services:
     command: ["--js"]
     networks:
       - network
-  esdb-node:
-    image: eventstore/eventstore:latest
-    container_name: esdb-node
-    ports:
-      - "2113:2113"
-      - "1113:1113"
-    command: [ "--insecure", "--run-projections=All" ]
-    networks:
-      - network
 
 networks:
   network:
