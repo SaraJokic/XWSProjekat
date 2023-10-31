@@ -7,6 +7,9 @@ import { AccommodationServiceService } from 'src/app/services/accommodation-serv
 import { DialogService } from 'src/app/services/dialog.service';
 import { UserService } from 'src/app/services/user.service';
 import { MaterialModule } from 'src/app/material/material.module';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+
+
 
 @Component({
   selector: 'app-home-page',
@@ -20,6 +23,7 @@ export class HomePageComponent implements OnInit {
   WIFI: boolean = false;
   KITCHEN: boolean = false;
   FREEPARKING: boolean = false;
+  showHint = false;
 
   PROMINENT: boolean = false;
 
@@ -27,6 +31,18 @@ export class HomePageComponent implements OnInit {
 
   accommodations: Accommodation[] = [];
   filteredAccommodations!: Accommodation[];
+  
+  customOptions: OwlOptions = {
+    loop: true,  
+    mouseDrag: true,  
+     dots: false,  
+    navSpeed: 700,  
+     items:1,
+     nav: true,
+     navText: ['<', '>']
+    
+  }
+  
 
   constructor(
     private accommodationService: AccommodationServiceService,private dialogService: DialogService, private userService:UserService) {
@@ -63,7 +79,39 @@ export class HomePageComponent implements OnInit {
     );
   }
 
-  search(searchArg: any) {
+search(formData: any): void {
+  this.filteredAccommodations = this.accommodations.filter(accommodation => {
+    let odgovaraLokacija = true;
+    let odgovaraBrojGostiju = true;
+    let odgovaraDatum = true;
+
+    // Provera lokacije
+    if (formData.location) {
+      odgovaraLokacija = accommodation.location.toLowerCase() === formData.location.toLowerCase();
+    }
+
+    // Provera broja gostiju
+    if (formData.guests) {
+      odgovaraBrojGostiju = accommodation.maxGuests >= formData.guests;
+    }
+
+    // Provera datuma (samo ako su oba datuma uneta)
+   // if (formData.sdate && formData.edate) {
+     // const dostupnoOd = new Date(accommodation.start_date);
+      //const dostupnoDo = new Date(accommodation.end_date);
+
+      //const trazeniPocetniDatum = new Date(formData.sdate);
+      //const trazeniKrajnjiDatum = new Date(formData.edate);
+
+      //odgovaraDatum = trazeniPocetniDatum >= dostupnoOd && trazeniKrajnjiDatum <= dostupnoDo;
+    //}
+
+   // return odgovaraLokacija && odgovaraBrojGostiju && odgovaraDatum;
+    return odgovaraLokacija && odgovaraBrojGostiju;
+  });
+}
+
+  /*search(searchArg: any) {
     const searchQuery: SearchAccommodation = {
       location: searchArg.location,
       guests: searchArg.guests,
@@ -80,7 +128,7 @@ export class HomePageComponent implements OnInit {
         console.error(error);
       }
     );
-  }
+  }*/
 
   openDialog(accommodation: Accommodation): void {
     this.dialogService.openDialogReservation(accommodation);
@@ -90,6 +138,9 @@ export class HomePageComponent implements OnInit {
   }
   openAccDialog(accommodation: Accommodation): void {
     this.dialogService.openAccDialog(accommodation);
+  }
+  openViewAccDialog(accommodation: Accommodation): void {
+    //this.dialogService.openViewAccDialog(accommodation);
   }
   onlyTrue(benefits: any): boolean {
     if (!benefits) {

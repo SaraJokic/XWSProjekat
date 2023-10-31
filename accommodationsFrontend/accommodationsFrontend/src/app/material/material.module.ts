@@ -9,7 +9,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
-
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -24,7 +29,13 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatIconModule,
     MatToolbarModule,
-    MatSelectModule
+    MatSelectModule,
+    CarouselModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatCardModule,
+    BrowserAnimationsModule
   ],
   
   exports: [
@@ -37,7 +48,13 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatIconModule,
     MatToolbarModule,
-    MatSelectModule
+    MatSelectModule,
+    CarouselModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatCardModule,
+    BrowserAnimationsModule
   ],
 })
 export class MaterialModule { }

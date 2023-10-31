@@ -46,5 +46,6 @@ openAccDialog(details: Accommodation): void {
       //console.log(`Dialog result: ${result}`);
     });
   }
+  
 }
 

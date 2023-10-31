@@ -1,8 +1,43 @@
-.accommodation-dialog-container {
-    display: flex;
-  justify-content: center;
+.reservation-dialog {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: transparent;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
   height: 100%;
-  }
+  box-sizing: border-box;
+}
 
-  
+.date-pickers {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Ensure the date pickers span the entire width */
+  margin-top: 10px;
+}
+
+.start-date,
+.end-date {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.guests {
+  width: 100%; /* Make the input span the entire width */
+  margin-top: 10px;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  width: 100%; /* Ensure the total section spans the entire width */
+  margin-top: 10px;
+}
